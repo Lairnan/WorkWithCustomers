@@ -3,11 +3,46 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:INCOMSYSTEM.Pages"
       mc:Ignorable="d"
-      Background="Gray"
       Title="Окно авторизации">
-    <UniformGrid>
-        <TextBlock Text="Авторизация!!!"/>
-    </UniformGrid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0">
+            <TextBlock Text="Введите логин:" Margin="0 5"/>
+            <TextBlock Text="Введите пароль:" Margin="0 5"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1">
+            <TextBox x:Name="LogBox" Margin="0 5"/>
+            <PasswordBox x:Name="PassBox" Margin="0 5"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0 5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button x:Name="AuthBtn"
+                    Content="Войти"
+                    Margin="5 0"/>
+            <Button x:Name="RegBtn"
+                    Content="Зарегистрироваться"
+                    Margin="5 0"/>
+        </StackPanel>
+        <TextBlock x:Name="ErrorBlock"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   Foreground="Red"/>
+    </Grid>
 </Page>
