@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,7 +28,7 @@ namespace INCOMSYSTEM.Pages
             MessageBox.Show("Test");
         }
 
-        private void GenerateCaptcha()
+        private async void GenerateCaptcha()
         {
             const string pattern = "abcdefghijklmnopqrstuvwxyz" +
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -37,8 +39,15 @@ namespace INCOMSYSTEM.Pages
             for (var i = 0; i < Random.Next(4, 6); i++)
                 captcha += pattern[Random.Next(0, pattern.Length)];
 
-            MessageBox.Show(captcha);
+            _isAllowed = true;
+
+            await Task.Delay(Timer * 1000);
+            _isAllowed = false;
         }
+
+        private int _attempts = 0;
+        private bool _isAllowed;
+        private const int Timer = 30;
 
         private void AuthBtnClick(object sender, RoutedEventArgs e)
         {
@@ -48,13 +57,44 @@ namespace INCOMSYSTEM.Pages
                 return;
             }
 
-            GenerateCaptcha();
+            // if (attemps++ > 3)
+            // {
+            //     TODO: Проверка на капчу
+            // }
+
+            var login = LogBox.Text;
+            var password = PassBox.Password;
+
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var user = db.UsersDetail.FirstOrDefault(s => s.login == login && s.password == password);
+                if (user != null)
+                {
+                    switch (user.idPos)
+                    {
+                        case 1:
+                            MessageBox.Show("Вы заказчик!");
+                            break;
+                        case 2:
+                            MessageBox.Show("Вы исполнитель!");
+                            break;
+                        case 3:
+                            MessageBox.Show("Вы менеджер!");
+                            break;
+                    }
+
+                    return;
+                }
+            }
+
+            if(_attempts > 3) GenerateCaptcha();
         }
 
         private bool CheckEmpty()
         {
             if (string.IsNullOrWhiteSpace(LogBox.Text)) return SetError("Логин не может быть пустым");
             if (string.IsNullOrWhiteSpace(PassBox.Password)) return SetError("Пароль не может быть пустым");
+            // if (CaptchaBox.Visibility == Visibility.Visible && string.IsNullOrWhiteSpace(CaptchaBox.Text)) return SetError("Капча не может быть пустой");
 
             AuthBtn.IsEnabled = true;
             ErrorBlock.Text = string.Empty;
