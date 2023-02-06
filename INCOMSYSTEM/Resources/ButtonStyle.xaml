@@ -16,7 +16,7 @@
                             Background="{TemplateBinding Background}"
                             Cursor="{TemplateBinding Cursor}"
                             CornerRadius="5">
-                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -24,18 +24,14 @@
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="Gray"/>
-                <Setter Property="Foreground" Value="IndianRed"/>
+                <Setter Property="Foreground" Value="#FFAE5F"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#3946AA"/>
             </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsPressed" Value="True"/>
-                </MultiTrigger.Conditions>
+            <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="#171717"/>
-            </MultiTrigger>
+            </Trigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
