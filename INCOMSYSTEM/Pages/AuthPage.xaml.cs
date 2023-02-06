@@ -1,18 +1,22 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using INCOMSYSTEM.Context;
 
 namespace INCOMSYSTEM.Pages
 {
     public partial class AuthPage : Page
     {
+        private readonly Random Random = new Random();
+
         public AuthPage()
         {
             InitializeComponent();
             LogBox.TextChanged += (s, e) => CheckEmpty();
             PassBox.PasswordChanged += (s, e) => CheckEmpty();
-            
-            this.KeyDown += OnKeyDown;
+
+            this.KeyDown += (s, e) => { if (e.Key == Key.Enter && AuthBtn.IsEnabled) AuthBtnClick(s, e); };
             AuthBtn.Click += AuthBtnClick;
             RegBtn.Click += RegBtnClick;
         }
@@ -22,14 +26,29 @@ namespace INCOMSYSTEM.Pages
             MessageBox.Show("Test");
         }
 
-        private void AuthBtnClick(object sender, RoutedEventArgs e)
+        private void GenerateCaptcha()
         {
-            MessageBox.Show("Test");
+            const string pattern = "abcdefghijklmnopqrstuvwxyz" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "1234567890" +
+                "!@#$%";
+
+            var captcha = "";
+            for (var i = 0; i < Random.Next(4, 6); i++)
+                captcha += pattern[Random.Next(0, pattern.Length)];
+
+            MessageBox.Show(captcha);
         }
 
-        private void OnKeyDown(object sender, KeyEventArgs e)
+        private void AuthBtnClick(object sender, RoutedEventArgs e)
         {
-            if(e.Key == Key.Enter && AuthBtn.IsEnabled) AuthBtnClick(sender, e);
+            if(CheckEmpty())
+            {
+                MessageBox.Show("Поля не могут быть пустыми");
+                return;
+            }
+
+            GenerateCaptcha();
         }
 
         private bool CheckEmpty()

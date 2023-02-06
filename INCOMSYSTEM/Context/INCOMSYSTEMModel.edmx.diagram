@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7406069acd7d4a4faacd81c648dd64fb" Name="Diagram1">
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Chats" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Customers" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Employees" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.LegalForms" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Messages" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Orders" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Positions" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Specializations" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Statuses" Width="1.5" PointX="3" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.Tasks" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KP_Saulin_INCOMSYSTEMModel.UsersDetail" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Chats__id__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Employees__idSpe__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__UserDetai__idPos__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="KP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__48CFD27E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

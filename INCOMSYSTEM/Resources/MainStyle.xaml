@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Style x:Key="MainStyle">
-        <Setter Property="TextBlock.FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="TextBlock.FontFamily" Value="/INCOMSYSTEM;component/Fonts/#Roboto"/>
         <Setter Property="TextBlock.FontSize" Value="16"/>
+        <Setter Property="TextBlock.Foreground" Value="White"/>
     </Style>
     
     <Style TargetType="TextBlock" BasedOn="{StaticResource MainStyle}"></Style>
@@ -10,4 +12,9 @@
     <Style TargetType="PasswordBox" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="Button" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="Label" BasedOn="{StaticResource MainStyle}"></Style>
+    <Style TargetType="RichTextBox" BasedOn="{StaticResource MainStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
 </ResourceDictionary>

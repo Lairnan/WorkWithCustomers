@@ -5,44 +5,88 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       Title="Окно авторизации">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="3,-1" StartPoint="0.5,4">
+                <GradientStop Color="#FF5776FF" Offset="0"/>
+                <GradientStop Color="#FFFEFEFF" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="0">
-            <TextBlock Text="Введите логин:" Margin="0 5"/>
-            <TextBlock Text="Введите пароль:" Margin="0 5"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="1">
-            <TextBox x:Name="LogBox" Margin="0 5"/>
-            <PasswordBox x:Name="PassBox" Margin="0 5"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="0 5"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button x:Name="AuthBtn"
-                    Content="Войти"
-                    Margin="5 0"/>
-            <Button x:Name="RegBtn"
-                    Content="Зарегистрироваться"
-                    Margin="5 0"/>
-        </StackPanel>
-        <TextBlock x:Name="ErrorBlock"
-                   Grid.Row="2"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   TextAlignment="Center"
-                   Foreground="Red"/>
+        <Grid Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Margin="15 0"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0">
+                <TextBlock Text="Введите логин:" Margin="0 5"/>
+                <TextBlock Text="Введите пароль:" Margin="0 5"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0 0 5 0">
+                <TextBox x:Name="LogBox" Margin="0 5"/>
+                <PasswordBox x:Name="PassBox" Margin="0 5"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="0 5"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="AuthBtn"
+                        Content="Войти"
+                        IsEnabled="False"
+                        Style="{StaticResource MainButton}"
+                        Margin="5 0"/>
+                <Button x:Name="RegBtn"
+                        Content="Зарегистрироваться"
+                        Style="{StaticResource MainButton}"
+                        Margin="5 0"/>
+            </StackPanel>
+            <TextBlock x:Name="ErrorBlock"
+                       Grid.Row="2"
+                       Visibility="Collapsed"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       TextAlignment="Center"
+                       Foreground="Red"/>
+        </Grid>
+        <Border Grid.Column="2"
+                BorderBrush="Coral"
+                BorderThickness="3 0 0 0"
+                Margin="5 30">
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Image Margin="5"
+                       Source="../Images/authImage.png"/>
+                <RichTextBox IsReadOnly="True" Grid.Row="1" HorizontalAlignment="Center">
+                    <FlowDocument TextAlignment="Center">
+                        <Paragraph>Добро пожаловать в АИС "ИНКОМСИСТЕМ".</Paragraph>
+                        <Paragraph>Научно-Инженерный Центр «ИНКОМСИСТЕМ» является крупнейшим системным интегратором
+                            Российской Федерации и стратегическим
+                            партнёром нефтегазовых и нефтехимических компаний.</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
