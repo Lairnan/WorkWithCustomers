@@ -8,8 +8,12 @@
     </Style>
     
     <Style TargetType="TextBlock" BasedOn="{StaticResource MainStyle}"></Style>
-    <Style TargetType="TextBox" BasedOn="{StaticResource MainStyle}"></Style>
-    <Style TargetType="PasswordBox" BasedOn="{StaticResource MainStyle}"></Style>
+    <Style TargetType="TextBox" BasedOn="{StaticResource MainStyle}">
+        <Setter Property="Background" Value="DimGray"/>
+    </Style>
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource MainStyle}">
+        <Setter Property="Background" Value="DimGray"/>
+    </Style>
     <Style TargetType="Button" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="Label" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="RichTextBox" BasedOn="{StaticResource MainStyle}">
