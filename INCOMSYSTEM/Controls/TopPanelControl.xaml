@@ -44,6 +44,7 @@
                 <TextBlock Grid.Column="1"
                            FontFamily="Comic sans MS"
                            TextAlignment="Center"
+                           VerticalAlignment="Center"
                            FontSize="18"
                            Foreground="White"
                            Margin="5,5"

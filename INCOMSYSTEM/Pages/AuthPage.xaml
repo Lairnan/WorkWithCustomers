@@ -34,8 +34,8 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0"
                         Grid.Column="0">
-                <TextBlock Text="Введите логин:" Margin="0 5"/>
-                <TextBlock Text="Введите пароль:" Margin="0 5"/>
+                <TextBlock Text="Введите логин:" Margin="0 15 0 0"/>
+                <TextBlock Text="Введите пароль:" Margin="0 15 0 0"/>
             </StackPanel>
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
@@ -46,7 +46,7 @@
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Margin="0 5"
+                        Margin="0 20"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Button x:Name="AuthBtn"
