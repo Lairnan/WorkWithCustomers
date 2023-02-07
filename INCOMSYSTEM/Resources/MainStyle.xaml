@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:INCOMSYSTEM.Controls">
 
     <Style x:Key="MainStyle">
         <Setter Property="TextBlock.FontFamily" Value="/INCOMSYSTEM;component/Fonts/#Roboto"/>
@@ -64,6 +65,70 @@
     
     <Style TargetType="TextBlock" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="TextBox" BasedOn="{StaticResource TextPassBoxStyle}"></Style>
+    <Style TargetType="controls:InputTextBox" BasedOn="{StaticResource MainStyle}">
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="IBeam"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:InputTextBox">
+                    <Grid Background="{TemplateBinding Background}"
+                          Width="{TemplateBinding Width}"
+                          x:Name="PART_Grid">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5"
+                                Width="15"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                x:Name="PART_Border"/>
+                        <ScrollViewer Margin="{TemplateBinding Padding}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      x:Name="PART_ContentHost"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsNull" Value="False">
+                            <Setter TargetName="PART_Border" Property="Width" Value="175"/>
+                        </Trigger>
+                        <Trigger Property="IsPlaceHolder" Value="True">
+                            <Setter TargetName="PART_ContentHost" Property="Opacity" Value="0.7"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsNull" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_Border"
+                                                         Storyboard.TargetProperty="Width"
+                                                         To="175"
+                                                         Duration="0:0:0.8"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard FillBehavior="Stop">
+                                        <DoubleAnimation Storyboard.TargetName="PART_Border"
+                                                         Storyboard.TargetProperty="Width"
+                                                         To="15"
+                                                         Duration="0:0:0.8"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="PasswordBox" BasedOn="{StaticResource TextPassBoxStyle}"></Style>
     <Style TargetType="Button" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="Label" BasedOn="{StaticResource MainStyle}"></Style>

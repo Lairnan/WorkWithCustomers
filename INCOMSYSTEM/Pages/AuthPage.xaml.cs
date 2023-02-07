@@ -10,13 +10,13 @@ namespace INCOMSYSTEM.Pages
 {
     public partial class AuthPage : Page
     {
-        private readonly Random Random = new Random();
+        private readonly Random _random = new Random();
 
         public AuthPage()
         {
             InitializeComponent();
             LogBox.TextChanged += (s, e) => CheckEmpty();
-            PassBox.PasswordChanged += (s, e) => CheckEmpty();
+            PassBox.TextChanged += (s, e) => CheckEmpty();
 
             this.KeyDown += (s, e) => { if (e.Key == Key.Enter && AuthBtn.IsEnabled) AuthBtnClick(s, e); };
             AuthBtn.Click += AuthBtnClick;
@@ -36,8 +36,8 @@ namespace INCOMSYSTEM.Pages
                 "!@#$%";
 
             var captcha = "";
-            for (var i = 0; i < Random.Next(4, 6); i++)
-                captcha += pattern[Random.Next(0, pattern.Length)];
+            for (var i = 0; i < _random.Next(4, 6); i++)
+                captcha += pattern[_random.Next(0, pattern.Length)];
 
             _isAllowed = true;
 
@@ -51,6 +51,9 @@ namespace INCOMSYSTEM.Pages
 
         private void AuthBtnClick(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(PassBox.Value);
+
+            return;
             if(CheckEmpty())
             {
                 MessageBox.Show("Поля не могут быть пустыми");
@@ -62,8 +65,8 @@ namespace INCOMSYSTEM.Pages
             //     TODO: Проверка на капчу
             // }
 
-            var login = LogBox.Text;
-            var password = PassBox.Password;
+            var login = LogBox.Value;
+            var password = PassBox.Value;
 
             using (var db = new INCOMSYSTEMEntities())
             {
@@ -85,6 +88,8 @@ namespace INCOMSYSTEM.Pages
 
                     return;
                 }
+
+                SetError("Неверный логин или пароль");
             }
 
             if(_attempts > 3) GenerateCaptcha();
@@ -92,8 +97,8 @@ namespace INCOMSYSTEM.Pages
 
         private bool CheckEmpty()
         {
-            if (string.IsNullOrWhiteSpace(LogBox.Text)) return SetError("Логин не может быть пустым");
-            if (string.IsNullOrWhiteSpace(PassBox.Password)) return SetError("Пароль не может быть пустым");
+            if (LogBox.IsPlaceHolder || string.IsNullOrWhiteSpace(LogBox.Text)) return SetError("Логин не может быть пустым");
+            if (PassBox.IsPlaceHolder || string.IsNullOrWhiteSpace(PassBox.Text)) return SetError("Пароль не может быть пустым");
             // if (CaptchaBox.Visibility == Visibility.Visible && string.IsNullOrWhiteSpace(CaptchaBox.Text)) return SetError("Капча не может быть пустой");
 
             AuthBtn.IsEnabled = true;

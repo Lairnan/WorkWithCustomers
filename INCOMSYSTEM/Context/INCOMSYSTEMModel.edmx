@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище KP_Saulin_INCOMSYSTEMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище KP_Saulin_INCOMSYSTEMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chats">
           <Key>
             <PropertyRef Name="idChat" />
@@ -48,6 +48,7 @@
           <Property Name="idChat" Type="bigint" Nullable="false" />
           <Property Name="message" Type="text" />
           <Property Name="attachment" Type="varbinary(max)" />
+          <Property Name="dateSend" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -362,8 +363,7 @@
             <End Role="UsersDetail" EntitySet="UsersDetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KP_Saulin_INCOMSYSTEMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -424,6 +424,7 @@
           <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Chats" Relationship="Self.FK__Messages__idChat__5812160E" FromRole="Messages" ToRole="Chats" />
+          <Property Name="dateSend" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -800,6 +801,7 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Messages">
               <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="dateSend" ColumnName="dateSend" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idChat" ColumnName="idChat" />
                 <ScalarProperty Name="message" ColumnName="message" />

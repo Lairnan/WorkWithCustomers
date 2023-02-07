@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
       mc:Ignorable="d"
       Title="Окно авторизации">
     <Grid>
@@ -40,8 +41,8 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
                         Margin="0 0 5 0">
-                <TextBox x:Name="LogBox" Margin="0 5"/>
-                <PasswordBox x:Name="PassBox" Margin="0 5"/>
+                <controls:InputTextBox x:Name="LogBox" Margin="0 5" PlaceHolder="example" IsNull="True"/>
+                <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsNull="True" IsPassword="True"/>
             </StackPanel>
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
