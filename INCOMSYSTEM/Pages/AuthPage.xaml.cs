@@ -28,32 +28,10 @@ namespace INCOMSYSTEM.Pages
             MessageBox.Show("Test");
         }
 
-        private async void GenerateCaptcha()
-        {
-            const string pattern = "abcdefghijklmnopqrstuvwxyz" +
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                "1234567890" +
-                "!@#$%";
-
-            var captcha = "";
-            for (var i = 0; i < _random.Next(4, 6); i++)
-                captcha += pattern[_random.Next(0, pattern.Length)];
-
-            _isAllowed = true;
-
-            await Task.Delay(Timer * 1000);
-            _isAllowed = false;
-        }
-
         private int _attempts = 0;
-        private bool _isAllowed;
-        private const int Timer = 30;
 
         private void AuthBtnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(PassBox.Value);
-
-            return;
             if(CheckEmpty())
             {
                 MessageBox.Show("Поля не могут быть пустыми");
@@ -92,14 +70,16 @@ namespace INCOMSYSTEM.Pages
                 SetError("Неверный логин или пароль");
             }
 
-            if(_attempts > 3) GenerateCaptcha();
+            if (_attempts > 3)
+            {
+                // TODO: Генерация новой капчи;
+            }
         }
 
         private bool CheckEmpty()
         {
-            if (LogBox.IsPlaceHolder || string.IsNullOrWhiteSpace(LogBox.Text)) return SetError("Логин не может быть пустым");
-            if (PassBox.IsPlaceHolder || string.IsNullOrWhiteSpace(PassBox.Text)) return SetError("Пароль не может быть пустым");
-            // if (CaptchaBox.Visibility == Visibility.Visible && string.IsNullOrWhiteSpace(CaptchaBox.Text)) return SetError("Капча не может быть пустой");
+            if (LogBox.IsPlaceHolder || string.IsNullOrWhiteSpace(LogBox.Value)) return SetError("Логин не может быть пустым");
+            if (PassBox.IsPlaceHolder || string.IsNullOrWhiteSpace(PassBox.Value)) return SetError("Пароль не может быть пустым");
 
             AuthBtn.IsEnabled = true;
             ErrorBlock.Text = string.Empty;

@@ -41,8 +41,8 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
                         Margin="0 0 5 0">
-                <controls:InputTextBox x:Name="LogBox" Margin="0 5" PlaceHolder="example" IsNull="True"/>
-                <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsNull="True" IsPassword="True"/>
+                <controls:InputTextBox x:Name="LogBox" Margin="0 5" PlaceHolder="example"/>
+                <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsPassword="True"/>
             </StackPanel>
             <StackPanel Grid.Row="1"
                         Grid.Column="0"

@@ -59,6 +59,7 @@
           <Property Name="idExecutor" Type="bigint" Nullable="false" />
           <Property Name="idTask" Type="bigint" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="difficulty" Type="float" />
           <Property Name="dateOrder" Type="datetime" Nullable="false" />
           <Property Name="planDateStart" Type="datetime" Nullable="false" />
           <Property Name="factDateStart" Type="datetime" />
@@ -97,6 +98,8 @@
           <Property Name="idSpecialization" Type="int" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="discount" Type="tinyint" />
+          <Property Name="approxCompleteTime" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersDetail">
           <Key>
@@ -447,6 +450,7 @@
           <NavigationProperty Name="Employees" Relationship="Self.FK__Orders__idExecut__4E88ABD4" FromRole="Orders" ToRole="Employees" />
           <NavigationProperty Name="Statuses" Relationship="Self.FK__Orders__idStatus__5070F446" FromRole="Orders" ToRole="Statuses" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK__Orders__idTask__4F7CD00D" FromRole="Orders" ToRole="Tasks" />
+          <Property Name="difficulty" Type="Double" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -484,6 +488,8 @@
           <Property Name="price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idTask__4F7CD00D" FromRole="Tasks" ToRole="Orders" />
           <NavigationProperty Name="Specializations" Relationship="Self.FK__Tasks__idSpecial__48CFD27E" FromRole="Tasks" ToRole="Specializations" />
+          <Property Name="discount" Type="Byte" />
+          <Property Name="approxCompleteTime" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersDetail">
           <Key>
@@ -812,6 +818,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="difficulty" ColumnName="difficulty" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
                 <ScalarProperty Name="idExecutor" ColumnName="idExecutor" />
@@ -854,6 +861,8 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="approxCompleteTime" ColumnName="approxCompleteTime" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />

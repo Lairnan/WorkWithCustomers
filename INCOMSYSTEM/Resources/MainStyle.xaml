@@ -6,12 +6,14 @@
         <Setter Property="TextBlock.FontFamily" Value="/INCOMSYSTEM;component/Fonts/#Roboto"/>
         <Setter Property="TextBlock.FontSize" Value="16"/>
         <Setter Property="TextBlock.Foreground" Value="White"/>
+        <Setter Property="TextBox.IsTabStop" Value="False"/>
     </Style>
     
     <Style x:Key="TextPassBoxStyle" BasedOn="{StaticResource MainStyle}">
         <Setter Property="TextBox.BorderBrush" Value="White"/>
         <Setter Property="TextBox.BorderThickness" Value="0 0 0 1"/>
         <Setter Property="TextBox.Padding" Value="5 2"/>
+        <Setter Property="TextBox.IsTabStop" Value="True"/>
         <Setter Property="TextBox.Margin" Value="0"/>
         <Setter Property="TextBox.CaretBrush" Value="White"/>
         <Setter Property="TextBox.Background" Value="Transparent"/>
@@ -69,6 +71,7 @@
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
         <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="IsTabStop" Value="True"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="Background" Value="Transparent"/>

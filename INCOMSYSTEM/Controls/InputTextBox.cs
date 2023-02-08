@@ -28,28 +28,6 @@ namespace INCOMSYSTEM.Controls
             DependencyProperty.Register(nameof(Value), typeof(string), typeof(InputTextBox),
                 new PropertyMetadata(""));
 
-        public SecureString Password
-        {
-            get => (SecureString)GetValue(PasswordProperty);
-            set => SetValue(PasswordProperty, value);
-        }
-
-        public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register(nameof(Password), typeof(SecureString), typeof(InputTextBox),
-                new FrameworkPropertyMetadata(new SecureString(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    null, null, false, UpdateSourceTrigger.PropertyChanged));
-
-        public string RealPassword
-        {
-            get => (string)GetValue(RealPasswordProperty);
-            set => SetValue(RealPasswordProperty, value);
-        }
-
-        public static readonly DependencyProperty RealPasswordProperty =
-            DependencyProperty.Register(nameof(RealPassword), typeof(string), typeof(InputTextBox),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    null, null, false, UpdateSourceTrigger.PropertyChanged));
-
         public bool IsPlaceHolder
         {
             get => (bool)GetValue(IsPlaceHolderProperty);
@@ -72,6 +50,34 @@ namespace INCOMSYSTEM.Controls
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     null, null, false, UpdateSourceTrigger.PropertyChanged));
 
+        public bool IsShowed
+        {
+            get => (bool)GetValue(IsShowedProperty);
+            set => SetValue(IsShowedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsShowedProperty =
+            DependencyProperty.Register(nameof(IsShowed), typeof(bool), typeof(InputTextBox),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    IsShowedPropertyChanged, null, false, UpdateSourceTrigger.PropertyChanged));
+
+        private static void IsShowedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is InputTextBox inputTextBox)) return;
+
+            inputTextBox.isChanged = true;
+            if ((bool)e.NewValue) inputTextBox.Text = inputTextBox.Value;
+            else
+            {
+                var text = inputTextBox.Text;
+                foreach(var c in text)
+                {
+                    text = text.Replace(c, '●');
+                }
+                inputTextBox.Text = text;
+            }
+        }
+
         public string PlaceHolder
         {
             get => (string)GetValue(PlaceHolderProperty);
@@ -81,27 +87,47 @@ namespace INCOMSYSTEM.Controls
         public static readonly DependencyProperty PlaceHolderProperty =
             DependencyProperty.Register(nameof(PlaceHolder), typeof(string), typeof(InputTextBox),
                 new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    OnPropertyTextChanged, null, false, UpdateSourceTrigger.PropertyChanged));
+                    PlaceHolderPropertyChanged, null, false, UpdateSourceTrigger.PropertyChanged));
 
-        private static void OnPropertyTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void PlaceHolderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is InputTextBox inputTextBox)) return;
-            inputTextBox.Value = (string)e.NewValue;
+            inputTextBox.IsPlaceHolder = !string.IsNullOrWhiteSpace((string)e.NewValue);
+            inputTextBox.Text = (string)e.NewValue;
         }
 
         public InputTextBox()
         {
             GotFocus += LostFocusText;
             LostFocus += GotFocusText;
-            
+
             TextChanged += OnTextChanged;
         }
+
+        public bool isChanged = false;
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (IsPlaceHolder) return;
-
-            Value = base.Text;
+            if (IsShowed)
+            {
+                Value = base.Text;
+                return;
+            }
+            if (!IsPassword) Value = base.Text;
+            else
+            {
+                isChanged = !isChanged;
+                if (string.IsNullOrWhiteSpace(Text)) return;
+                if (isChanged)
+                {
+                    var start = SelectionStart;
+                    var r = base.Text[start - 1];
+                    Value = Value.Insert(start - 1, r.ToString());
+                    base.Text = base.Text.Replace(r, '●');
+                    base.SelectionStart = start;
+                }
+            }
         }
 
         private void GotFocusText(object sender, RoutedEventArgs e) => SetPlaceHolder();

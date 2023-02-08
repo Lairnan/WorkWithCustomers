@@ -28,6 +28,8 @@
         <controls:TopPanelControl/>
         <Frame x:Name="AFrame"
                Grid.Row="1"
+               Margin="5"
+               IsTabStop="False"
                NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

@@ -26,6 +26,7 @@ namespace INCOMSYSTEM.Context
         public Nullable<System.DateTime> factDateComplete { get; set; }
         public byte[] attachement { get; set; }
         public byte idStatus { get; set; }
+        public Nullable<double> difficulty { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }

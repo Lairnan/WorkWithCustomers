@@ -3,6 +3,7 @@
     <Style TargetType="{x:Type Button}" x:Key="MainButton" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="#2FAA87"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="BorderBrush" Value="Coral"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Padding" Value="15 5"/>

@@ -25,6 +25,8 @@ namespace INCOMSYSTEM.Context
         public int idSpecialization { get; set; }
         public string description { get; set; }
         public decimal price { get; set; }
+        public Nullable<byte> discount { get; set; }
+        public int approxCompleteTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
