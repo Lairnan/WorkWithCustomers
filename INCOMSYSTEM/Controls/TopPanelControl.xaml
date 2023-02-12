@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:INCOMSYSTEM"
              mc:Ignorable="d">
-    <Border MouseEnter="PnlControlBar_OnMouseEnter" MouseLeftButtonDown="PnlControlBar_OnMouseLeftButtonDown" Background="#004D47" Padding="5">
+    <Border MouseEnter="PnlControlBar_OnMouseEnter" MouseLeftButtonDown="PnlControlBar_OnMouseLeftButtonDown" Padding="5">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -51,17 +51,15 @@
                            Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal">
-                    <Button Click="MinimizeBtn_Click"
-                            Style="{StaticResource BtnUp}">
+                    <Button Click="MinimizeBtn_Click" Margin="3 0">
                         <TextBlock Text="0" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button x:Name="SwitchStateBtn"
-                            Click="SwitchStateBtn_Click"
-                            Style="{StaticResource BtnUp}">
+                            Margin="3 0"
+                            Click="SwitchStateBtn_Click">
                         <TextBlock x:Name="WindowCurrentState" Text="1" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Click="CloseBtn_Click"
-                            Style="{StaticResource BtnUp}">
+                    <Button Click="CloseBtn_Click" Margin="3 0">
                         <TextBlock Text="r" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
