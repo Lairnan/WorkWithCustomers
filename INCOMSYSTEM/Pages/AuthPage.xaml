@@ -7,12 +7,6 @@
       mc:Ignorable="d"
       Title="Окно авторизации">
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="3,-1" StartPoint="0.5,4">
-                <GradientStop Color="#FF5776FF" Offset="0"/>
-                <GradientStop Color="#FFFEFEFF" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -26,6 +20,7 @@
               VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -48,21 +43,26 @@
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Margin="0 20"
+                        Margin="0 20 0 5"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Button x:Name="AuthBtn"
                         Content="Войти"
                         IsEnabled="False"
-                        Style="{StaticResource MainButton}"
                         Margin="5 0"/>
                 <Button x:Name="RegBtn"
                         Content="Зарегистрироваться"
-                        Style="{StaticResource MainButton}"
                         Margin="5 0"/>
             </StackPanel>
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource LabelBtn}"
+                    Click="GuestBtn_Click"
+                    Content="Войти как гость"
+                    HorizontalAlignment="Center"/>
             <TextBlock x:Name="ErrorBlock"
-                       Grid.Row="2"
+                       Grid.Row="3"
                        Visibility="Collapsed"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"

@@ -93,5 +93,10 @@ namespace INCOMSYSTEM.Pages
             ErrorBlock.Text = error;
             return true;
         }
+
+        private void GuestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

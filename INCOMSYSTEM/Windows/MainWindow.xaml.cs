@@ -29,11 +29,13 @@ namespace INCOMSYSTEM.Windows
 
         private async void Nav(object sender)
         {
-            var anim = new DoubleAnimation();
-            anim.EasingFunction = new SineEase() { EasingMode = EasingMode.EaseInOut };
+            var anim = new DoubleAnimation
+            {
+                EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
+                To = 0d,
+                Duration = TimeSpan.FromSeconds(0.7)
+            };
 
-            anim.To = 0d;
-            anim.Duration = TimeSpan.FromSeconds(0.7);
             MFrame.BeginAnimation(OpacityProperty, anim);
 
             await Task.Delay(700);

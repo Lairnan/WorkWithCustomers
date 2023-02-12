@@ -38,8 +38,7 @@
                 <Button x:Name="BackBtn"
                         Content="&lt;-"
                         Click="BackBtn_Click"/>
-                <Button x:Name="QuitBtn"
-                        Margin="5 0"
+                <Button Margin="5 0"
                         Content="Выйти"
                         Click="QuitBtn_Click"/>
             </StackPanel>

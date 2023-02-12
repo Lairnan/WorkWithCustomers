@@ -133,7 +133,6 @@
         </Setter>
     </Style>
     <Style TargetType="PasswordBox" BasedOn="{StaticResource TextPassBoxStyle}"></Style>
-    <Style TargetType="Button" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="Label" BasedOn="{StaticResource MainStyle}"></Style>
     <Style TargetType="RichTextBox" BasedOn="{StaticResource MainStyle}">
         <Setter Property="Background" Value="Transparent"/>
