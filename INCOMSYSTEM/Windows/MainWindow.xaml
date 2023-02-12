@@ -12,6 +12,7 @@
         MinHeight="350"
         Width="600"
         MinWidth="550"
+        WindowState="Maximized"
         Background="DimGray">
 
     <WindowChrome.WindowChrome>

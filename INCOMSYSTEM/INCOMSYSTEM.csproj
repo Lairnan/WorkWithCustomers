@@ -59,6 +59,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="BehaviorsFiles\ObservableObject.cs" />
     <Compile Include="Context\Chats.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -111,6 +113,7 @@
     <Compile Include="Pages\ViewTasks.xaml.cs">
       <DependentUpon>ViewTasks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ViewTasksViewModel.cs" />
     <Compile Include="Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -132,6 +135,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ButtonStyle.xaml" />
+    <Page Include="Resources\ItemsControlNullTarget.xaml" />
     <Page Include="Resources\MainStyle.xaml" />
     <Page Include="Resources\WindowStyle.xaml" />
     <Page Include="Windows\AuthWindow.xaml">
@@ -187,6 +191,8 @@
     </Content>
     <Resource Include="Images\authImage.png" />
     <Content Include="Fonts\Roboto-Regular.ttf" />
+    <Content Include="Images\eyeOpen.png" />
+    <Content Include="Images\eyeClose.png" />
     <Content Include="Images\oldlogo.png" />
   </ItemGroup>
   <ItemGroup>

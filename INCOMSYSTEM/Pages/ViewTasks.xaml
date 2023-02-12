@@ -3,10 +3,31 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:INCOMSYSTEM.Pages"
+      xmlns:vm="clr-namespace:INCOMSYSTEM.ViewModels"
       mc:Ignorable="d"
       Title="Список задач">
+    <Page.DataContext>
+        <vm:ViewTasksViewModel/>
+    </Page.DataContext>
     <Grid>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Test" Click="Button_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="Lv"
+                  Grid.Row="1"
+                  ItemsSource="{Binding TasksCollection}"
+                  Background="Transparent">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="Специализация" DisplayMemberBinding="{Binding Specializations.name}"/>
+                    <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding description}"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding price, StringFormat='{}{0:0.00 руб.}'}"/>
+                    <GridViewColumn Header="Скидка" DisplayMemberBinding="{Binding discount}"/>
+                    <GridViewColumn Header="Новая цена" DisplayMemberBinding="{Binding newPrice, StringFormat='{}{0:0.00 руб.}'}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

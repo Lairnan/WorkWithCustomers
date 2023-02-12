@@ -1,6 +1,7 @@
-﻿using INCOMSYSTEM.Windows;
-using System.Windows;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Windows.Controls;
+using INCOMSYSTEM.Context;
 
 namespace INCOMSYSTEM.Pages
 {
@@ -12,11 +13,11 @@ namespace INCOMSYSTEM.Pages
         public ViewTasks()
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.MainFrame.Navigate(new ViewTasks());
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                Lv.ItemsSource = db.Tasks.Include(s => s.Specializations).ToList();
+            }
         }
     }
 }

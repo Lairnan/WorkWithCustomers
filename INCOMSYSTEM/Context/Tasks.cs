@@ -31,5 +31,8 @@ namespace INCOMSYSTEM.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual Specializations Specializations { get; set; }
+
+        public bool discoutStyle => discount > 10;
+        public decimal newPrice => (decimal)(price - (price * (discount / 100m)));
     }
 }
