@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -65,17 +64,26 @@ namespace INCOMSYSTEM.Controls
         {
             if (!(d is InputTextBox inputTextBox)) return;
 
-            inputTextBox.isChanged = true;
-            if ((bool)e.NewValue) inputTextBox.Text = inputTextBox.Value;
+            inputTextBox._isChanged = false;
+            if ((bool)e.NewValue)
+            {
+                var start = inputTextBox.SelectionStart;
+                inputTextBox.Text = inputTextBox.Value;
+                inputTextBox.SelectionStart = start;
+            }
             else
             {
+                if (string.IsNullOrWhiteSpace(inputTextBox.Value)) return;
+                var start = inputTextBox.SelectionStart;
                 var text = inputTextBox.Text;
-                foreach(var c in text)
+                foreach (var c in text)
                 {
                     text = text.Replace(c, '●');
                 }
                 inputTextBox.Text = text;
+                inputTextBox.SelectionStart = start;
             }
+            inputTextBox._isChanged = true;
         }
 
         public string PlaceHolder
@@ -102,42 +110,101 @@ namespace INCOMSYSTEM.Controls
             LostFocus += GotFocusText;
 
             TextChanged += OnTextChanged;
+            PreviewKeyDown += OnPreviewKeyDown;
         }
 
-        public bool isChanged = false;
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                case Key.Back:
+                    if (SelectionLength > 0)
+                    {
+                        _isRemove = true;
+                        RemoveFromSecureString(SelectionStart, SelectionLength);
+                    }
+                    else switch (e.Key)
+                    {
+                        case Key.Delete when SelectionStart < Text.Length:
+                            _isRemove = true;
+                            RemoveFromSecureString(SelectionStart, 1);
+                            break;
+                        case Key.Back when SelectionStart > 0:
+                            _isRemove = true;
+                            var caretIndex = SelectionStart;
+                            if (SelectionStart > 0 && SelectionStart < Text.Length)
+                                caretIndex -= 1;
+                            RemoveFromSecureString(SelectionStart - 1, 1);
+                            SelectionStart = caretIndex;
+                            break;
+                        default:
+                            _isRemove = false;
+                            break;
+                    }
+
+                    e.Handled = true;
+                    break;
+
+                default:
+                    _isChanged = true;
+                    _isRemove = false;
+                    break;
+            }
+        }
+
+        private bool _isRemove = false;
+        private bool _isChanged = false;
+
+        private readonly object _lock = new object();
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (IsPlaceHolder) return;
-            if (IsShowed)
+            lock (Value)
             {
-                Value = base.Text;
-                return;
-            }
-            if (!IsPassword) Value = base.Text;
-            else
-            {
-                isChanged = !isChanged;
-                if (string.IsNullOrWhiteSpace(Text)) return;
-                if (isChanged)
+                if (IsPlaceHolder) return;
+                if (IsShowed)
                 {
-                    var start = SelectionStart;
-                    var r = base.Text[start - 1];
-                    Value = Value.Insert(start - 1, r.ToString());
-                    base.Text = base.Text.Replace(r, '●');
-                    base.SelectionStart = start;
+                    Value = base.Text;
+                    return;
                 }
+
+                if (!IsPassword) Value = base.Text;
+                else
+                {
+                    if (!_isRemove && _isChanged)
+                    {
+                        _isChanged = false;
+                        var start = SelectionStart;
+                        var r = base.Text[start - 1];
+                        Value = Value.Insert(start - 1, r.ToString());
+                        base.Text = base.Text.Replace(r, '●');
+                        base.SelectionStart = start;
+                    }
+
+                }
+
             }
         }
 
-        private void GotFocusText(object sender, RoutedEventArgs e) => SetPlaceHolder();
+        private void RemoveFromSecureString(int startIndex, int trimLength)
+        {
+            if (string.IsNullOrWhiteSpace(Value)) return;
+            _isChanged = false;
+            _isRemove = true;
 
-        private void LostFocusText(object sender, RoutedEventArgs e) => RemovePlaceHolder();
+            var caretIndex = SelectionStart;
+            Value = Value.Remove(startIndex, trimLength);
+            Text = Text.Remove(startIndex, trimLength);
+            
+            SelectionStart = caretIndex;
+        }
 
-        private void SetPlaceHolder()
+        private void GotFocusText(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(base.Text))
             {
+                _isChanged = false;
                 Value = string.Empty;
                 base.Text = PlaceHolder;
                 IsPlaceHolder = true;
@@ -147,17 +214,16 @@ namespace INCOMSYSTEM.Controls
             else IsNull = false;
         }
 
-        private void RemovePlaceHolder()
+        private void LostFocusText(object sender, RoutedEventArgs e)
         {
             if (IsPlaceHolder)
             {
+                _isChanged = false;
                 base.Text = string.Empty;
                 IsPlaceHolder = false;
             }
 
             IsNull = string.IsNullOrWhiteSpace(base.Text);
         }
-        
-        // ●
     }
 }
