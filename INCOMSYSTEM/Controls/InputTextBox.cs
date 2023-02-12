@@ -147,6 +147,7 @@ namespace INCOMSYSTEM.Controls
                     break;
 
                 default:
+                    if (SelectionLength > 0) RemoveFromSecureString(SelectionStart, SelectionLength);
                     _isChanged = true;
                     _isRemove = false;
                     break;
