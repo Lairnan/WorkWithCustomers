@@ -31,7 +31,6 @@
           <Property Name="surname" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="patronymic" Type="nvarchar" MaxLength="75" />
-          <Property Name="idSpecialization" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="LegalForms">
           <Key>
@@ -82,6 +81,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="75" Nullable="false" />
         </EntityType>
+        <EntityType Name="SpecializationsEmployee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmployee" Type="bigint" Nullable="false" />
+          <Property Name="idSpecialization" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Statuses">
           <Key>
             <PropertyRef Name="id" />
@@ -110,6 +117,7 @@
           <Property Name="password" Type="nvarchar" MaxLength="75" Nullable="false" />
           <Property Name="phone" Type="bigint" />
           <Property Name="idPos" Type="tinyint" Nullable="false" />
+          <Property Name="dateStart" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Chats__id__5535A963">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
@@ -174,20 +182,6 @@
             </Principal>
             <Dependent Role="Customers">
               <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employees__idSpe__45F365D3">
-          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specializations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="idSpecialization" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -297,6 +291,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SpecializationsEmployee_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SpecializationsEmployee" Type="Self.SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecializationsEmployee_Specializations">
+          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SpecializationsEmployee" Type="Self.SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idSpecialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище KP_Saulin_INCOMSYSTEMModelContainer">
           <EntitySet Name="Chats" EntityType="Self.Chats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
@@ -306,6 +328,7 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specializations" EntityType="Self.Specializations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpecializationsEmployee" EntityType="Self.SpecializationsEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersDetail" EntityType="Self.UsersDetail" Schema="dbo" store:Type="Tables" />
@@ -328,10 +351,6 @@
           <AssociationSet Name="FK__Customers__idUse__412EB0B6" Association="Self.FK__Customers__idUse__412EB0B6">
             <End Role="UsersDetail" EntitySet="UsersDetail" />
             <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employees__idSpe__45F365D3" Association="Self.FK__Employees__idSpe__45F365D3">
-            <End Role="Specializations" EntitySet="Specializations" />
-            <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
           <AssociationSet Name="FK__Employees__idUse__44FF419A" Association="Self.FK__Employees__idUse__44FF419A">
             <End Role="UsersDetail" EntitySet="UsersDetail" />
@@ -365,6 +384,14 @@
             <End Role="Positions" EntitySet="Positions" />
             <End Role="UsersDetail" EntitySet="UsersDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_SpecializationsEmployee_Employees" Association="Self.FK_SpecializationsEmployee_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecializationsEmployee_Specializations" Association="Self.FK_SpecializationsEmployee_Specializations">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -380,8 +407,8 @@
           <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Chats__id__5535A963" FromRole="Chats" ToRole="Orders" />
           <NavigationProperty Name="Customers" Relationship="Self.FK__Chats__idCustome__534D60F1" FromRole="Chats" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Chats__idManager__5441852A" FromRole="Chats" ToRole="Employees" />
           <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__idChat__5812160E" FromRole="Chats" ToRole="Messages" />
+          <NavigationProperty Name="Employees" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5441852A" FromRole="Chats" ToRole="Employees" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -395,20 +422,6 @@
           <NavigationProperty Name="LegalForms" Relationship="Self.FK__Customers__idLeg__4222D4EF" FromRole="Customers" ToRole="LegalForms" />
           <NavigationProperty Name="UsersDetail" Relationship="Self.FK__Customers__idUse__412EB0B6" FromRole="Customers" ToRole="UsersDetail" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idCustom__4D94879B" FromRole="Customers" ToRole="Orders" />
-        </EntityType>
-        <EntityType Name="Employees">
-          <Key>
-            <PropertyRef Name="idUser" />
-          </Key>
-          <Property Name="idUser" Type="Int64" Nullable="false" />
-          <Property Name="surname" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="patronymic" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
-          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Chats" Relationship="Self.FK__Chats__idManager__5441852A" FromRole="Employees" ToRole="Chats" />
-          <NavigationProperty Name="Specializations" Relationship="Self.FK__Employees__idSpe__45F365D3" FromRole="Employees" ToRole="Specializations" />
-          <NavigationProperty Name="UsersDetail" Relationship="Self.FK__Employees__idUse__44FF419A" FromRole="Employees" ToRole="UsersDetail" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__idExecut__4E88ABD4" FromRole="Employees" ToRole="Orders" />
         </EntityType>
         <EntityType Name="LegalForms">
           <Key>
@@ -447,10 +460,10 @@
           <Property Name="idStatus" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Chats" Relationship="Self.FK__Chats__id__5535A963" FromRole="Orders" ToRole="Chats" />
           <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__idCustom__4D94879B" FromRole="Orders" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Orders__idExecut__4E88ABD4" FromRole="Orders" ToRole="Employees" />
           <NavigationProperty Name="Statuses" Relationship="Self.FK__Orders__idStatus__5070F446" FromRole="Orders" ToRole="Statuses" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK__Orders__idTask__4F7CD00D" FromRole="Orders" ToRole="Tasks" />
           <Property Name="difficulty" Type="Double" />
+          <NavigationProperty Name="Employees" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4E88ABD4" FromRole="Orders" ToRole="Employees" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -466,8 +479,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__idSpe__45F365D3" FromRole="Specializations" ToRole="Employees" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK__Tasks__idSpecial__48CFD27E" FromRole="Specializations" ToRole="Tasks" />
+          <NavigationProperty Name="SpecializationsEmployee" Relationship="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Specializations" FromRole="Specializations" ToRole="SpecializationsEmployee" />
         </EntityType>
         <EntityType Name="Statuses">
           <Key>
@@ -501,8 +514,9 @@
           <Property Name="phone" Type="Int64" />
           <Property Name="idPos" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__idUse__412EB0B6" FromRole="UsersDetail" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__idUse__44FF419A" FromRole="UsersDetail" ToRole="Employees" />
           <NavigationProperty Name="Positions" Relationship="Self.FK__UserDetai__idPos__3A81B327" FromRole="UsersDetail" ToRole="Positions" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__44FF419A" FromRole="UsersDetail" ToRole="Employees" />
         </EntityType>
         <Association Name="FK__Chats__id__5535A963">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
@@ -527,18 +541,6 @@
             </Principal>
             <Dependent Role="Chats">
               <PropertyRef Name="idCustomer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Chats__idManager__5441852A">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Chats">
-              <PropertyRef Name="idManager" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -591,46 +593,6 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="idCustomer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employees__idSpe__45F365D3">
-          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specializations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="idSpecialization" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employees__idUse__44FF419A">
-          <End Role="UsersDetail" Type="Self.UsersDetail" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsersDetail">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__idExecut__4E88ABD4">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="idExecutor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -693,7 +655,6 @@
         <EntityContainer Name="INCOMSYSTEMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Chats" EntityType="Self.Chats" />
           <EntitySet Name="Customers" EntityType="Self.Customers" />
-          <EntitySet Name="Employees" EntityType="Self.Employees" />
           <EntitySet Name="LegalForms" EntityType="Self.LegalForms" />
           <EntitySet Name="Messages" EntityType="Self.Messages" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
@@ -708,10 +669,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__Chats__idCustome__534D60F1" Association="Self.FK__Chats__idCustome__534D60F1">
             <End Role="Customers" EntitySet="Customers" />
-            <End Role="Chats" EntitySet="Chats" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Chats__idManager__5441852A" Association="Self.FK__Chats__idManager__5441852A">
-            <End Role="Employees" EntitySet="Employees" />
             <End Role="Chats" EntitySet="Chats" />
           </AssociationSet>
           <AssociationSet Name="FK__Messages__idChat__5812160E" Association="Self.FK__Messages__idChat__5812160E">
@@ -730,18 +687,6 @@
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employees__idSpe__45F365D3" Association="Self.FK__Employees__idSpe__45F365D3">
-            <End Role="Specializations" EntitySet="Specializations" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employees__idUse__44FF419A" Association="Self.FK__Employees__idUse__44FF419A">
-            <End Role="UsersDetail" EntitySet="UsersDetail" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__idExecut__4E88ABD4" Association="Self.FK__Orders__idExecut__4E88ABD4">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK__Orders__idStatus__5070F446" Association="Self.FK__Orders__idStatus__5070F446">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Orders" EntitySet="Orders" />
@@ -758,7 +703,116 @@
             <End Role="Specializations" EntitySet="Specializations" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
+          <EntitySet Name="SpecializationsEmployee" EntityType="KP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" />
+          <AssociationSet Name="FK_SpecializationsEmployee_Specializations" Association="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Specializations">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
+          </AssociationSet>
+          <EntitySet Name="Employees" EntityType="KP_Saulin_INCOMSYSTEMModel.Employees" />
+          <AssociationSet Name="FK__Chats__idManager__5441852A" Association="KP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5441852A">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Chats" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__idUse__44FF419A" Association="KP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__44FF419A">
+            <End Role="UsersDetail" EntitySet="UsersDetail" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__idExecut__4E88ABD4" Association="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4E88ABD4">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecializationsEmployee_Employees" Association="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="SpecializationsEmployee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmployee" Type="Int64" Nullable="false" />
+          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Specializations" Relationship="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Specializations" FromRole="SpecializationsEmployee" ToRole="Specializations" />
+          <NavigationProperty Name="Employees" Relationship="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Employees" FromRole="SpecializationsEmployee" ToRole="Employees" />
+        </EntityType>
+        <Association Name="FK_SpecializationsEmployee_Specializations">
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Specializations" Role="Specializations" Multiplicity="1" />
+          <End Type="KP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idSpecialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="Int64" Nullable="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="patronymic" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chats" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5441852A" FromRole="Employees" ToRole="Chats" />
+          <NavigationProperty Name="UsersDetail" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__44FF419A" FromRole="Employees" ToRole="UsersDetail" />
+          <NavigationProperty Name="Orders" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4E88ABD4" FromRole="Employees" ToRole="Orders" />
+          <NavigationProperty Name="SpecializationsEmployee" Relationship="KP_Saulin_INCOMSYSTEMModel.FK_SpecializationsEmployee_Employees" FromRole="Employees" ToRole="SpecializationsEmployee" />
+        </EntityType>
+        <Association Name="FK__Chats__idManager__5441852A">
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__idUse__44FF419A">
+          <End Type="KP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__idExecut__4E88ABD4">
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="idExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecializationsEmployee_Employees">
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="KP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -782,17 +836,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="idLegalForm" ColumnName="idLegalForm" />
                 <ScalarProperty Name="address" ColumnName="address" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Employees">
-              <MappingFragment StoreEntitySet="Employees">
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
-                <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -874,11 +917,31 @@
           <EntitySetMapping Name="UsersDetail">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.UsersDetail">
               <MappingFragment StoreEntitySet="UsersDetail">
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="idPos" ColumnName="idPos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecializationsEmployee">
+            <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee">
+              <MappingFragment StoreEntitySet="SpecializationsEmployee">
+                <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

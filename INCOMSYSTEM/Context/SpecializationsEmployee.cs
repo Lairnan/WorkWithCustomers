@@ -12,17 +12,13 @@ namespace INCOMSYSTEM.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class UsersDetail
+    public partial class SpecializationsEmployee
     {
-        public long idUser { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
-        public Nullable<long> phone { get; set; }
-        public byte idPos { get; set; }
-        public System.DateTime dateStart { get; set; }
+        public long id { get; set; }
+        public long idEmployee { get; set; }
+        public int idSpecialization { get; set; }
     
-        public virtual Customers Customers { get; set; }
-        public virtual Positions Positions { get; set; }
+        public virtual Specializations Specializations { get; set; }
         public virtual Employees Employees { get; set; }
     }
 }

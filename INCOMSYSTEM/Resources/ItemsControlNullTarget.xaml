@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:bf="clr-namespace:INCOMSYSTEM.BehaviorsFiles">
     <bf:AnyItemsToVisibilityConverter x:Key="AnyItemsToVisibilityConverter"/>
-    <Style TargetType="{x:Type ItemsControl}">
+    <Style TargetType="{x:Type ItemsControl}" x:Key="ItemsVisible">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ItemsControl}">

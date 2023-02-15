@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Windows;
 
 namespace INCOMSYSTEM.Pages
 {
@@ -27,7 +28,6 @@ namespace INCOMSYSTEM.Pages
             MessageBox.Show("Test");
         }
 
-        private int _attempts = 0;
 
         private void AuthBtnClick(object sender, RoutedEventArgs e)
         {
@@ -37,11 +37,6 @@ namespace INCOMSYSTEM.Pages
                 return;
             }
 
-            // if (attemps++ > 3)
-            // {
-            //     TODO: Проверка на капчу
-            // }
-
             var login = LogBox.Value;
             var password = PassBox.Value;
 
@@ -50,6 +45,8 @@ namespace INCOMSYSTEM.Pages
                 var user = db.UsersDetail.FirstOrDefault(s => s.login == login && s.password == password);
                 if (user != null)
                 {
+                    MainWindow.AuthUser = user;
+                    var window = new MainWindow();
                     switch (user.idPos)
                     {
                         case 1:
@@ -62,16 +59,13 @@ namespace INCOMSYSTEM.Pages
                             MessageBox.Show("Вы менеджер!");
                             break;
                     }
+                    window.Show();
+                    Application.Current.Windows.OfType<AuthWindow>().First().Close();
 
                     return;
                 }
 
                 SetError("Неверный логин или пароль");
-            }
-
-            if (_attempts > 3)
-            {
-                // TODO: Генерация новой капчи;
             }
         }
 

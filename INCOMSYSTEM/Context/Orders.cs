@@ -30,8 +30,8 @@ namespace INCOMSYSTEM.Context
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }
-        public virtual Employees Employees { get; set; }
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
+        public virtual Employees Employees { get; set; }
     }
 }

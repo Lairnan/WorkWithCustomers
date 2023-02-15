@@ -34,5 +34,6 @@ namespace INCOMSYSTEM.Context
 
         public bool discoutStyle => discount > 10;
         public decimal newPrice => (decimal)(price - (price * (discount / 100m)));
+        public bool discountVisible => discount != null && discount > 0;
     }
 }

@@ -27,8 +27,8 @@ namespace INCOMSYSTEM.Context
     
         public virtual Orders Orders { get; set; }
         public virtual Customers Customers { get; set; }
-        public virtual Employees Employees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messages> Messages { get; set; }
+        public virtual Employees Employees { get; set; }
     }
 }

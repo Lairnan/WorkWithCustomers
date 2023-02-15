@@ -60,7 +60,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
-    <Compile Include="BehaviorsFiles\ObservableObject.cs" />
     <Compile Include="Context\Chats.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -100,6 +99,9 @@
     <Compile Include="Context\Specializations.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\SpecializationsEmployee.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\Statuses.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -113,7 +115,6 @@
     <Compile Include="Pages\ViewTasks.xaml.cs">
       <DependentUpon>ViewTasks.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ViewTasksViewModel.cs" />
     <Compile Include="Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -191,8 +192,8 @@
     </Content>
     <Resource Include="Images\authImage.png" />
     <Content Include="Fonts\Roboto-Regular.ttf" />
-    <Content Include="Images\eyeOpen.png" />
-    <Content Include="Images\eyeClose.png" />
+    <Resource Include="Images\eyeOpen.png" />
+    <Resource Include="Images\eyeClose.png" />
     <Content Include="Images\oldlogo.png" />
   </ItemGroup>
   <ItemGroup>

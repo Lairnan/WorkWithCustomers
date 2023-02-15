@@ -45,7 +45,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
-                <TextBlock/>
+                <TextBlock x:Name="AuthBlock"/>
                 <Image Source="../Images/logo.png"/>
             </StackPanel>
         </Grid>

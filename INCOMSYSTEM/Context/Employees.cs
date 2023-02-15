@@ -19,19 +19,20 @@ namespace INCOMSYSTEM.Context
         {
             this.Chats = new HashSet<Chats>();
             this.Orders = new HashSet<Orders>();
+            this.SpecializationsEmployee = new HashSet<SpecializationsEmployee>();
         }
     
         public long idUser { get; set; }
         public string surname { get; set; }
         public string name { get; set; }
         public string patronymic { get; set; }
-        public int idSpecialization { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chats> Chats { get; set; }
-        public virtual Specializations Specializations { get; set; }
         public virtual UsersDetail UsersDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SpecializationsEmployee> SpecializationsEmployee { get; set; }
     }
 }

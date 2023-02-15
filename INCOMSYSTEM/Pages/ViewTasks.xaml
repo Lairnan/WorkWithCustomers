@@ -3,31 +3,116 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:vm="clr-namespace:INCOMSYSTEM.ViewModels"
       mc:Ignorable="d"
       Title="Список задач">
-    <Page.DataContext>
-        <vm:ViewTasksViewModel/>
-    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ListView x:Name="Lv"
-                  Grid.Row="1"
-                  ItemsSource="{Binding TasksCollection}"
-                  Background="Transparent">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="Специализация" DisplayMemberBinding="{Binding Specializations.name}"/>
-                    <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding description}"/>
-                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding price, StringFormat='{}{0:0.00 руб.}'}"/>
-                    <GridViewColumn Header="Скидка" DisplayMemberBinding="{Binding discount}"/>
-                    <GridViewColumn Header="Новая цена" DisplayMemberBinding="{Binding newPrice, StringFormat='{}{0:0.00 руб.}'}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ItemsControl x:Name="TasksList"
+                      Grid.Row="1">
+            <ItemsControl.Resources>
+                <Style TargetType="TextBlock" x:Key="disc" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding discoutStyle}" Value="True">
+                            <Setter Property="Foreground" Value="Yellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding discountVisible}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="TextBlock" x:Key="oldPrice" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding discoutStyle}" Value="True">
+                            <Setter Property="Foreground" Value="#ccc"/>
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="400"
+                            Height="175"
+                            BorderThickness="1"
+                            BorderBrush="White"
+                            CornerRadius="10"
+                            Padding="5"
+                            Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding name}"
+                                       Grid.Row="0"
+                                       FontSize="18"
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{Binding description}"
+                                       Grid.Row="1"
+                                       TextWrapping="Wrap"/>
+                            <StackPanel Grid.Row="2">
+                                <TextBlock Text="{Binding Specializations.name, StringFormat='{}Область: {0}'}"
+                                       VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding approxCompleteTime, StringFormat='{}Примерные дни выполнения{0}'}"/>
+                            </StackPanel>
+
+                            <Border Grid.Column="1"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="4"
+                                    BorderThickness="1 0 0 0"
+                                    BorderBrush="White"
+                                    Margin="5 0 0 0">
+                                <StackPanel HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding price, StringFormat='{}{0:0.00} руб.'}"
+                                               TextWrapping="Wrap"
+                                               Style="{StaticResource oldPrice}"/>
+                                    <TextBlock Text="{Binding discount, StringFormat='{}{0}%', TargetNullValue={x:Null}}"
+                                               TextWrapping="Wrap"
+                                               Style="{StaticResource disc}"
+                                               Margin="0 5"/>
+                                    <TextBlock Text="{Binding newPrice, StringFormat='{}{0:0.00} руб.', TargetNullValue={x:Null}}"
+                                               Style="{StaticResource disc}"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
+                            <Button Grid.Row="3"
+                                    Content="Выбрать"
+                                    HorizontalAlignment="Left"
+                                    Margin="0 5 0 0"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                    Click="SelectBtn_Click"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
     </Grid>
 </Page>

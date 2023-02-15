@@ -5,6 +5,8 @@ using System.Windows.Navigation;
 using System.Windows.Media.Animation;
 using System;
 using System.Threading.Tasks;
+using INCOMSYSTEM.Context;
+using System.Linq;
 
 namespace INCOMSYSTEM.Windows
 {
@@ -16,10 +18,27 @@ namespace INCOMSYSTEM.Windows
         public MainWindow()
         {
             InitializeComponent();
+            AuthBlock.Text = "Добро пожаловать, ";
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                if (AuthUser.idPos == 1)
+                {
+                    var user = db.Customers.First(s => s.idUser == AuthUser.idUser);
+                    AuthBlock.Text += $"{user.name}!";
+                }
+                else
+                {
+                    var user = db.Employees.First(s => s.idUser == AuthUser.idUser);
+                    AuthBlock.Text += $"{user.surname} {user.name}";
+                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}!" : "!";
+                }
+            }
             MainFrame = MFrame;
             MainFrame.Navigated += MainFrameOnNavigated;
             MainFrame.Navigate(new ViewTasks());
         }
+
+        public static UsersDetail AuthUser { get; set; }
 
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {

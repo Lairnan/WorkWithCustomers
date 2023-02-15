@@ -37,8 +37,36 @@
                         Grid.Column="1"
                         Margin="0 0 5 0">
                 <controls:InputTextBox x:Name="LogBox" Margin="0 5" PlaceHolder="example"/>
-                <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsPassword="True"/>
-                <CheckBox IsChecked="{Binding ElementName=PassBox, Path=IsShowed}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsPassword="True"/>
+                    <CheckBox Grid.Column="1"
+                              IsChecked="{Binding ElementName=PassBox, Path=IsShowed}">
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="CheckBox">
+                                            <Image x:Name="eyeImage" Width="24" Height="24"/>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter TargetName="eyeImage" Property="Source" Value="../Images/eyeOpen.png"/>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="eyeImage" Property="Source" Value="../Images/eyeClose.png"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+                </Grid>
             </StackPanel>
             <StackPanel Grid.Row="1"
                         Grid.Column="0"
