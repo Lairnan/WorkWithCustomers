@@ -45,7 +45,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border Width="400"
-                            Height="175"
+                            Height="160"
                             BorderThickness="1"
                             BorderBrush="White"
                             CornerRadius="10"
@@ -66,7 +66,7 @@
                                        Grid.Row="0"
                                        FontSize="18"
                                        FontWeight="Bold"/>
-                            <TextBlock Text="{Binding description}"
+                            <TextBlock Text="{Binding shortDescription}"
                                        TextWrapping="Wrap"
                                        Grid.Row="1"/>
                             <StackPanel Grid.Row="2" Margin="0 5">

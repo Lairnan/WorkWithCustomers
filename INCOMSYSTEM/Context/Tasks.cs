@@ -35,5 +35,19 @@ namespace INCOMSYSTEM.Context
         public bool discoutStyle => discount > 10;
         public decimal newPrice => (decimal)(price - (price * (discount / 100m)));
         public bool discountVisible => discount != null && discount > 0;
+
+        public string shortDescription => description.Length > 50 ? description.Substring(0, 50) + "..." : description;
+
+        // public string shortDescription {
+        //     get
+        //     {
+        //         var text = description;
+        //         if (text.Length > 100)
+        //         {
+        //             text = text.Remove(0, 100);
+        //             return text;
+        //         } return description;
+        //     }
+        // }
     }
 }
