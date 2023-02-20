@@ -19,6 +19,7 @@ namespace INCOMSYSTEM.Context
         public long idExecutor { get; set; }
         public long idTask { get; set; }
         public decimal price { get; set; }
+        public Nullable<double> difficulty { get; set; }
         public System.DateTime dateOrder { get; set; }
         public System.DateTime planDateStart { get; set; }
         public Nullable<System.DateTime> factDateStart { get; set; }
@@ -26,12 +27,11 @@ namespace INCOMSYSTEM.Context
         public Nullable<System.DateTime> factDateComplete { get; set; }
         public byte[] attachement { get; set; }
         public byte idStatus { get; set; }
-        public Nullable<double> difficulty { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }
+        public virtual Employees Employees { get; set; }
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
-        public virtual Employees Employees { get; set; }
     }
 }

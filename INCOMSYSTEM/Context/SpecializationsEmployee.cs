@@ -18,7 +18,7 @@ namespace INCOMSYSTEM.Context
         public long idEmployee { get; set; }
         public int idSpecialization { get; set; }
     
-        public virtual Specializations Specializations { get; set; }
         public virtual Employees Employees { get; set; }
+        public virtual Specializations Specializations { get; set; }
     }
 }

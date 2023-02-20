@@ -16,6 +16,7 @@ namespace INCOMSYSTEM.Context
     {
         public long id { get; set; }
         public long idChat { get; set; }
+        public long idUser { get; set; }
         public string message { get; set; }
         public byte[] attachment { get; set; }
         public System.DateTime dateSend { get; set; }

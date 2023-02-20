@@ -17,6 +17,17 @@ namespace INCOMSYSTEM.Controls
             DependencyProperty.Register(nameof(IsNull), typeof(bool), typeof(InputTextBox),
                 new PropertyMetadata(true));
 
+        public bool IsWhiteSpace
+        {
+            get => (bool)GetValue(IsWhiteSpaceProperty);
+            set => SetValue(IsWhiteSpaceProperty, value);
+        }
+
+        public static readonly DependencyProperty IsWhiteSpaceProperty =
+            DependencyProperty.Register(nameof(IsWhiteSpace), typeof(bool), typeof(InputTextBox),
+                new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    null, null, false, UpdateSourceTrigger.PropertyChanged));
+
         public string Value
         {
             get => (string)GetValue(ValueProperty);
@@ -63,7 +74,7 @@ namespace INCOMSYSTEM.Controls
         private static void IsShowedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is InputTextBox inputTextBox)) return;
-
+            if (inputTextBox.IsPlaceHolder) return;
             inputTextBox._isChanged = false;
             if ((bool)e.NewValue)
             {
@@ -106,8 +117,8 @@ namespace INCOMSYSTEM.Controls
 
         public InputTextBox()
         {
-            GotFocus += LostFocusText;
-            LostFocus += GotFocusText;
+            GotFocus += GotFocusText;
+            LostFocus += LostFocusText;
 
             TextChanged += OnTextChanged;
             PreviewKeyDown += OnPreviewKeyDown;
@@ -163,6 +174,8 @@ namespace INCOMSYSTEM.Controls
         {
             lock (Value)
             {
+                IsWhiteSpace = IsPlaceHolder || string.IsNullOrWhiteSpace(base.Text);
+
                 if (IsPlaceHolder) return;
                 if (IsShowed)
                 {
@@ -201,30 +214,36 @@ namespace INCOMSYSTEM.Controls
             SelectionStart = caretIndex;
         }
 
-        private void GotFocusText(object sender, RoutedEventArgs e)
+        private void LostFocusText(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(base.Text))
             {
                 _isChanged = false;
                 Value = string.Empty;
-                base.Text = PlaceHolder;
                 IsPlaceHolder = true;
+                base.Text = PlaceHolder;
 
                 IsNull = true;
             }
             else IsNull = false;
         }
 
-        private void LostFocusText(object sender, RoutedEventArgs e)
+        private void GotFocusText(object sender, RoutedEventArgs e)
         {
             if (IsPlaceHolder)
             {
                 _isChanged = false;
-                base.Text = string.Empty;
                 IsPlaceHolder = false;
+                base.Text = string.Empty;
             }
 
             IsNull = string.IsNullOrWhiteSpace(base.Text);
+        }
+
+        public new void Clear()
+        {
+            base.Text = string.Empty;
+            LostFocusText(new object(), new RoutedEventArgs());
         }
     }
 }

@@ -5,13 +5,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
+using System.Data.Entity;
 
 namespace INCOMSYSTEM.Pages
 {
     public partial class AuthPage : Page
     {
-        private readonly Random _random = new Random();
-
         public AuthPage()
         {
             InitializeComponent();
@@ -42,7 +41,7 @@ namespace INCOMSYSTEM.Pages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                var user = db.UsersDetail.FirstOrDefault(s => s.login == login && s.password == password);
+                var user = db.UsersDetail.Include(s => s.Positions).FirstOrDefault(s => s.login == login && s.password == password);
                 if (user != null)
                 {
                     MainWindow.AuthUser = user;

@@ -19,6 +19,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                         <Label Content="{TemplateBinding Content}"
                                Foreground="{TemplateBinding Foreground}"
+                               FontFamily="{TemplateBinding FontFamily}"
                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                     </Border>
@@ -43,7 +44,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Label Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
+                    <Border BorderBrush="White"
+                            BorderThickness="0 0 0 2">
+                        <Label Content="{TemplateBinding Content}"
+                               Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

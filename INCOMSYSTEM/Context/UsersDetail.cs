@@ -22,7 +22,7 @@ namespace INCOMSYSTEM.Context
         public System.DateTime dateStart { get; set; }
     
         public virtual Customers Customers { get; set; }
-        public virtual Positions Positions { get; set; }
         public virtual Employees Employees { get; set; }
+        public virtual Positions Positions { get; set; }
     }
 }

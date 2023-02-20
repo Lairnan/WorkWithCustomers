@@ -46,7 +46,8 @@
                            VerticalAlignment="Center"
                            FontSize="18"
                            Foreground="White"
-                           Margin="5,5" />
+                           Margin="5,5"
+                           Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" />
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal">
                     <Button Click="MinimizeBtn_Click" Margin="3 0" Width="40">

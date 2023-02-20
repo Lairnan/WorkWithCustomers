@@ -18,7 +18,7 @@ namespace INCOMSYSTEM.Windows
         public MainWindow()
         {
             InitializeComponent();
-            AuthBlock.Text = "Добро пожаловать, ";
+            AuthBlock.Text = $"{AuthUser.Positions.name}, ";
             using (var db = new INCOMSYSTEMEntities())
             {
                 if (AuthUser.idPos == 1)
@@ -29,8 +29,8 @@ namespace INCOMSYSTEM.Windows
                 else
                 {
                     var user = db.Employees.First(s => s.idUser == AuthUser.idUser);
-                    AuthBlock.Text += $"{user.surname} {user.name}";
-                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}!" : "!";
+                    AuthBlock.Text += $"{user.surname} {user.name.ElementAt(0)}.";
+                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic.ElementAt(0)}." : "";
                 }
             }
             MainFrame = MFrame;

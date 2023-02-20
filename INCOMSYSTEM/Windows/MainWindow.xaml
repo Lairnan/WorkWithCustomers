@@ -35,7 +35,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="5 0">
                 <Button x:Name="BackBtn"
                         Content="&lt;-"
                         Click="BackBtn_Click"/>
@@ -45,8 +45,11 @@
             </StackPanel>
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
-                <TextBlock x:Name="AuthBlock"/>
-                <Image Source="../Images/logo.png"/>
+                <TextBlock x:Name="AuthBlock" VerticalAlignment="Center"/>
+                <Image Source="../Images/user.png"
+                       Width="32"
+                       Height="32"
+                       Margin="10 0 20 0"/>
             </StackPanel>
         </Grid>
         <Frame x:Name="MFrame"

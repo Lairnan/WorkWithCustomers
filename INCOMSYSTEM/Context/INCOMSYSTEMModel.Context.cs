@@ -27,15 +27,15 @@ namespace INCOMSYSTEM.Context
     
         public virtual DbSet<Chats> Chats { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
+        public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<LegalForms> LegalForms { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Specializations> Specializations { get; set; }
+        public virtual DbSet<SpecializationsEmployee> SpecializationsEmployee { get; set; }
         public virtual DbSet<Statuses> Statuses { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<UsersDetail> UsersDetail { get; set; }
-        public virtual DbSet<SpecializationsEmployee> SpecializationsEmployee { get; set; }
-        public virtual DbSet<Employees> Employees { get; set; }
     }
 }

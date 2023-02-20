@@ -22,13 +22,13 @@ namespace INCOMSYSTEM.Context
     
         public long idChat { get; set; }
         public long idCustomer { get; set; }
-        public long idManager { get; set; }
+        public Nullable<long> idManager { get; set; }
         public System.DateTime dateCreate { get; set; }
     
         public virtual Orders Orders { get; set; }
         public virtual Customers Customers { get; set; }
+        public virtual Employees Employees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messages> Messages { get; set; }
-        public virtual Employees Employees { get; set; }
     }
 }
