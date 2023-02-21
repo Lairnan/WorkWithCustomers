@@ -48,6 +48,7 @@
           <Property Name="idUser" Type="bigint" Nullable="false" />
           <Property Name="message" Type="text" />
           <Property Name="attachment" Type="varbinary(max)" />
+          <Property Name="fileExtension" Type="nvarchar" MaxLength="10" />
           <Property Name="dateSend" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
@@ -66,6 +67,7 @@
           <Property Name="planDateComplete" Type="datetime" Nullable="false" />
           <Property Name="factDateComplete" Type="datetime" />
           <Property Name="attachement" Type="varbinary(max)" />
+          <Property Name="fileExtension" Type="nvarchar" MaxLength="10" />
           <Property Name="idStatus" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Positions">
@@ -108,6 +110,8 @@
           <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="discount" Type="tinyint" />
           <Property Name="approxCompleteTime" Type="int" Nullable="false" />
+          <Property Name="attachment" Type="varbinary(max)" />
+          <Property Name="fileExtension" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="UsersDetail">
           <Key>
@@ -530,6 +534,7 @@
           <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="dateSend" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Chats" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5812160E" FromRole="Messages" ToRole="Chats" />
+          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -553,6 +558,7 @@
           <NavigationProperty Name="Employees" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4E88ABD4" FromRole="Orders" ToRole="Employees" />
           <NavigationProperty Name="Statuses" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__5070F446" FromRole="Orders" ToRole="Statuses" />
           <NavigationProperty Name="Tasks" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4F7CD00D" FromRole="Orders" ToRole="Tasks" />
+          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -602,6 +608,8 @@
           <Property Name="approxCompleteTime" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4F7CD00D" FromRole="Tasks" ToRole="Orders" />
           <NavigationProperty Name="Specializations" Relationship="KP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__48CFD27E" FromRole="Tasks" ToRole="Specializations" />
+          <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UsersDetail">
           <Key>
@@ -864,6 +872,7 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Messages">
               <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
                 <ScalarProperty Name="dateSend" ColumnName="dateSend" />
                 <ScalarProperty Name="attachment" ColumnName="attachment" />
                 <ScalarProperty Name="message" ColumnName="message" />
@@ -876,6 +885,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
                 <ScalarProperty Name="idStatus" ColumnName="idStatus" />
                 <ScalarProperty Name="attachement" ColumnName="attachement" />
                 <ScalarProperty Name="factDateComplete" ColumnName="factDateComplete" />
@@ -928,6 +938,8 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="KP_Saulin_INCOMSYSTEMModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
+                <ScalarProperty Name="attachment" ColumnName="attachment" />
                 <ScalarProperty Name="approxCompleteTime" ColumnName="approxCompleteTime" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="price" ColumnName="price" />

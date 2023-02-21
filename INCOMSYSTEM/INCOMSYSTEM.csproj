@@ -112,9 +112,13 @@
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputTextBox.cs" />
-    <Compile Include="Pages\ViewTasks.xaml.cs">
+    <Compile Include="Pages\MainPages\Views\ViewDetail.xaml.cs">
+      <DependentUpon>ViewDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainPages\ViewTasks.xaml.cs">
       <DependentUpon>ViewTasks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViewModel.cs" />
     <Compile Include="Windows\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -131,7 +135,11 @@
       <DependentUpon>TopPanelControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\AuthPage.xaml" />
-    <Page Include="Pages\ViewTasks.xaml">
+    <Page Include="Pages\MainPages\Views\ViewDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewTasks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

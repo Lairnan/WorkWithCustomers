@@ -6,8 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Pages.MainPages.Views;
+using INCOMSYSTEM.Windows;
 
-namespace INCOMSYSTEM.Pages
+namespace INCOMSYSTEM.Pages.MainPages
 {
     /// <summary>
     /// Логика взаимодействия для ViewTasks.xaml
@@ -20,6 +22,14 @@ namespace INCOMSYSTEM.Pages
 
             using (var db = new INCOMSYSTEMEntities())
             {
+                var max = db.Tasks.Max(s => s.price);
+
+                LeftSlider.Maximum = (long)max;
+                RightSlider.Maximum = (long)max;
+
+                LeftSlider.Value = 0;
+                RightSlider.Value = (long)max;
+
                 TasksList.ItemsSource = db.Tasks.Include(s => s.Specializations).ToList();
 
                 var list = new List<Specializations> { new Specializations { name = "Очистить" } };
@@ -31,7 +41,7 @@ namespace INCOMSYSTEM.Pages
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
         {
             var task = (Tasks)((Button)sender).CommandParameter;
-            MessageBox.Show($"{task.shortDescription}, {task.shortDescription.Length}");
+            MainWindow.MainFrame.Navigate(new ViewDetail(task));
         }
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -39,7 +49,7 @@ namespace INCOMSYSTEM.Pages
             ApplyFilter();
         }
 
-        private void Slider_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Slider_MouseLeftButtonUp(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ApplyFilter();
         }
@@ -66,7 +76,7 @@ namespace INCOMSYSTEM.Pages
 
         private void ApplyFilter()
         {
-            if (PriceBox == null || FilterText == null || TasksList == null || SpecBox == null) return;
+            if (PriceBox == null || FilterText == null || TasksList == null || SpecBox == null || LeftSlider == null || RightSlider == null) return;
 
             using (var db = new INCOMSYSTEMEntities())
             {
@@ -86,6 +96,12 @@ namespace INCOMSYSTEM.Pages
                         list = list.OrderByDescending(s => s.discount != null && s.discount > 0 ? s.newPrice : s.price);
                         break;
                 }
+
+                var min = (decimal)LeftSlider.Value;
+                var max = (decimal)RightSlider.Value;
+
+                list = list.Where(s => (s.discount != null && s.discount > 0 ? s.newPrice : s.price) >= min 
+                                        && (s.discount != null && s.discount > 0 ? s.newPrice : s.price) <= max);
 
                 TasksList.ItemsSource = list.ToList();
             }

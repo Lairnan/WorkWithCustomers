@@ -27,6 +27,8 @@ namespace INCOMSYSTEM.Context
         public decimal price { get; set; }
         public Nullable<byte> discount { get; set; }
         public int approxCompleteTime { get; set; }
+        public byte[] attachment { get; set; }
+        public string fileExtension { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
@@ -36,18 +38,6 @@ namespace INCOMSYSTEM.Context
         public decimal newPrice => (decimal)(price - (price * (discount / 100m)));
         public bool discountVisible => discount != null && discount > 0;
 
-        public string shortDescription => description.Length > 50 ? description.Substring(0, 50) + "..." : description;
-
-        // public string shortDescription {
-        //     get
-        //     {
-        //         var text = description;
-        //         if (text.Length > 100)
-        //         {
-        //             text = text.Remove(0, 100);
-        //             return text;
-        //         } return description;
-        //     }
-        // }
+        public string shortDescription => description.Length > 60 ? description.Substring(0, 60) + "..." : description;
     }
 }

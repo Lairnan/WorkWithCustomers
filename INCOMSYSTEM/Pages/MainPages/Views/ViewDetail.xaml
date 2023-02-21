@@ -1,0 +1,107 @@
+﻿<Page x:Class="INCOMSYSTEM.Pages.MainPages.Views.ViewDetail"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Title="Просмотр задачи">
+
+    <Grid VerticalAlignment="Center"
+          HorizontalAlignment="Center"
+          Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="20"
+                   x:Name="TitleTask"
+                   TextAlignment="Center"/>
+        <Border BorderBrush="Coral"
+                BorderThickness="1"
+                Padding="5"
+                Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <CheckBox Visibility="Collapsed" x:Name="discountStyle"/>
+                <CheckBox Visibility="Collapsed" x:Name="discountVisible"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="White"
+                            BorderThickness="0 0 0 1"
+                            Grid.ColumnSpan="3"/>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Область направления:" TextAlignment="Center"/>
+                        <TextBlock x:Name="SpecTask"/>
+                    </StackPanel>
+                </Grid>
+                <Border BorderBrush="White"
+                        BorderThickness="0 0 0 1"
+                        Grid.ColumnSpan="3"
+                        Grid.Row="1"/>
+                <TextBlock x:Name="DescriptionTask"
+                           TextWrapping="Wrap"
+                           Margin="0 10"
+                           Grid.Row="1"
+                           Text="{Binding Description}"/>
+                <Grid Grid.Row="2" Margin="0 5">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" x:Key="disc" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=discountStyle, Path=IsChecked}" Value="True">
+                                    <Setter Property="Foreground" Value="Yellow"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=discountVisible, Path=IsChecked}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                        <Style TargetType="TextBlock" x:Key="oldPrice" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=discountStyle, Path=IsChecked}" Value="True">
+                                    <Setter Property="Foreground" Value="#ccc"/>
+                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="PriceTask" Style="{StaticResource oldPrice}"/>
+                        <TextBlock x:Name="DiscountTask" Style="{StaticResource disc}"/>
+                        <TextBlock x:Name="NewPriceTask" Style="{StaticResource disc}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" x:Name="AttachmentBlock" VerticalAlignment="Center">
+                        <TextBlock Text="Вложение" TextAlignment="Center"/>
+                        <Button Content="Скачать"
+                                Margin="5 2"
+                                Click="DownloadAttachmentBtn_Click"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock x:Name="ApproxCompleteTime"
+                           Grid.Row="3"/>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Заказать"
+                    Margin="5 10"
+                    Click="MakeOrderBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
