@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using INCOMSYSTEM.Context;
-using INCOMSYSTEM.Pages.Edits;
+using INCOMSYSTEM.Pages.Details;
 using INCOMSYSTEM.Pages.MainPages.Views;
 using INCOMSYSTEM.Windows;
 

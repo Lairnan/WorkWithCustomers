@@ -6,7 +6,7 @@ using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
 
-namespace INCOMSYSTEM.Pages.Edits
+namespace INCOMSYSTEM.Pages.Details
 {
     public partial class TaskDetailPage : Page
     {
