@@ -45,9 +45,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border BorderBrush="White"
-                            BorderThickness="0 0 0 2">
-                        <Label Content="{TemplateBinding Content}"
-                               Foreground="{TemplateBinding Foreground}"/>
+                            BorderThickness="0 0 0 2"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <TextBlock Text="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

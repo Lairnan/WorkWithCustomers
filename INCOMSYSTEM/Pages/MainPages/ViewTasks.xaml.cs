@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Pages.Edits;
 using INCOMSYSTEM.Pages.MainPages.Views;
 using INCOMSYSTEM.Windows;
 
@@ -110,6 +111,31 @@ namespace INCOMSYSTEM.Pages.MainPages
         {
             if (ClearBtn == null || FilterText == null) return;
             ApplyFilter();
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var task = (Tasks)((Button)sender).CommandParameter;
+            
+            var addWindow = new AdditionalWindow();
+            addWindow.MFrame.Navigate(new EditTask(task));
+            if (addWindow.ShowDialog() != true) return;
+            
+            ApplyFilter();
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить эту задачу?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+            
+            var task = (Tasks)((Button)sender).CommandParameter;
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                db.Tasks.Remove(db.Tasks.First(s => s.id == task.id));
+                db.SaveChanges();
+            }
+            
         }
     }
     //**Пупсик камазик!** 😀😍😘

@@ -38,28 +38,18 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             ApproxCompleteTime.Text = $"Примерное время выполнения {task.approxCompleteTime} дней";
             AttachmentBlock.Visibility = task.attachment == null ? Visibility.Collapsed : Visibility.Visible;
             Task = task;
-            //RefreshStyles();
         }
-
-        //private void RefreshStyles()
-        //{
-        //    var style = DiscountTask.Style;
-        //    DiscountTask.Style = null;
-        //    DiscountTask.Style = style;
-
-        //    NewPriceTask.Style = null;
-        //    NewPriceTask.Style = style;
-        //}
 
         private readonly Tasks Task;
 
         private void DownloadAttachmentBtn_Click(object sender, RoutedEventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.CheckFileExists = true;
-            saveFileDialog.CreatePrompt = true;
-            saveFileDialog.FileName = $"{Task.name}.{Task.fileExtension}";
-            saveFileDialog.Filter = $"File | *.{Task.fileExtension}";
+            var saveFileDialog = new SaveFileDialog
+            {
+                CreatePrompt = true,
+                FileName = $"{Task.name}.{Task.fileExtension}",
+                Filter = $"File | *.{Task.fileExtension}"
+            };
             if (saveFileDialog.ShowDialog() != true) return;
 
             using(var file = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write))

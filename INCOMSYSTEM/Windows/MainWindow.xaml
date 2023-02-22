@@ -7,13 +7,15 @@
         mc:Ignorable="d"
         AllowsTransparency="True"
         WindowStyle="None"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         Height="400"
         MinHeight="350"
         Width="600"
         MinWidth="550"
         WindowState="Maximized"
-        Background="DimGray">
+        Background="DimGray"
+        BorderBrush="Black"
+        BorderThickness="2">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"

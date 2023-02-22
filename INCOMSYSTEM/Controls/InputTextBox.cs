@@ -48,7 +48,7 @@ namespace INCOMSYSTEM.Controls
             DependencyProperty.Register(nameof(IsPlaceHolder), typeof(bool), typeof(InputTextBox),
                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     null, null, false, UpdateSourceTrigger.PropertyChanged));
-
+        
         public bool IsPassword
         {
             get => (bool)GetValue(IsPasswordProperty);
@@ -158,7 +158,6 @@ namespace INCOMSYSTEM.Controls
                     break;
 
                 default:
-                    if (SelectionLength > 0) RemoveFromSecureString(SelectionStart, SelectionLength);
                     _isChanged = true;
                     _isRemove = false;
                     break;
@@ -172,29 +171,38 @@ namespace INCOMSYSTEM.Controls
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (Text != PlaceHolder || !IsPlaceHolder)
+            {
+                IsPlaceHolder = false;
+                IsNull = false;
+            }
+            else
+            {
+                IsPlaceHolder = true;
+                IsNull = true;
+            }
+            
             lock (Value)
             {
-                IsWhiteSpace = IsPlaceHolder || string.IsNullOrWhiteSpace(base.Text);
+                IsWhiteSpace = IsPlaceHolder || string.IsNullOrWhiteSpace(Text);
 
                 if (IsPlaceHolder) return;
                 if (IsShowed)
                 {
-                    Value = base.Text;
+                    Value = Text;
                     return;
                 }
 
-                if (!IsPassword) Value = base.Text;
+                if (!IsPassword) Value = Text;
                 else
                 {
-                    if (!_isRemove && _isChanged)
-                    {
-                        _isChanged = false;
-                        var start = SelectionStart;
-                        var r = base.Text[start - 1];
-                        Value = Value.Insert(start - 1, r.ToString());
-                        base.Text = base.Text.Replace(r, '●');
-                        base.SelectionStart = start;
-                    }
+                    if (_isRemove || !_isChanged) return;
+                    _isChanged = false;
+                    var start = SelectionStart;
+                    var r = Text[start - 1];
+                    Value = Value.Insert(start - 1, r.ToString());
+                    Text = Text.Replace(r, '●');
+                    SelectionStart = start;
 
                 }
 
@@ -216,12 +224,12 @@ namespace INCOMSYSTEM.Controls
 
         private void LostFocusText(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(base.Text))
+            if (string.IsNullOrWhiteSpace(Text))
             {
                 _isChanged = false;
                 Value = string.Empty;
                 IsPlaceHolder = true;
-                base.Text = PlaceHolder;
+                Text = PlaceHolder;
 
                 IsNull = true;
             }
@@ -234,7 +242,7 @@ namespace INCOMSYSTEM.Controls
             {
                 _isChanged = false;
                 IsPlaceHolder = false;
-                base.Text = string.Empty;
+                Text = string.Empty;
             }
 
             IsNull = string.IsNullOrWhiteSpace(base.Text);

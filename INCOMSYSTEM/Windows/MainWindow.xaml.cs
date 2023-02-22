@@ -1,5 +1,4 @@
-﻿using INCOMSYSTEM.Pages;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Media.Animation;
@@ -7,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using INCOMSYSTEM.Context;
 using System.Linq;
+using INCOMSYSTEM.Pages.MainPages;
 
 namespace INCOMSYSTEM.Windows
 {
@@ -48,25 +48,25 @@ namespace INCOMSYSTEM.Windows
 
         private async void Nav(object sender)
         {
-            var anim = new DoubleAnimation
-            {
-                EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
-                To = 0d,
-                Duration = TimeSpan.FromSeconds(0.7)
-            };
-
-            MFrame.BeginAnimation(OpacityProperty, anim);
-
-            await Task.Delay(700);
-
             var page = ((Frame)sender).Content as Page;
             this.Title = page?.Title;
 
-            await Task.Delay(25);
+            //var anim = new DoubleAnimation
+            //{
+            //    EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
+            //    To = 0d,
+            //    Duration = TimeSpan.FromSeconds(0.7)
+            //};
 
-            anim.To = 1.0d;
-            anim.Duration = TimeSpan.FromSeconds(0.7);
-            MFrame.BeginAnimation(OpacityProperty, anim);
+            //MFrame.BeginAnimation(OpacityProperty, anim);
+
+            //await Task.Delay(700);
+
+            //await Task.Delay(25);
+
+            //anim.To = 1.0d;
+            //anim.Duration = TimeSpan.FromSeconds(0.7);
+            //MFrame.BeginAnimation(OpacityProperty, anim);
         }
 
         public static Frame MainFrame { get; private set; }
