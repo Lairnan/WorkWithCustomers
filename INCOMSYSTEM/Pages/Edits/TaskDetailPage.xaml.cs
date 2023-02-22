@@ -8,14 +8,42 @@ using Microsoft.Win32;
 
 namespace INCOMSYSTEM.Pages.Edits
 {
-    public partial class EditTask : Page
+    public partial class TaskDetailPage : Page
     {
-        public EditTask(Tasks task)
+        public TaskDetailPage(Tasks task)
         {
             InitializeComponent();
+            Title = "Редактирование заказа";
+            _isEdit = true;
+            SaveBtn.Content = "Сохранить";
+            
             Task = task;
             _fileTask = task.attachment;
             _fileTaskExtension = task.fileExtension;
+            SetFileValues(task);
+
+            _oldName = task.name;
+            SetInputBoxValues(task);
+
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                SpecBox.ItemsSource = db.Specializations.ToList();
+                SpecBox.SelectedItem = SpecBox.ItemsSource.Cast<Specializations>()
+                    .First(s => s.id == task.idSpecialization);
+            }
+        }
+
+        private void SetInputBoxValues(Tasks task)
+        {
+            NameBox.Text = task.name;
+            DescriptionBox.Text = task.description;
+            PriceBox.Text = $"{task.price:0.00}";
+            if (task.discount != null) DiscountBox.Text = $"{task.discount}";
+            ApproxTimeBox.Text = $"{task.approxCompleteTime}";
+        }
+
+        private void SetFileValues(Tasks task)
+        {
             if (_fileTask == null)
             {
                 FileDownload.IsEnabled = false;
@@ -29,19 +57,20 @@ namespace INCOMSYSTEM.Pages.Edits
                 TempFileExtension = _fileTaskExtension;
                 ClearBtn.IsEnabled = true;
             }
+        }
 
-            _oldName = task.name;
-            NameBox.Text = task.name;
-            DescriptionBox.Text = task.description;
-            PriceBox.Text = $"{task.price:0.00}";
-            DiscountBox.Text = $"{task.discount}";
-            ApproxTimeBox.Text = $"{task.approxCompleteTime}";
+        public TaskDetailPage()
+        {
+            InitializeComponent();
+            Title = "Добавление заказа";
+            _isEdit = false;
+            SaveBtn.Content = "Добавить";
 
+            FileDownload.IsEnabled = false;
+            ReturnBtn.Visibility = Visibility.Collapsed;
             using (var db = new INCOMSYSTEMEntities())
             {
                 SpecBox.ItemsSource = db.Specializations.ToList();
-                SpecBox.SelectedItem = SpecBox.ItemsSource.Cast<Specializations>()
-                    .First(s => s.id == task.idSpecialization);
             }
         }
 
@@ -59,6 +88,8 @@ namespace INCOMSYSTEM.Pages.Edits
             }
         }
 
+        private readonly bool _isEdit;
+
         private readonly string _oldName;
         
         private readonly byte[] _fileTask;
@@ -72,6 +103,7 @@ namespace INCOMSYSTEM.Pages.Edits
         {
             var openFile = new OpenFileDialog
             {
+                Title = "Загрузка файла",
                 Filter = "Document | *.docx; *.doc | Portable Document | *.pdf",
                 DefaultExt = ".docx"
             };
@@ -108,6 +140,7 @@ namespace INCOMSYSTEM.Pages.Edits
             
             var saveFileDialog = new SaveFileDialog
             {
+                Title = "Скачивание файла",
                 FileName = $"{NameBox.Value}",
                 Filter = $"File | * {TempFileExtension}",
                 DefaultExt = $".{TempFileExtension}"
@@ -140,36 +173,78 @@ namespace INCOMSYSTEM.Pages.Edits
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            switch (_isEdit)
+            {
+                case true when !SaveTask():
+                case false when !AddTask():
+                    return;
+            }
+
+            var addWindow = Application.Current.Windows.OfType<AdditionalWindow>().First();
+            addWindow.DialogResult = true;
+            addWindow.Close();
+        }
+
+        private bool SaveTask()
+        {
             if (IsNullOrWhiteSpace())
             {
                 MessageBox.Show("Поля не могут быть пустыми");
                 // TODO: Сделать вывод ошибки снизу окна или всплывающей подсказкой
-                return;
+                return false;
             }
-            if (!GetValues()) return;
+            if (!GetValues()) return false;
 
-            if (!IsEquals())
+            if (IsEqualsOrNull()) return true;
+            using (var db = new INCOMSYSTEMEntities())
             {
-                
-                using (var db = new INCOMSYSTEMEntities())
-                {
-                    var task = db.Tasks.First(s => s.id == Task.id);
-                    task.name = _name;
-                    task.description = _desc;
-                    task.price = _price;
-                    task.discount = _disc;
-                    task.approxCompleteTime = _approx;
-                    task.idSpecialization = _spec.id;
-                    task.attachment = TempFile;
-                    task.fileExtension = TempFileExtension;
+                var task = db.Tasks.First(s => s.id == Task.id);
+                task.name = _name;
+                task.description = _desc;
+                task.price = _price;
+                if (_disc > 0) task.discount = _disc;
+                else task.discount = null;
+                task.approxCompleteTime = _approx;
+                task.idSpecialization = _spec.id;
+                task.attachment = TempFile;
+                task.fileExtension = TempFileExtension;
 
-                    db.SaveChanges();
-                }
+                db.SaveChanges();
             }
-            
-            var addWindow = Application.Current.Windows.OfType<AdditionalWindow>().First();
-            addWindow.DialogResult = true;
-            addWindow.Close();
+
+            return true;
+        }
+
+        private bool AddTask()
+        {
+            if (IsNullOrWhiteSpace())
+            {
+                MessageBox.Show("Поля не могут быть пустыми");
+                // TODO: Сделать вывод ошибки снизу окна или всплывающей подсказкой
+                return false;
+            }
+            if (!GetValues()) return false;
+
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var task = new Tasks
+                {
+                    name = _name,
+                    description = _desc,
+                    price = _price,
+                    approxCompleteTime = _approx,
+                    idSpecialization = _spec.id,
+                    attachment = TempFile,
+                    fileExtension = TempFileExtension
+                };
+                if (_disc > 0) task.discount = _disc;
+                else task.discount = null;
+
+                db.Tasks.Add(task);
+                db.SaveChanges();
+            }
+
+            return true;
         }
 
         private string _name;
@@ -190,7 +265,7 @@ namespace INCOMSYSTEM.Pages.Edits
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(DiscountBox.Value) && !byte.TryParse(DiscountBox.Value, out _disc))
+            if (!DiscountBox.IsWhiteSpace && !byte.TryParse(DiscountBox.Value, out _disc))
             {
                 MessageBox.Show("Не удалось преобразовать скидку");
                 return false;
@@ -204,6 +279,9 @@ namespace INCOMSYSTEM.Pages.Edits
 
         private bool IsNullOrWhiteSpace()
         {
+            return NameBox.IsWhiteSpace || DescriptionBox.IsWhiteSpace || PriceBox.IsWhiteSpace ||
+                   ApproxTimeBox.IsWhiteSpace;
+            
             return string.IsNullOrWhiteSpace(NameBox.Value)
                    || string.IsNullOrWhiteSpace(DescriptionBox.Value)
                    || string.IsNullOrWhiteSpace(PriceBox.Value)
@@ -212,7 +290,7 @@ namespace INCOMSYSTEM.Pages.Edits
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsEquals()
+            if (!IsEqualsOrNull()
                 && MessageBox.Show("Отменить внесённые изменения?", "Подтверждение",
                     MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No) return;
             
@@ -221,14 +299,22 @@ namespace INCOMSYSTEM.Pages.Edits
             addWindow.Close();
         }
 
-        private bool IsEquals()
+        private bool IsEqualsOrNull()
         {
-            return NameBox.Value == Task.name
-                   && DescriptionBox.Value == Task.description
-                   && PriceBox.Value == Task.price.ToString("0.00")
-                   && DiscountBox.Value == Task.discount.ToString()
-                   && ApproxTimeBox.Value == Task.approxCompleteTime.ToString()
-                   && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
+            if(_isEdit) return NameBox.Value == Task.name
+                       && ((Specializations)SpecBox.SelectedItem).id == Task.idSpecialization
+                       && DescriptionBox.Value == Task.description
+                       && PriceBox.Value == Task.price.ToString("0.00")
+                       && DiscountBox.Value == Task.discount.ToString()
+                       && ApproxTimeBox.Value == Task.approxCompleteTime.ToString()
+                       && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
+
+            return NameBox.IsWhiteSpace
+                   && DescriptionBox.IsWhiteSpace
+                   && PriceBox.IsWhiteSpace
+                   && DiscountBox.IsWhiteSpace
+                   && ApproxTimeBox.IsWhiteSpace
+                   && string.IsNullOrWhiteSpace(FileName);
         }
     }
 }

@@ -34,8 +34,8 @@ namespace INCOMSYSTEM.Context
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual Specializations Specializations { get; set; }
 
-        public bool discoutStyle => discount > 10;
-        public decimal newPrice => (decimal)(price - (price * (discount / 100m)));
+        public bool discoutStyle => discount != null && discount > 10;
+        public decimal newPrice => discount != null ? (decimal)(price - (price * (discount / 100m))) : price;
         public bool discountVisible => discount != null && discount > 0;
 
         public string shortDescription => description.Length > 60 ? description.Substring(0, 60) + "..." : description;

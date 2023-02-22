@@ -18,6 +18,23 @@
         </Grid.ColumnDefinitions>
         <ItemsControl x:Name="TasksList"
                       Grid.Row="1">
+            <ItemsControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить" Click="AddTaskMenu_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Background" Value="Gray"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Source={x:Static windows:MainWindow.AuthUser}, Path=idPos}" Value="3">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                </ContextMenu>
+            </ItemsControl.ContextMenu>
             <ItemsControl.Resources>
                 <Style TargetType="TextBlock" x:Key="disc" BasedOn="{StaticResource {x:Type TextBlock}}">
                     <Setter Property="Visibility" Value="Visible"/>

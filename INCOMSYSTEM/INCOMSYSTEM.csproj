@@ -115,8 +115,8 @@
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputTextBox.cs" />
-    <Compile Include="Pages\Edits\EditTask.xaml.cs">
-      <DependentUpon>EditTask.xaml</DependentUpon>
+    <Compile Include="Pages\Edits\TaskDetailPage.xaml.cs">
+      <DependentUpon>TaskDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\Views\ViewDetail.xaml.cs">
       <DependentUpon>ViewDetail.xaml</DependentUpon>
@@ -144,7 +144,7 @@
       <DependentUpon>TopPanelControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\AuthPage.xaml" />
-    <Page Include="Pages\Edits\EditTask.xaml" />
+    <Page Include="Pages\Edits\TaskDetailPage.xaml" />
     <Page Include="Pages\MainPages\Views\ViewDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

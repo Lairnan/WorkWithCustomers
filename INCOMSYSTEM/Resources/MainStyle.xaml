@@ -67,7 +67,7 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsNull" Value="False">
+                        <Trigger Property="IsWhiteSpace" Value="False">
                             <Setter TargetName="PART_Border" Property="Width" Value="175"/>
                         </Trigger>
                         <Trigger Property="IsPlaceHolder" Value="True">

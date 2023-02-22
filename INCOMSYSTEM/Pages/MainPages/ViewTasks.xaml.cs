@@ -118,7 +118,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             var task = (Tasks)((Button)sender).CommandParameter;
             
             var addWindow = new AdditionalWindow();
-            addWindow.MFrame.Navigate(new EditTask(task));
+            addWindow.MFrame.Navigate(new TaskDetailPage(task));
             if (addWindow.ShowDialog() != true) return;
             
             ApplyFilter();
@@ -136,6 +136,16 @@ namespace INCOMSYSTEM.Pages.MainPages
                 db.SaveChanges();
             }
             
+            ApplyFilter();
+        }
+
+        private void AddTaskMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new AdditionalWindow();
+            addWindow.MFrame.Navigate(new TaskDetailPage());
+            if (addWindow.ShowDialog() != true) return;
+            
+            ApplyFilter();
         }
     }
     //**Пупсик камазик!** 😀😍😘

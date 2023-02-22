@@ -29,8 +29,8 @@ namespace INCOMSYSTEM.Windows
                 else
                 {
                     var user = db.Employees.First(s => s.idUser == AuthUser.idUser);
-                    AuthBlock.Text += $"{user.surname} {user.name.ElementAt(0)}.";
-                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic.ElementAt(0)}." : "";
+                    AuthBlock.Text += $"{user.surname} {user.name}";
+                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}" : "";
                 }
             }
             MainFrame = MFrame;

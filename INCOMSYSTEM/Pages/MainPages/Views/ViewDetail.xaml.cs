@@ -46,6 +46,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         {
             var saveFileDialog = new SaveFileDialog
             {
+                Title = "Скачивание файла",
                 CreatePrompt = true,
                 FileName = $"{Task.name}.{Task.fileExtension}",
                 Filter = $"File | *.{Task.fileExtension}"
