@@ -16,7 +16,7 @@ namespace INCOMSYSTEM.Context
     {
         public long id { get; set; }
         public long idCustomer { get; set; }
-        public long idExecutor { get; set; }
+        public Nullable<long> idExecutor { get; set; }
         public long idTask { get; set; }
         public decimal price { get; set; }
         public double difficulty { get; set; }

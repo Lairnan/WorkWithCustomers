@@ -57,7 +57,7 @@
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCustomer" Type="bigint" Nullable="false" />
-          <Property Name="idExecutor" Type="bigint" Nullable="false" />
+          <Property Name="idExecutor" Type="bigint" />
           <Property Name="idTask" Type="bigint" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="difficulty" Type="float" Nullable="false" />
@@ -229,7 +229,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__idExecut__3C69FB99">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -565,7 +565,7 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idCustomer" Type="Int64" Nullable="false" />
-          <Property Name="idExecutor" Type="Int64" Nullable="false" />
+          <Property Name="idExecutor" Type="Int64" />
           <Property Name="idTask" Type="Int64" Nullable="false" />
           <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="difficulty" Type="Double" Nullable="false" />
@@ -754,7 +754,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__idExecut__3C69FB99">
-          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="KP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
           <End Type="KP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">

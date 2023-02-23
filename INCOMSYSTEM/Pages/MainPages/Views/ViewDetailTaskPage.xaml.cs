@@ -1,20 +1,10 @@
 ﻿using INCOMSYSTEM.Context;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using INCOMSYSTEM.Windows;
 
 namespace INCOMSYSTEM.Pages.MainPages.Views
 {
@@ -62,7 +52,32 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
         private void MakeOrderBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Вы уверены с заказом?", "Подтверждение", MessageBoxButton.YesNo,
+                    MessageBoxImage.Information) != MessageBoxResult.Yes) return;
+            
+            var order = new Orders
+            {
+                idCustomer = MainWindow.AuthUser.idUser,
+                idTask = Task.id,
+                difficulty = 1f,
+                dateOrder = DateTime.Now,
+                idStatus = 1
+            };
+            order.price = Task.price * (decimal)order.difficulty;
+            var chat = new Chats
+            {
+                idChat = order.id,
+                idCustomer = MainWindow.AuthUser.idUser,
+                dateCreate = DateTime.Now
+            };
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                db.Orders.Add(order);
+                db.Chats.Add(chat);
+                db.SaveChanges();
+            }
 
+            MessageBox.Show("Заказ успешно сформирован!");
         }
     }
 }
