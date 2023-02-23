@@ -84,6 +84,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Orientation="Horizontal"
+                    HorizontalAlignment="Center"
                     Margin="0 5">
             <Button Content="Сохранить" Click="SaveBtn_Click" x:Name="SaveBtn"/>
             <Button Content="Отменить" Margin="5 0" Click="CancelBtn_Click"/>

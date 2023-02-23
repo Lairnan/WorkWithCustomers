@@ -20,19 +20,17 @@
                       Grid.Row="1">
             <ItemsControl.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Добавить" Click="AddTaskMenu_Click">
-                        <MenuItem.Style>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Background" Value="Gray"/>
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Source={x:Static windows:MainWindow.AuthUser}, Path=idPos}" Value="3">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </MenuItem.Style>
-                    </MenuItem>
+                    <ContextMenu.Style>
+                        <Style TargetType="ContextMenu" BasedOn="{StaticResource {x:Type ContextMenu}}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Static windows:MainWindow.AuthUser}, Path=idPos}" Value="3">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContextMenu.Style>
+                    <MenuItem Header="Добавить" Click="AddTaskMenu_Click"/>
                 </ContextMenu>
             </ItemsControl.ContextMenu>
             <ItemsControl.Resources>

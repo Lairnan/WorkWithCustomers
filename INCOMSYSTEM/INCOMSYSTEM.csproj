@@ -124,7 +124,6 @@
     <Compile Include="Pages\MainPages\ViewTasks.xaml.cs">
       <DependentUpon>ViewTasks.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestViewModel.cs" />
     <Compile Include="Windows\AdditionalWindow.xaml.cs">
       <DependentUpon>AdditionalWindow.xaml</DependentUpon>
     </Compile>

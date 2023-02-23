@@ -48,6 +48,7 @@
                         <CheckBox.Style>
                             <Style TargetType="CheckBox">
                                 <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="IsTabStop" Value="False"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="CheckBox">

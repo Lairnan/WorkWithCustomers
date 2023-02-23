@@ -112,4 +112,55 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="IsReadOnly" Value="True"/>
     </Style>
+
+    <Style TargetType="ContextMenu">
+        <Setter Property="Background" Value="Gray"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}" Padding="3">
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="MenuItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border MaxWidth="175" MinWidth="30" Background="{TemplateBinding Background}" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="BorderIcon"
+                                    BorderBrush="White"
+                                    BorderThickness="0 0 1 0"
+                                    Padding="0 0 5 0"
+                                    Margin="0 0 5 0">
+                                <Label x:Name="IconMenu"
+                                       Content="{TemplateBinding Icon}"
+                                       Padding="0"
+                                       Margin="0"
+                                       Style="{x:Null}"
+                                       Width="20"/>
+                            </Border>
+                            <TextBlock Text="{TemplateBinding Header}" Grid.Column="1" FontSize="15"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=IconMenu, Path=Content}" Value="{x:Null}">
+                            <Setter TargetName="BorderIcon" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#5d514b"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
