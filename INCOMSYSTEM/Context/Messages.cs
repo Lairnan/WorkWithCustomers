@@ -19,9 +19,10 @@ namespace INCOMSYSTEM.Context
         public long idUser { get; set; }
         public string message { get; set; }
         public byte[] attachment { get; set; }
-        public System.DateTime dateSend { get; set; }
         public string fileExtension { get; set; }
+        public System.DateTime dateSend { get; set; }
     
         public virtual Chats Chats { get; set; }
+        public virtual UsersDetail UsersDetail { get; set; }
     }
 }

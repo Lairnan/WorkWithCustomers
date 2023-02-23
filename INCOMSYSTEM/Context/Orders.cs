@@ -19,15 +19,15 @@ namespace INCOMSYSTEM.Context
         public long idExecutor { get; set; }
         public long idTask { get; set; }
         public decimal price { get; set; }
-        public Nullable<double> difficulty { get; set; }
+        public double difficulty { get; set; }
         public System.DateTime dateOrder { get; set; }
-        public System.DateTime planDateStart { get; set; }
+        public Nullable<System.DateTime> planDateStart { get; set; }
         public Nullable<System.DateTime> factDateStart { get; set; }
-        public System.DateTime planDateComplete { get; set; }
+        public Nullable<System.DateTime> planDateComplete { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
         public byte[] attachement { get; set; }
-        public byte idStatus { get; set; }
         public string fileExtension { get; set; }
+        public byte idStatus { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }
