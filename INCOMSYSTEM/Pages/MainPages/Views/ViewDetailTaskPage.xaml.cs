@@ -21,9 +21,9 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
     /// <summary>
     /// Логика взаимодействия для ViewDetail.xaml
     /// </summary>
-    public partial class ViewDetail : Page
+    public partial class ViewDetailTaskPage : Page
     {
-        public ViewDetail(Tasks task)
+        public ViewDetailTaskPage(Tasks task)
         {
             InitializeComponent();
 

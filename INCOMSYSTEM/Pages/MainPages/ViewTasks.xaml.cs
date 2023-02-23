@@ -42,7 +42,7 @@ namespace INCOMSYSTEM.Pages.MainPages
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
         {
             var task = (Tasks)((Button)sender).CommandParameter;
-            MainWindow.MainFrame.Navigate(new ViewDetail(task));
+            MainWindow.MainFrame.Navigate(new ViewDetailTaskPage(task));
         }
 
         private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

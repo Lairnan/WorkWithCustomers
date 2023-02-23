@@ -118,8 +118,8 @@
     <Compile Include="Pages\Details\TaskDetailPage.xaml.cs">
       <DependentUpon>TaskDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPages\Views\ViewDetail.xaml.cs">
-      <DependentUpon>ViewDetail.xaml</DependentUpon>
+    <Compile Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml.cs">
+      <DependentUpon>ViewDetailTaskPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\ViewTasks.xaml.cs">
       <DependentUpon>ViewTasks.xaml</DependentUpon>
@@ -144,7 +144,7 @@
     </Compile>
     <Page Include="Pages\AuthPage.xaml" />
     <Page Include="Pages\Details\TaskDetailPage.xaml" />
-    <Page Include="Pages\MainPages\Views\ViewDetail.xaml">
+    <Page Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
