@@ -49,14 +49,22 @@
             <Label Content="Дата формирования заказа" Grid.Column="6"/>
             <Label Content="Статус" Grid.Column="7"/>
         </Grid>
-        <ListView x:Name="OrdersList"
-                  Grid.Row="2"
-                  Background="Transparent"
-                  BorderBrush="Transparent"
-                  BorderThickness="0">
-            <ListView.ItemTemplate>
+        <ItemsControl x:Name="OrdersList"
+                      Grid.Row="2"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      BorderThickness="0">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <CheckBox x:Name="OrderGrid">
+                        <CheckBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Просмотреть заказ"/>
+                                <MenuItem Header="Редактировать заказ"/>
+                                <MenuItem Header="Перейти к чату" Visibility="{Binding CanJoinChat}"/>
+                                <MenuItem Header="Сформировать договор" Visibility="{Binding CanFormAgreement}"/>
+                            </ContextMenu>
+                        </CheckBox.ContextMenu>
                         <CheckBox.Style>
                             <Style TargetType="CheckBox">
                                 <Setter Property="Cursor" Value="Hand"/>
@@ -129,10 +137,10 @@
                                 <Grid Grid.Row="1" Grid.ColumnSpan="8" Grid.Column="0" Margin="0 5">
                                     <Grid.Style>
                                         <Style TargetType="Grid">
-                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=OrderGrid, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -179,7 +187,7 @@
                         </CheckBox.Content>
                     </CheckBox>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Page>

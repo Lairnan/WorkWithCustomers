@@ -18,6 +18,13 @@ namespace INCOMSYSTEM.Windows
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame = MFrame;
+            MainFrame.Navigated += MainFrameOnNavigated;
+            if (AuthUser == null)
+            {
+                AuthBlock.Text = "Вы вошли как гость!";
+                MainFrame.Navigate(new ViewTasksPage());
+            }
             AuthBlock.Text = $"{AuthUser.Positions.name}, ";
             using (var db = new INCOMSYSTEMEntities())
             {
@@ -33,9 +40,22 @@ namespace INCOMSYSTEM.Windows
                     AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}" : "";
                 }
             }
-            MainFrame = MFrame;
-            MainFrame.Navigated += MainFrameOnNavigated;
-            MainFrame.Navigate(new ViewTasks());
+
+            switch (AuthUser.idPos)
+            {
+                case 1:
+                    MainFrame.Navigate(new ViewTasksPage());
+                    break;
+                case 2:
+                    MainFrame.Navigate(new ViewOrdersPage());
+                    break;
+                case 3:
+                    MainFrame.Navigate(new ViewOrdersPage());
+                    break;
+                default:
+                    MessageBox.Show("Такого окна не существует, ты как вообще сюда попал?");
+                    break;
+            }
         }
 
         public static UsersDetail AuthUser { get; set; }

@@ -7,8 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+
 namespace INCOMSYSTEM.Context
 {
+    using System.Windows;
+    using INCOMSYSTEM.Windows;
     using System;
     using System.Collections.Generic;
     
@@ -34,5 +37,15 @@ namespace INCOMSYSTEM.Context
         public virtual Employees Employees { get; set; }
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
+
+        public Visibility CanJoinChat =>
+            idExecutor == null || (idExecutor != null && MainWindow.AuthUser?.idUser == idExecutor)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+        public Visibility CanFormAgreement =>
+            idExecutor != null && planDateStart != null && planDateComplete != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
     }
 }
