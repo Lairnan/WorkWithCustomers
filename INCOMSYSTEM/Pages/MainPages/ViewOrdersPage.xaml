@@ -4,12 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
-      xmlns:vm="clr-namespace:INCOMSYSTEM"
       mc:Ignorable="d"
       Title="Список заказов">
-    <Page.DataContext>
-        <vm:TestViewModel/>
-    </Page.DataContext>
     <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -59,10 +55,20 @@
                     <CheckBox x:Name="OrderGrid">
                         <CheckBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Просмотреть заказ"/>
-                                <MenuItem Header="Редактировать заказ"/>
-                                <MenuItem Header="Перейти к чату" Visibility="{Binding CanJoinChat}"/>
-                                <MenuItem Header="Сформировать договор" Visibility="{Binding CanFormAgreement}"/>
+                                <MenuItem Header="Просмотреть заказ"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                    Path=DataContext}"/>
+                                <MenuItem Header="Редактировать заказ"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                    Path=DataContext}"/>
+                                <MenuItem Header="Перейти к чату"
+                                          Visibility="{Binding CanJoinChat}"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                    Path=DataContext}"/>
+                                <MenuItem Header="Сформировать договор"
+                                          Visibility="{Binding CanFormAgreement}"
+                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                    Path=DataContext}"/>
                             </ContextMenu>
                         </CheckBox.ContextMenu>
                         <CheckBox.Style>
