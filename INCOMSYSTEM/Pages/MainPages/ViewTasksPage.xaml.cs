@@ -15,14 +15,16 @@ namespace INCOMSYSTEM.Pages.MainPages
     /// <summary>
     /// Логика взаимодействия для ViewTasks.xaml
     /// </summary>
-    public partial class ViewTasks : Page
+    public partial class ViewTasksPage
     {
-        public ViewTasks()
+        public ViewTasksPage()
         {
             InitializeComponent();
 
             using (var db = new INCOMSYSTEMEntities())
             {
+                AllCountTask.Text = db.Tasks.Count().ToString();
+                
                 var max = db.Tasks.Max(s => s.price);
 
                 LeftSlider.Maximum = (long)max;
@@ -50,7 +52,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             ApplyFilter();
         }
 
-        private void Slider_MouseLeftButtonUp(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ApplyFilter();
         }

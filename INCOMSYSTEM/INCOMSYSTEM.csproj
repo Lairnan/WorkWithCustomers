@@ -118,12 +118,16 @@
     <Compile Include="Pages\Details\TaskDetailPage.xaml.cs">
       <DependentUpon>TaskDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPages\ViewOrdersPage.xaml.cs">
+      <DependentUpon>ViewOrdersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml.cs">
       <DependentUpon>ViewDetailTaskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPages\ViewTasks.xaml.cs">
-      <DependentUpon>ViewTasks.xaml</DependentUpon>
+    <Compile Include="Pages\MainPages\ViewTasksPage.xaml.cs">
+      <DependentUpon>ViewTasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestViewModel.cs" />
     <Compile Include="Windows\AdditionalWindow.xaml.cs">
       <DependentUpon>AdditionalWindow.xaml</DependentUpon>
     </Compile>
@@ -144,11 +148,12 @@
     </Compile>
     <Page Include="Pages\AuthPage.xaml" />
     <Page Include="Pages\Details\TaskDetailPage.xaml" />
+    <Page Include="Pages\MainPages\ViewOrdersPage.xaml" />
     <Page Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainPages\ViewTasks.xaml">
+    <Page Include="Pages\MainPages\ViewTasksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
