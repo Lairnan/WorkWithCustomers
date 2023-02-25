@@ -18,6 +18,7 @@ namespace INCOMSYSTEM.Pages.MainPages
                     .Include(s => s.Employees)
                     .Include(s => s.Statuses)
                     .Include(s => s.Tasks)
+                    .Include(s => s.Chats)
                     .ToList();
             }
         }

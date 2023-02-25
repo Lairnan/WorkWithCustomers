@@ -39,7 +39,7 @@ namespace INCOMSYSTEM.Context
         public virtual Tasks Tasks { get; set; }
 
         public Visibility CanJoinChat =>
-            idExecutor == null || (idExecutor != null && MainWindow.AuthUser?.idUser == idExecutor)
+            Chats.idManager == null || MainWindow.AuthUser?.idUser == Chats.idManager
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
