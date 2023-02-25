@@ -25,6 +25,8 @@ namespace INCOMSYSTEM.Context
         public string password { get; set; }
         public Nullable<long> phone { get; set; }
         public byte idPos { get; set; }
+        public long passport { get; set; }
+        public string address { get; set; }
         public System.DateTime dateStart { get; set; }
     
         public virtual Customers Customers { get; set; }

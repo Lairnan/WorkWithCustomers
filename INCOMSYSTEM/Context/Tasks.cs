@@ -27,6 +27,7 @@ namespace INCOMSYSTEM.Context
         public decimal price { get; set; }
         public Nullable<byte> discount { get; set; }
         public int approxCompleteTime { get; set; }
+        public int supportPeriod { get; set; }
         public byte[] attachment { get; set; }
         public string fileExtension { get; set; }
     
@@ -37,7 +38,6 @@ namespace INCOMSYSTEM.Context
         public bool discoutStyle => discount != null && discount > 10;
         public decimal newPrice => discount != null ? (decimal)(price - (price * (discount / 100m))) : price;
         public bool discountVisible => discount != null && discount > 0;
-
         public string shortDescription => description.Length > 60 ? description.Substring(0, 60) + "..." : description;
     }
 }

@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
 namespace INCOMSYSTEM.Context
 {
-    using System.Windows;
-    using INCOMSYSTEM.Windows;
     using System;
+    using System.Windows;
     using System.Collections.Generic;
+    using INCOMSYSTEM.Windows;
     
     public partial class Orders
     {
@@ -28,7 +27,7 @@ namespace INCOMSYSTEM.Context
         public Nullable<System.DateTime> factDateStart { get; set; }
         public Nullable<System.DateTime> planDateComplete { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
-        public byte[] attachement { get; set; }
+        public byte[] attachment { get; set; }
         public string fileExtension { get; set; }
         public byte idStatus { get; set; }
     
