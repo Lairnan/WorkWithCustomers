@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       Title="Список заказов">
     <Grid HorizontalAlignment="Center">
@@ -17,11 +18,14 @@
             <TextBlock Text=" из "/>
             <TextBlock x:Name="AllItemsCount"/>
         </StackPanel>
-        <Grid Margin="5 0 0 0"
-              Grid.Row="1">
+        <Grid Grid.Row="1">
             <Grid.Resources>
-                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource ComboBoxTextBlockStyle}">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="White"/>
                     <Setter Property="BorderThickness" Value="1"/>
                 </Style>
@@ -36,14 +40,30 @@
                 <ColumnDefinition Width="225"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <Label Content="№Заказа"/>
-            <Label Content="Заказчик" Grid.Column="1"/>
-            <Label Content="Исполнитель" Grid.Column="2"/>
-            <Label Content="Задача" Grid.Column="3"/>
-            <Label Content="Цена" Grid.Column="4"/>
-            <Label Content="Сложность" Grid.Column="5"/>
-            <Label Content="Дата формирования заказа" Grid.Column="6"/>
-            <Label Content="Статус" Grid.Column="7"/>
+            <Border>
+                <TextBlock Text="№Заказа"/>
+            </Border>
+            <Border Grid.Column="1">
+                <TextBlock Text="Заказчик"/>
+            </Border>
+            <Border Grid.Column="2">
+                <TextBlock Text="Исполнитель"/>
+            </Border>
+            <Border Grid.Column="3">
+                <TextBlock Text="Задача"/>
+            </Border>
+            <Border Grid.Column="4">
+                <TextBlock Text="Цена"/>
+            </Border>
+            <Border Grid.Column="5">
+                <TextBlock Text="Сложность"/>
+            </Border>
+            <Border Grid.Column="6">
+                <TextBlock Text="Дата формирования заказа"/>
+            </Border>
+            <Border Grid.Column="7">
+                <TextBlock Text="Статус"/>
+            </Border>
         </Grid>
         <ItemsControl x:Name="OrdersList"
                       Grid.Row="2"
@@ -52,20 +72,20 @@
                       BorderThickness="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox x:Name="OrderGrid">
+                    <CheckBox x:Name="OrderGrid" Margin="0 0 0 5">
                         <CheckBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Просмотреть заказ"
-                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                                    Path=DataContext}"/>
-                                <MenuItem Header="Редактировать заказ"
+                                          Click="ViewOrderMenu_Click"
                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                     Path=DataContext}"/>
                                 <MenuItem Header="Перейти к чату"
+                                          Click="OpenChatOrderMenu_Click"
                                           Visibility="{Binding CanJoinChat}"
                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                     Path=DataContext}"/>
                                 <MenuItem Header="Сформировать договор"
+                                          Click="FormAgreementOrderMenu_Click"
                                           Visibility="{Binding CanFormAgreement}"
                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                     Path=DataContext}"/>
@@ -86,24 +106,15 @@
                         <CheckBox.Content>
                             <Grid>
                                 <Grid.Resources>
-                                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="Label">
-                                                    <Label Content="{TemplateBinding Content}"
-                                                           BorderBrush="White"
-                                                           BorderThickness="1"
-                                                           HorizontalContentAlignment="Center"
-                                                           Style="{StaticResource MainStyle}">
-                                                        <Label.ToolTip>
-                                                            <TextBlock Text="{TemplateBinding Content}"
-                                                                       FontFamily="{TemplateBinding FontFamily}"
-                                                                       Style="{x:Null}"/>
-                                                        </Label.ToolTip>
-                                                    </Label>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource ComboBoxTextBlockStyle}">
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="White"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Setter Property="Padding" Value="5"/>
                                     </Style>
                                 </Grid.Resources>
                                 <Grid.RowDefinitions>
@@ -120,27 +131,41 @@
                                     <ColumnDefinition Width="225"/>
                                     <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Content="{Binding id}"/>
-                                <Label Content="{Binding Customers.name}" Grid.Column="1"/>
-                                <Label Grid.Column="2">
-                                    <Label.Content>
-                                        <TextBlock>
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1} {2}">
-                                                    <Binding Path="Employees.surname"/>
-                                                    <Binding Path="Employees.name"/>
-                                                    <Binding Path="Employees.patronymic"/>
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </Label.Content>
-                                </Label>
-                                <Label Content="{Binding Tasks.name}" Grid.Column="3"/>
-                                <Label Content="{Binding price, StringFormat='{}{0:0.00} руб.'}" Grid.Column="4"/>
-                                <Label Content="{Binding difficulty}" Grid.Column="5"/>
-                                <Label Content="{Binding dateOrder, StringFormat='{}{0:dd MMMM yyyy}', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Grid.Column="6"/>
-                                <Label Content="{Binding Statuses.name}" Grid.Column="7"/>
-                                <Grid Grid.Row="1" Grid.ColumnSpan="8" Grid.Column="0" Margin="0 5">
+                                <Border>
+                                    <TextBlock Text="{Binding id}"/>
+                                </Border>
+                                <Border Grid.Column="1">
+                                    <TextBlock Text="{Binding Customers.name}"/>
+                                </Border>
+                                <Border Grid.Column="2">
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                         <MultiBinding StringFormat="{}{0} {1} {2}" TargetNullValue="Отсутствует">
+                                             <Binding Path="Employees.surname"/>
+                                             <Binding Path="Employees.name"/>
+                                             <Binding Path="Employees.patronymic"/>
+                                         </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </Border>
+                                <Border Grid.Column="3">
+                                    <TextBlock Text="{Binding Tasks.name}"/>
+                                </Border>
+                                <Border Grid.Column="4">
+                                    <TextBlock Text="{Binding price, StringFormat='{}{0:0} руб.'}"/>
+                                </Border>
+                                <Border Grid.Column="5">
+                                    <TextBlock Text="{Binding difficulty}"/>
+                                </Border>
+                                <Border Grid.Column="6">
+                                    <TextBlock Text="{Binding dateOrder,
+                                                            StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                            ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
+                                </Border>
+                                <Border Grid.Column="7">
+                                    <TextBlock Text="{Binding Statuses.name}"/>
+                                </Border>
+                                <Grid Grid.Row="1" Grid.ColumnSpan="8" Grid.Column="0">
                                     <Grid.Style>
                                         <Style TargetType="Grid">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -161,33 +186,42 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Content="Плановая дата начала"/>
-                                    <Label Content="Фактическая дата начала" Grid.Column="1"/>
-                                    <Label Content="Плановая дата завершения" Grid.Column="2"/>
-                                    <Label Content="Фактическая дата завершения" Grid.Column="3"/>
-                                    <Label Content="{Binding planDateStart,
-                                                                    StringFormat='{}{0:dd MMMM yyyy}',
-                                                                    ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                    TargetNullValue='Отсутствует'}"
-                                           Grid.Row="1"/>
-                                    <Label Content="{Binding factDateStart,
-                                                                    StringFormat='{}{0:dd MMMM yyyy}',
-                                                                    ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                    TargetNullValue='Отсутствует'}"
-                                           Grid.Row="1"
-                                           Grid.Column="1"/>
-                                    <Label Content="{Binding planDateComplete,
-                                                                    StringFormat='{}{0:dd MMMM yyyy}',
-                                                                    ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                    TargetNullValue='Отсутствует'}"
-                                           Grid.Row="1"
-                                           Grid.Column="2"/>
-                                    <Label Content="{Binding factDateComplete,
-                                                                    StringFormat='{}{0:dd MMMM yyyy}',
-                                                                    ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                    TargetNullValue='Отсутствует'}"
-                                           Grid.Row="1"
-                                           Grid.Column="3"/>
+                                    <Border>
+                                        <TextBlock Text="Плановая дата начала"/>
+                                    </Border>
+                                    <Border Grid.Column="1">
+                                        <TextBlock Text="Фактическая дата начала"/>
+                                    </Border>
+                                    <Border Grid.Column="2">
+                                        <TextBlock Text="Плановая дата завершения"/>
+                                    </Border>
+                                    <Border Grid.Column="3">
+                                        <TextBlock Text="Фактическая дата завершения"/>
+                                    </Border>
+                                    <Border Grid.Row="1">
+                                        <TextBlock Text="{Binding planDateStart,
+                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
+                                                                 TargetNullValue='Отсутствует'}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="1">
+                                        <TextBlock Text="{Binding factDateStart,
+                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
+                                                                 TargetNullValue='Отсутствует'}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="2">
+                                        <TextBlock Text="{Binding planDateComplete,
+                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
+                                                                 TargetNullValue='Отсутствует'}"/>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="3">
+                                        <TextBlock Text="{Binding factDateComplete,
+                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
+                                                                 TargetNullValue='Отсутствует'}"/>
+                                    </Border>
                                 </Grid>
                             </Grid>
                         </CheckBox.Content>

@@ -63,6 +63,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="BehaviorsFiles\Extension.cs" />
+    <Compile Include="BehaviorsFiles\NumberInWords.cs" />
     <Compile Include="Context\Chats.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -121,6 +123,9 @@
     <Compile Include="Pages\MainPages\ViewOrdersPage.xaml.cs">
       <DependentUpon>ViewOrdersPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPages\Views\ViewDetailOrderPage.xaml.cs">
+      <DependentUpon>ViewDetailOrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml.cs">
       <DependentUpon>ViewDetailTaskPage.xaml</DependentUpon>
     </Compile>
@@ -149,6 +154,7 @@
     <Page Include="Pages\AuthPage.xaml" />
     <Page Include="Pages\Details\TaskDetailPage.xaml" />
     <Page Include="Pages\MainPages\ViewOrdersPage.xaml" />
+    <Page Include="Pages\MainPages\Views\ViewDetailOrderPage.xaml" />
     <Page Include="Pages\MainPages\Views\ViewDetailTaskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,6 +220,9 @@
       <DependentUpon>INCOMSYSTEMModel.edmx</DependentUpon>
       <LastGenOutput>INCOMSYSTEMModel.cs</LastGenOutput>
     </Content>
+    <AdditionalFiles Include="Resources\AgreementTemplate.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
     <Resource Include="Images\user.png" />
     <Resource Include="Images\authImage.png" />
     <Content Include="Fonts\Roboto-Regular.ttf" />

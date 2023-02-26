@@ -46,18 +46,6 @@ namespace INCOMSYSTEM.Pages
                 {
                     MainWindow.AuthUser = user;
                     var window = new MainWindow();
-                    switch (user.idPos)
-                    {
-                        case 1:
-                            MessageBox.Show("Вы заказчик!");
-                            break;
-                        case 2:
-                            MessageBox.Show("Вы исполнитель!");
-                            break;
-                        case 3:
-                            MessageBox.Show("Вы менеджер!");
-                            break;
-                    }
                     window.Show();
                     Application.Current.Windows.OfType<AuthWindow>().First().Close();
 
