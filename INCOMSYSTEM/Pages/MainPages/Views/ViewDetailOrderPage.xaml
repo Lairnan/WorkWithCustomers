@@ -115,7 +115,7 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0 5">
-            <Button Content="Сохранить" Click="SaveBtn_Click" x:Name="SaveBtn"/>
+            <Button Content="Сохранить" Click="SaveBtn_Click"/>
             <Button Content="Отменить" Margin="5 0" Click="CancelBtn_Click"/>
         </StackPanel>
     </Grid>

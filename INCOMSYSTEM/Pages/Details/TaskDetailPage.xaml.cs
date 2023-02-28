@@ -161,7 +161,7 @@ namespace INCOMSYSTEM.Pages.Details
             var fileExtension = file.Split('.').Last();
             if (fileExtension != "docx" && fileExtension != "doc" && fileExtension != "pdf")
             {
-                // TODO: Сделать вывод ошибки о неправильном формате
+                AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
             TempFile = File.ReadAllBytes(file);
@@ -169,6 +169,7 @@ namespace INCOMSYSTEM.Pages.Details
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
             FileName = file.Split('\\').Last();
+            AdditionalWindow.HideError();
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -180,6 +181,7 @@ namespace INCOMSYSTEM.Pages.Details
                     return;
             }
 
+            AdditionalWindow.HideError();
             var addWindow = Application.Current.Windows.OfType<AdditionalWindow>().First();
             addWindow.DialogResult = true;
             addWindow.Close();
@@ -189,8 +191,7 @@ namespace INCOMSYSTEM.Pages.Details
         {
             if (IsNullOrWhiteSpace())
             {
-                MessageBox.Show("Поля не могут быть пустыми");
-                // TODO: Сделать вывод ошибки снизу окна или всплывающей подсказкой
+                AdditionalWindow.ShowError("Поля не могут быть пустыми");
                 return false;
             }
             if (!GetValues()) return false;
@@ -219,8 +220,7 @@ namespace INCOMSYSTEM.Pages.Details
         {
             if (IsNullOrWhiteSpace())
             {
-                MessageBox.Show("Поля не могут быть пустыми");
-                // TODO: Сделать вывод ошибки снизу окна или всплывающей подсказкой
+                AdditionalWindow.ShowError("Поля не могут быть пустыми");
                 return false;
             }
             if (!GetValues()) return false;
@@ -261,18 +261,18 @@ namespace INCOMSYSTEM.Pages.Details
             _desc = DescriptionBox.Value;
             if (!decimal.TryParse(PriceBox.Value, out _price))
             {
-                MessageBox.Show("Не удалось преобразовать цену в число");
+                AdditionalWindow.ShowError("Поля не могут быть пустыми");
                 return false;
             }
 
             if (!DiscountBox.IsWhiteSpace && !byte.TryParse(DiscountBox.Value, out _disc))
             {
-                MessageBox.Show("Не удалось преобразовать скидку");
+                AdditionalWindow.ShowError("Поля не могут быть пустыми");
                 return false;
             }
 
             if (int.TryParse(ApproxTimeBox.Value, out _approx)) return true;
-            MessageBox.Show("Не удалось преобразовать время выполнения в число");
+            AdditionalWindow.ShowError("Поля не могут быть пустыми");
             return false;
 
         }
@@ -281,11 +281,6 @@ namespace INCOMSYSTEM.Pages.Details
         {
             return NameBox.IsWhiteSpace || DescriptionBox.IsWhiteSpace || PriceBox.IsWhiteSpace ||
                    ApproxTimeBox.IsWhiteSpace;
-            
-            return string.IsNullOrWhiteSpace(NameBox.Value)
-                   || string.IsNullOrWhiteSpace(DescriptionBox.Value)
-                   || string.IsNullOrWhiteSpace(PriceBox.Value)
-                   || string.IsNullOrWhiteSpace(ApproxTimeBox.Value);
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

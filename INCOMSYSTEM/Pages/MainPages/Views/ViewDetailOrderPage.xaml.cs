@@ -36,7 +36,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         {
             CustomerBlock.Text = $"{order.Customers.name}";
             PriceBox.Text = $"{order.price:0.00 руб.}";
-            DifficultyBox.Text = $"{order.difficulty}";
+            DifficultyBox.Text = order.difficulty.ToString(CultureInfo.InvariantCulture);
             if (order.Chats.Employees != null)
             {
                 ManagerBlock.Text = $"{order.Chats.Employees.surname} {order.Chats.Employees.name}";
@@ -148,7 +148,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             var fileExtension = file.Split('.').Last();
             if (fileExtension != "docx" && fileExtension != "doc" && fileExtension != "pdf")
             {
-                // TODO: Сделать вывод ошибки о неправильном формате
+                AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
             TempFile = File.ReadAllBytes(file);
@@ -156,20 +156,26 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
             FileName = $"Дополнение к договору.{TempFileExtension}";
+            AdditionalWindow.HideError();
         }
 
         private void DifficultyBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!decimal.TryParse(DifficultyBox.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var difficulty)) return;
-            var price = _order.price * difficulty;
+            if (!decimal.TryParse(DifficultyBox.Text.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var difficulty))
+            {
+                AdditionalWindow.ShowError("Не удалось преобразовать коэффициент сложности в строку");
+                return;
+            }
+            var price = _order.Tasks.newPrice * difficulty;
             PriceBox.Text = Math.Round(price).ToString(CultureInfo.InvariantCulture);
+            AdditionalWindow.HideError();
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!decimal.TryParse(DifficultyBox.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var difficulty))
+            if (!decimal.TryParse(DifficultyBox.Text.Replace(',', '.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var difficulty))
             {
-                MessageBox.Show("Не удалось преобразовать коэффициент сложности в строку");
+                AdditionalWindow.ShowError("Не удалось преобразовать коэффициент сложности в строку");
                 return;
             }
             if (!IsEquals())
@@ -177,8 +183,8 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 using (var db = new INCOMSYSTEMEntities())
                 {
                     var order = db.Orders.First(s => s.id == _order.id);
-                    order.idExecutor = (ExecutorBox.SelectedItem as Employees).idUser;
-                    order.price = Math.Round(_order.price * difficulty);
+                    order.idExecutor = ((Employees)ExecutorBox.SelectedItem).idUser;
+                    order.price = Math.Round(_order.Tasks.newPrice * difficulty);
                     order.difficulty = (double)difficulty;
                     order.planDateStart = PlanDateStartBox.SelectedDate;
                     order.factDateStart = FactDateStartBox.SelectedDate;
@@ -190,6 +196,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 }
             }
 
+            AdditionalWindow.HideError();
             var addWindow = Application.Current.Windows.OfType<AdditionalWindow>().First();
             addWindow.DialogResult = true;
             addWindow.Close();
@@ -209,7 +216,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         private bool IsEquals()
         {
             return ((Employees)ExecutorBox.SelectedItem).idUser == _order.idExecutor
-                        && DifficultyBox.Text == _order.difficulty.ToString()
+                        && DifficultyBox.Text == _order.difficulty.ToString(CultureInfo.InvariantCulture)
                         && PlanDateStartBox.SelectedDate == _order.planDateStart
                         && FactDateStartBox.SelectedDate == _order.factDateStart
                         && PlanDateCompleteBox.SelectedDate == _order.planDateComplete
@@ -227,6 +234,12 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                                           && PlanDateCompleteBox.SelectedDate.Value < PlanDateStartBox.SelectedDate.Value;
             FactDateCompleteBox.IsWrong = FactDateCompleteBox.SelectedDate != null &&  FactDateStartBox.SelectedDate != null
                                           && FactDateCompleteBox.SelectedDate.Value < FactDateStartBox.SelectedDate.Value;
+            
+            if(PlanDateStartBox.IsWrong) AdditionalWindow.ShowError("Плановая дата начала не может быть больше плановой даты завершения");
+            else if(FactDateStartBox.IsWrong) AdditionalWindow.ShowError("Фактическая дата начала не может быть больше фактической даты завершения");
+            else if(PlanDateCompleteBox.IsWrong) AdditionalWindow.ShowError("Плановая дата завершения не может быть меньше плановой даты начала");
+            else if(FactDateCompleteBox.IsWrong) AdditionalWindow.ShowError("Фактическая дата завершения не может быть меньше фактической даты начала");
+            else AdditionalWindow.HideError();
         }
     }
 }
