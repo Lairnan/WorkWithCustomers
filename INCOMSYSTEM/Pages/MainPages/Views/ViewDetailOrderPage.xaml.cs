@@ -162,7 +162,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         {
             if (!decimal.TryParse(DifficultyBox.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var difficulty)) return;
             var price = _order.price * difficulty;
-            PriceBox.Text = Math.Round(price).ToString();
+            PriceBox.Text = Math.Round(price).ToString(CultureInfo.InvariantCulture);
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -180,10 +180,12 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                     order.idExecutor = (ExecutorBox.SelectedItem as Employees).idUser;
                     order.price = Math.Round(_order.price * difficulty);
                     order.difficulty = (double)difficulty;
-                    order.planDateStart = PlanDateStartBox.SelectedDate.Value;
-                    order.factDateStart = FactDateStartBox.SelectedDate.Value;
-                    order.planDateComplete = PlanDateCompleteBox.SelectedDate.Value;
-                    order.factDateComplete = FactDateCompleteBox.SelectedDate.Value;
+                    order.planDateStart = PlanDateStartBox.SelectedDate;
+                    order.factDateStart = FactDateStartBox.SelectedDate;
+                    order.planDateComplete = PlanDateCompleteBox.SelectedDate;
+                    order.factDateComplete = FactDateCompleteBox.SelectedDate;
+                    order.attachment = TempFile;
+                    order.fileExtension = TempFileExtension;
                     db.SaveChanges();
                 }
             }
@@ -213,6 +215,18 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                         && PlanDateCompleteBox.SelectedDate == _order.planDateComplete
                         && FactDateCompleteBox.SelectedDate == _order.factDateComplete
                         && (_fileOrder == TempFile && _fileOrderExtension == TempFileExtension);
+        }
+
+        private void DateBox_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PlanDateStartBox.IsWrong = PlanDateStartBox.SelectedDate != null &&  PlanDateCompleteBox.SelectedDate != null
+                                       && PlanDateStartBox.SelectedDate.Value > PlanDateCompleteBox.SelectedDate.Value;
+            FactDateStartBox.IsWrong = FactDateStartBox.SelectedDate != null &&  FactDateCompleteBox.SelectedDate != null
+                                       && FactDateStartBox.SelectedDate.Value > FactDateCompleteBox.SelectedDate.Value;
+            PlanDateCompleteBox.IsWrong = PlanDateCompleteBox.SelectedDate != null &&  PlanDateStartBox.SelectedDate != null
+                                          && PlanDateCompleteBox.SelectedDate.Value < PlanDateStartBox.SelectedDate.Value;
+            FactDateCompleteBox.IsWrong = FactDateCompleteBox.SelectedDate != null &&  FactDateStartBox.SelectedDate != null
+                                          && FactDateCompleteBox.SelectedDate.Value < FactDateStartBox.SelectedDate.Value;
         }
     }
 }

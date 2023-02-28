@@ -11,7 +11,7 @@
         WindowState="Normal"
         Background="DimGray"
         ResizeMode="NoResize"
-        Height="500"
+        Height="550"
         Width="600"
         BorderBrush="Black"
         BorderThickness="2">

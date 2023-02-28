@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
       xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -59,6 +60,14 @@
                         <Setter Property="Height" Value="30"/>
                         <Setter Property="Margin" Value="0 5 0 0"/>
                     </Style>
+                    <Style TargetType="controls:DatePickerEx" BasedOn="{StaticResource {x:Type controls:DatePickerEx}}">
+                        <Setter Property="BorderBrush" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsWrong}" Value="True">
+                                <Setter Property="BorderBrush" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
                 </StackPanel.Resources>
                 <controls:InputTextBox x:Name="CustomerBlock" IsReadOnly="True"/>
                 <ComboBox x:Name="ExecutorBox">
@@ -79,10 +88,10 @@
                 <controls:InputTextBox x:Name="ManagerBlock" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="PriceBox" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="DifficultyBox" TextChanged="DifficultyBox_TextChanged"/>
-                <controls:DatePickerEx x:Name="PlanDateStartBox"/>
-                <controls:DatePickerEx x:Name="FactDateStartBox"/>
-                <controls:DatePickerEx x:Name="PlanDateCompleteBox"/>
-                <controls:DatePickerEx x:Name="FactDateCompleteBox"/>
+                <controls:DatePickerEx x:Name="PlanDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
+                <controls:DatePickerEx x:Name="FactDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
+                <controls:DatePickerEx x:Name="PlanDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
+                <controls:DatePickerEx x:Name="FactDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

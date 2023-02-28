@@ -129,12 +129,13 @@
 
     <Style x:Key="DatePickerTextBoxStyle" TargetType="{x:Type DatePickerTextBox}" BasedOn="{StaticResource MainStyle}">
         <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="Margin" Value="0 4"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
                     <Border CornerRadius="5"
-                            BorderBrush="White"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0 0 0 1">
                         <ScrollViewer x:Name="PART_ContentHost"/>
                     </Border>
@@ -177,6 +178,7 @@
                         </Grid.ColumnDefinitions>
                         <DatePickerTextBox
                             x:Name="PART_TextBox"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             Style="{StaticResource DatePickerTextBoxStyle}"/>
                         <Button
                             Background="Transparent"

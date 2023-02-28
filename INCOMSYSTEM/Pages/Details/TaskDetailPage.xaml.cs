@@ -17,7 +17,7 @@ namespace INCOMSYSTEM.Pages.Details
             _isEdit = true;
             SaveBtn.Content = "Сохранить";
             
-            Task = task;
+            _task = task;
             _fileTask = task.attachment;
             _fileTaskExtension = task.fileExtension;
             SetFileValues(task);
@@ -74,7 +74,7 @@ namespace INCOMSYSTEM.Pages.Details
             }
         }
 
-        private readonly Tasks Task;
+        private readonly Tasks _task;
 
         private string _fileName;
         private string FileName
@@ -198,7 +198,7 @@ namespace INCOMSYSTEM.Pages.Details
             if (IsEqualsOrNull()) return true;
             using (var db = new INCOMSYSTEMEntities())
             {
-                var task = db.Tasks.First(s => s.id == Task.id);
+                var task = db.Tasks.First(s => s.id == _task.id);
                 task.name = _name;
                 task.description = _desc;
                 task.price = _price;
@@ -301,12 +301,12 @@ namespace INCOMSYSTEM.Pages.Details
 
         private bool IsEqualsOrNull()
         {
-            if(_isEdit) return NameBox.Value == Task.name
-                       && ((Specializations)SpecBox.SelectedItem).id == Task.idSpecialization
-                       && DescriptionBox.Value == Task.description
-                       && PriceBox.Value == Task.price.ToString("0.00")
-                       && DiscountBox.Value == Task.discount.ToString()
-                       && ApproxTimeBox.Value == Task.approxCompleteTime.ToString()
+            if(_isEdit) return NameBox.Value == _task.name
+                       && ((Specializations)SpecBox.SelectedItem).id == _task.idSpecialization
+                       && DescriptionBox.Value == _task.description
+                       && PriceBox.Value == _task.price.ToString("0.00")
+                       && DiscountBox.Value == _task.discount.ToString()
+                       && ApproxTimeBox.Value == _task.approxCompleteTime.ToString()
                        && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
 
             return NameBox.IsWhiteSpace
