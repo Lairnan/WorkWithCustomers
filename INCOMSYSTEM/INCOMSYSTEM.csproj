@@ -116,6 +116,7 @@
     <Compile Include="Context\UsersDetail.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DatePickerEx.cs" />
     <Compile Include="Controls\InputTextBox.cs" />
     <Compile Include="Pages\Details\TaskDetailPage.xaml.cs">
       <DependentUpon>TaskDetailPage.xaml</DependentUpon>
@@ -165,6 +166,10 @@
     </Page>
     <Page Include="Resources\ButtonStyle.xaml" />
     <Page Include="Resources\ComboBoxStyle.xaml" />
+    <Page Include="Resources\DatePickerExStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\ItemsControlNullTarget.xaml" />
     <Page Include="Resources\MainStyle.xaml" />
     <Page Include="Resources\WindowStyle.xaml" />

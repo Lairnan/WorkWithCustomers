@@ -47,7 +47,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
-                <TextBlock x:Name="AuthBlock" VerticalAlignment="Center"/>
+                <TextBlock x:Name="AuthBlock" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                 <Image Source="../Images/user.png"
                        Width="32"
                        Height="32"

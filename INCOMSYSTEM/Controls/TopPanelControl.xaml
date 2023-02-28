@@ -51,16 +51,16 @@
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal">
                     <Button Click="MinimizeBtn_Click" Margin="3 0" Width="40">
-                        <TextBlock Text="0" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="0" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                     </Button>
                     <Button x:Name="SwitchStateBtn"
                             Margin="3 0"
                             Click="SwitchStateBtn_Click"
                             Width="40">
-                        <TextBlock x:Name="WindowCurrentState" Text="1" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="WindowCurrentState" Text="1" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                     </Button>
                     <Button Click="CloseBtn_Click" Margin="3 0" Width="40">
-                        <TextBlock Text="r" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="r" FontFamily="Webdings" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                     </Button>
                 </StackPanel>
             </Grid>

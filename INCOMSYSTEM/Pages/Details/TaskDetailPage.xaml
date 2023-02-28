@@ -5,6 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
       mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}"/>
+    </Page.Resources>
     <Grid HorizontalAlignment="Center"
           VerticalAlignment="Center">
         <Grid.RowDefinitions>
@@ -18,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <StackPanel.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
                     <Setter Property="Height" Value="30"/>
                     <Setter Property="TextWrapping" Value="Wrap"/>
                 </Style>

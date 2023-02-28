@@ -7,6 +7,10 @@
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       Title="Список заказов">
+    <Page.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}"/>
+    </Page.Resources>
     <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -17,7 +17,7 @@
                             Background="{TemplateBinding Background}"
                             Cursor="{TemplateBinding Cursor}"
                             CornerRadius="5">
-                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
+                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource TextBlockStyle}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -35,11 +35,4 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
-    <!-- <Grid.Background> -->
-    <!--     <LinearGradientBrush EndPoint="3,-1" StartPoint="0.5,4"> -->
-    <!--         <GradientStop Color="#FF5776FF" Offset="0"/> -->
-    <!--         <GradientStop Color="#FFFEFEFF" Offset="1"/> -->
-    <!--     </LinearGradientBrush> -->
-    <!-- </Grid.Background> -->
 </ResourceDictionary>

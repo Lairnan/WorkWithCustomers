@@ -18,7 +18,8 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                         <Label Content="{TemplateBinding Content}"
-                               Foreground="{TemplateBinding Foreground}"
+                               Foreground="White"
+                               Style="{StaticResource LabelStyle}"
                                FontFamily="{TemplateBinding FontFamily}"
                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
@@ -49,7 +50,7 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
                         <TextBlock Text="{TemplateBinding Content}"
-                                   Foreground="{TemplateBinding Foreground}"
+                                   Foreground="White"
                                    TextWrapping="Wrap"
                                    TextAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                     </Border>

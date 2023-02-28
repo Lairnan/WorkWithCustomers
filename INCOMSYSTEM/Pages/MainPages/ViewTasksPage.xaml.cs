@@ -24,7 +24,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             using (var db = new INCOMSYSTEMEntities())
             {
                 AllCountTask.Text = db.Tasks.Count().ToString();
-                
+
                 var max = db.Tasks.Max(s => s.price);
 
                 LeftSlider.Maximum = (long)max;

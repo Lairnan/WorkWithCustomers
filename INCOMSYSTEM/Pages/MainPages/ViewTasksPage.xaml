@@ -7,6 +7,10 @@
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
       mc:Ignorable="d"
       Title="Список задач">
+    <Page.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
