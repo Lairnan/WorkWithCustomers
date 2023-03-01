@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d"
-      Title="Главное окно">
+      Title="Главное окно"
+      Background="DimGray">
     <Page.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
         <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}"/>
@@ -16,32 +17,88 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="300"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <Button Margin="5" Content="Задачи" x:Name="Tasks" Click="Tasks_Click"/>
-            <Rectangle Margin="5" Width="200" Height="3" Fill="Gray" RadiusX="50" RadiusY="50"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <TextBlock TextWrapping="Wrap" Text="Хдесь можно просмотреть имеющиеся задачи с исполнителями "/>
-            <Rectangle Margin="5" Width="250" Height="3" Fill="White" RadiusX="50" RadiusY="50"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <Button Margin="5" Content="Заказы" x:Name="Order" Click="Order_Click"/>
-            <Rectangle Margin="5" Width="200" Height="3" Fill="Gray" RadiusX="50" RadiusY="50"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock TextWrapping="Wrap" Text="Я календарлбятретьесентябля"/>
-            <Rectangle Margin="5" Width="250" Height="3" Fill="White" RadiusX="50" RadiusY="50"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="0">
-            <Button Margin="5" Content="Пользователи"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="2">
-            <TextBlock TextWrapping="Wrap" Text="Здесь можно просмотреть имеющихся пользвателей в системе"/>
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5"
+                    Content="Задачи"
+                    Click="ViewTasksBtn_Click"/>
+            <TextBlock Grid.Column="1"
+                       TextWrapping="Wrap"
+                       Text="Перейдя в окно с задачи, появится список 
+                       задач с возможность их фильтрации, так же можно 
+                       их добавить, редактировать или удалить"/>
+            <Rectangle Grid.Row="1"
+                       Grid.Column="0"
+                       Margin="15 5"
+                       Height="3"
+                       Fill="Gray"
+                       RadiusX="50"
+                       RadiusY="50"/>
+            <Rectangle Grid.Row="1"
+                       Grid.Column="1"
+                       Margin="15 5"
+                       Height="3"
+                       Fill="White"
+                       RadiusX="50"
+                       RadiusY="50"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5"
+                    Content="Заказы"
+                    Click="ViewOrderBtn_Click"/>
+            <TextBlock Grid.Column="1"
+                       TextWrapping="Wrap"
+                       Text="Перейдя в окно с заказами, появится список 
+                       заказов, где можно просмотреть, изменить, 
+                       перейти к чату заказа, сформировать договор"/>
+            <Rectangle Grid.Row="1"
+                       Grid.Column="0"
+                       Margin="15 5"
+                       Height="3"
+                       Fill="Gray"
+                       RadiusX="50"
+                       RadiusY="50"/>
+            <Rectangle Grid.Row="1"
+                       Grid.Column="1"
+                       Margin="15 5"
+                       Height="3"
+                       Fill="White"
+                       RadiusX="50"
+                       RadiusY="50"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5"
+                    Content="Пользователи"/>
+            <TextBlock Grid.Column="1"
+                       TextWrapping="Wrap"
+                       Text="Перейдя в окно с пользователями, появится список 
+                       пользователей с возможность фильтрации поиска, так же 
+                       можно просмотреть аккаунт пользователя и перейти к чату, 
+                       если существует"/>
+        </Grid>
     </Grid>
 </Page>
 

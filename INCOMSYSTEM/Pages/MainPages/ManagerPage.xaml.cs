@@ -13,12 +13,12 @@ namespace INCOMSYSTEM.Pages.MainPages
         {
             InitializeComponent();
         }
-        private void Tasks_Click(object sender, RoutedEventArgs e)
+        private void ViewTasksBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.MainFrame.Navigate(new ViewTasksPage());
         }
 
-        private void Order_Click(object sender, RoutedEventArgs e)
+        private void ViewOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.MainFrame.Navigate(new ViewOrdersPage());
         }
