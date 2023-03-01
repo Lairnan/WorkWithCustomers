@@ -1,0 +1,67 @@
+﻿<Page x:Class="INCOMSYSTEM.Pages.MainPages.ManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+      Title="Главное окно">
+    <Page.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+        <Style TargetType="Label" BasedOn="{StaticResource LabelStyle}"/>
+    </Page.Resources>
+    <Grid HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Button Margin="5" Content="Задачи" x:Name="Tasks" Click="Tasks_Click"/>
+            <Rectangle Margin="5" Width="200" Height="3" Fill="Gray" RadiusX="50" RadiusY="50"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <TextBlock TextWrapping="Wrap" Text="Хдесь можно просмотреть имеющиеся задачи с исполнителями "/>
+            <Rectangle Margin="5" Width="250" Height="3" Fill="White" RadiusX="50" RadiusY="50"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Button Margin="5" Content="Заказы" x:Name="Order" Click="Order_Click"/>
+            <Rectangle Margin="5" Width="200" Height="3" Fill="Gray" RadiusX="50" RadiusY="50"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock TextWrapping="Wrap" Text="Я календарлбятретьесентябля"/>
+            <Rectangle Margin="5" Width="250" Height="3" Fill="White" RadiusX="50" RadiusY="50"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Button Margin="5" Content="Пользователи"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock TextWrapping="Wrap" Text="Здесь можно просмотреть имеющихся пользвателей в системе"/>
+        </StackPanel>
+    </Grid>
+</Page>
+
+
+<!--<Path Grid.Row="2"
+              x:Name="TestPath"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Height="250"
+              Width="250"
+              Fill="Black"
+              Stroke="White"
+              StrokeThickness="2"
+              Data="M0,0 a30,30 0 1 1 0,1 z
+              M8,-5 a7,7 0 1 1 0,1 z
+              M11,-6 a2,2 0 1 1 0,1 z
+              M34,-5 a7,7 0 1 1 0,1 z
+              M42,-6 a2,2 0 1 1 0,1 z
+              M24,-5 h9
+              M7,-5 l-3,-5
+              M49,-5 l5,-10
+              M28,3 a1,1 0 1 1 0,1 z
+              M15,15 h30"/>-->

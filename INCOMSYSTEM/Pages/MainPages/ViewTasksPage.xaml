@@ -106,14 +106,16 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding name}"
                                        Grid.Row="0"
+                                       Style="{StaticResource TextBlockStyle}"
                                        FontSize="18"
                                        FontWeight="Bold"/>
                             <TextBlock Text="{Binding shortDescription}"
                                        TextWrapping="Wrap"
+                                       Style="{StaticResource TextBlockStyle}"
                                        Grid.Row="1"/>
                             <StackPanel Grid.Row="2" Margin="0 5">
-                                <TextBlock Text="{Binding Specializations.name, StringFormat='{}Область: {0}'}" TextWrapping="Wrap"/>
-                                <TextBlock Text="{Binding approxCompleteTime, StringFormat='{}Примерные дни выполнения: {0} дней'}"/>
+                                <TextBlock Text="{Binding Specializations.name, StringFormat='{}Область: {0}'}" TextWrapping="Wrap" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Text="{Binding approxCompleteTime, StringFormat='{}Примерные дни выполнения: {0} дней'}" Style="{StaticResource TextBlockStyle}"/>
                             </StackPanel>
 
                             <Border Grid.Column="1"

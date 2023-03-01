@@ -50,7 +50,7 @@ namespace INCOMSYSTEM.Windows
                     MainFrame.Navigate(new ViewOrdersPage());
                     break;
                 case 3:
-                    MainFrame.Navigate(new ViewOrdersPage());
+                    MainFrame.Navigate(new ManagerPage());
                     break;
                 default:
                     MessageBox.Show("Такого окна не существует, ты как вообще сюда попал?");
