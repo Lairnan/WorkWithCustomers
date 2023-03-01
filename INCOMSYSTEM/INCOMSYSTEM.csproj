@@ -235,12 +235,15 @@
     <AdditionalFiles Include="Resources\AgreementTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <Resource Include="Images\profileSettings.png" />
+    <Resource Include="Images\shutdown.png" />
     <Resource Include="Images\user.png" />
     <Resource Include="Images\authImage.png" />
     <Content Include="Fonts\Roboto-Regular.ttf" />
     <Resource Include="Images\eyeOpen.png" />
     <Resource Include="Images\eyeClose.png" />
     <Resource Include="Images\gear.png" />
+    <Resource Include="Images\home.png" />
     <Content Include="Images\oldlogo.png" />
   </ItemGroup>
   <ItemGroup>

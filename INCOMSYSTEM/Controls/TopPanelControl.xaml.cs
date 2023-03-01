@@ -15,6 +15,7 @@ namespace INCOMSYSTEM.Controls
             Loaded += (s, e) =>
             {
                 var window = (this.Parent as Grid).Parent as Window;
+                window.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
                 SwitchStateBtn.Visibility = window.ResizeMode != ResizeMode.NoResize ? Visibility.Visible : Visibility.Collapsed;
                 WindowCurrentState.Text = window.WindowState == WindowState.Maximized ? "2" : "1";
             };

@@ -252,7 +252,8 @@
                                         Minimum="0"
                                         x:Name="LeftSlider"/>
                                 <TextBox Text="{Binding ElementName=LeftSlider, Path=Value, StringFormat='{}{0:0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         TextAlignment="Center"/>
+                                         TextAlignment="Center"
+                                         Style="{StaticResource TextBoxStyle}"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <TextBlock Text="До"
@@ -261,7 +262,8 @@
                                         Minimum="0"
                                         x:Name="RightSlider"/>
                                 <TextBox Text="{Binding ElementName=RightSlider, Path=Value, StringFormat='{}{0:0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         TextAlignment="Center"/>
+                                         TextAlignment="Center"
+                                         Style="{StaticResource TextBoxStyle}"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>

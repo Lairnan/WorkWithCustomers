@@ -109,7 +109,7 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="CheckBox">
-                                                    <ContentPresenter/>
+                                                    <Label Content="{TemplateBinding Content}" Style="{x:Null}"/>
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
