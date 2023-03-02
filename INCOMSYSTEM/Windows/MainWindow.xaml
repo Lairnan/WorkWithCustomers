@@ -31,7 +31,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <controls:TopPanelControl Grid.Column="0" Grid.ColumnSpan="2"/>
@@ -62,25 +62,25 @@
                IsTabStop="False"
                NavigationUIVisibility="Hidden"/>
         
-        <Border Grid.Column="0"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Left"
-                Grid.Row="1"
-                Grid.RowSpan="2"
-                BorderBrush="Coral"
-                BorderThickness="0 0 1 0">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Width" Value="35"/>
+        <controls:BorderEx Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           HorizontalAlignment="Left"
+                           Grid.Row="1"
+                           Grid.RowSpan="2"
+                           BorderBrush="Coral"
+                           BorderThickness="0 0 1 0">
+            <controls:BorderEx.Style>
+                <Style TargetType="controls:BorderEx">
+                    <Setter Property="Width" Value="50"/>
                     <Setter Property="Panel.ZIndex" Value="1"/>
                     <Setter Property="Background" Value="#93696969"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=SideBarImage, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                            <DataTrigger.EnterActions>
+                        <Trigger Property="IsMouseEnter" Value="True">
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Width"
-                                                         To="150"
+                                                         To="200"
                                                          Duration="0:0:0.8">
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase EasingMode="EaseInOut"/>
@@ -88,12 +88,12 @@
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Width"
-                                                         To="35"
+                                                         To="50"
                                                          Duration="0:0:0.8">
                                             <DoubleAnimation.EasingFunction>
                                                 <SineEase EasingMode="EaseInOut"/>
@@ -101,51 +101,59 @@
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
+                            </Trigger.ExitActions>
+                        </Trigger>
                     </Style.Triggers>
                 </Style>
-            </Border.Style>
-            <Border.Resources>
+            </controls:BorderEx.Style>
+            <controls:BorderEx.Resources>
                 <Style TargetType="Image">
-                    <Setter Property="Height" Value="24"/>
-                    <Setter Property="Width" Value="24"/>
+                    <Setter Property="Height" Value="32"/>
+                    <Setter Property="Width" Value="32"/>
                 </Style>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
                     <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Margin" Value="5 0 0 0"/>
+                    <Setter Property="Margin" Value="10 0 0 0"/>
+                    <Setter Property="FontSize" Value="18"/>
                 </Style>
-            </Border.Resources>
-            <Grid Margin="5 0 0 0">
+            </controls:BorderEx.Resources>
+            <Grid Margin="8 0 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <CheckBox x:Name="SideBarImage"
-                          Style="{StaticResource ClearTemplate}">
-                    <CheckBox.Content>
+                <Button Style="{StaticResource SideBarButton}" Click="MainMenuBtn_Click">
+                    <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Images/logo.png"/>
                             <TextBlock Text="INCOMSYSTEM"/>
                         </StackPanel>
-                    </CheckBox.Content>
-                </CheckBox>
+                    </Button.Content>
+                </Button>
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center">
-                    <Button Style="{StaticResource SideBarButton}">
+                    <Button Style="{StaticResource SideBarButton}" Click="ReviewBtn_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="../Images/home.png"/>
-                                <TextBlock Text="Главное меню"/>
+                                <TextBlock Text="Обзор"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Style="{StaticResource SideBarButton}" Margin="0 5">
+                    <Button Style="{StaticResource SideBarButton}" Margin="0 5" Click="ProfileBtn_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="../Images/profileSettings.png"/>
                                 <TextBlock Text="Профиль"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource SideBarButton}" Margin="0 5" Click="ChatBtn_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="../Images/profileSettings.png"/>
+                                <TextBlock Text="Мессенджер"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
@@ -162,6 +170,6 @@
                     </Button.Content>
                 </Button>
             </Grid>
-        </Border>
+        </controls:BorderEx>
     </Grid>
 </Window>

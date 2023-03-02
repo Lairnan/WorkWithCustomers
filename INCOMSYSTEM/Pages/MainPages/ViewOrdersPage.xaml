@@ -36,8 +36,10 @@
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="TextAlignment" Value="Center"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="DimGray"/>
                         </Style>
                         <Style TargetType="Border">
+                            <Setter Property="Background" Value="DimGray"/>
                             <Setter Property="BorderBrush" Value="White"/>
                             <Setter Property="BorderThickness" Value="1"/>
                         </Style>
@@ -79,12 +81,10 @@
                 </Grid>
                 <ItemsControl x:Name="OrdersList"
                               Grid.Row="1"
-                              Background="Transparent"
-                              BorderBrush="Transparent"
-                              BorderThickness="0">
+                              Style="{StaticResource ItemsVisible}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="OrderGrid" Margin="0 0 0 10">
+                            <CheckBox x:Name="OrderGrid" Margin="0 0 0 10" Style="{StaticResource ClearCheckBoxTemplate}">
                                 <CheckBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Просмотреть заказ"
@@ -103,18 +103,6 @@
                                                                             Path=DataContext}"/>
                                     </ContextMenu>
                                 </CheckBox.ContextMenu>
-                                <CheckBox.Style>
-                                    <Style TargetType="CheckBox">
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="CheckBox">
-                                                    <Label Content="{TemplateBinding Content}" Style="{x:Null}"/>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </CheckBox.Style>
                                 <CheckBox.Content>
                                     <Grid>
                                         <Grid.Resources>
@@ -122,8 +110,10 @@
                                                 <Setter Property="Foreground" Value="White"/>
                                                 <Setter Property="TextAlignment" Value="Center"/>
                                                 <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="Background" Value="DimGray"/>
                                             </Style>
                                             <Style TargetType="Border">
+                                                <Setter Property="Background" Value="DimGray"/>
                                                 <Setter Property="BorderBrush" Value="White"/>
                                                 <Setter Property="BorderThickness" Value="1"/>
                                                 <Setter Property="Padding" Value="5"/>

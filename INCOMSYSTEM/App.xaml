@@ -9,6 +9,7 @@
                  <ResourceDictionary Source="Resources/ButtonStyle.xaml"/>
                  <ResourceDictionary Source="Resources/ComboBoxStyle.xaml"/>
                  <ResourceDictionary Source="Resources/DatePickerExStyle.xaml"/>
+                 <ResourceDictionary Source="Resources/ItemsControlNullTarget.xaml"/>
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>

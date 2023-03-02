@@ -15,12 +15,12 @@ namespace INCOMSYSTEM.Pages.MainPages
         }
         private void ViewTasksBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.MainFrame.Navigate(new ViewTasksPage());
+            MainWindow.ReviewFrame.Navigate(new ViewTasksPage());
         }
 
         private void ViewOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.MainFrame.Navigate(new ViewOrdersPage());
+            MainWindow.ReviewFrame.Navigate(new ViewOrdersPage());
         }
     }
 }

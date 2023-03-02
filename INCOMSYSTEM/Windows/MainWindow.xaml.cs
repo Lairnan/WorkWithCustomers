@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Media.Animation;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using INCOMSYSTEM.Context;
 using System.Linq;
@@ -18,13 +19,23 @@ namespace INCOMSYSTEM.Windows
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame = MFrame;
-            MainFrame.Navigated += MainFrameOnNavigated;
+            ReviewFrame = new Frame();
+            _sideBarMenu.Add(MenuItems.Review, null);
+            _sideBarMenu.Add(MenuItems.Profile, new ViewOrdersPage());
+            _sideBarMenu.Add(MenuItems.Chat, new Page());
+            ReviewFrame.Navigated += MainFrameOnNavigated;
             if (AuthUser == null)
             {
                 AuthBlock.Text = "Вы вошли как гость!";
-                MainFrame.Navigate(new ViewTasksPage());
+                ReviewFrame.Navigate(new ViewTasksPage());
+                return;
             }
+            SetAuthUserText();
+            SetStartPage();
+        }
+
+        private void SetAuthUserText()
+        {
             AuthBlock.Text = $"{AuthUser.Positions.name}, ";
             using (var db = new INCOMSYSTEMEntities())
             {
@@ -40,20 +51,24 @@ namespace INCOMSYSTEM.Windows
                     AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}" : "";
                 }
             }
+        }
 
+        private void SetStartPage()
+        {
             switch (AuthUser.idPos)
             {
                 case 1:
-                    MainFrame.Navigate(new ViewTasksPage());
+                    ReviewFrame.Navigate(new ViewTasksPage());
                     break;
                 case 2:
-                    MainFrame.Navigate(new ViewOrdersPage());
+                    ReviewFrame.Navigate(new ViewOrdersPage());
                     break;
                 case 3:
-                    MainFrame.Navigate(new ManagerPage());
+                    ReviewFrame.Navigate(new ManagerPage());
                     break;
                 default:
                     MessageBox.Show("Такого окна не существует, ты как вообще сюда попал?");
+                    this.Close();
                     break;
             }
         }
@@ -62,38 +77,41 @@ namespace INCOMSYSTEM.Windows
 
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
         {
-            Nav(sender);
-            BackBtn.IsEnabled = MainFrame.CanGoBack;
-        }
-
-        private async void Nav(object sender)
-        {
+            if (!Equals(MFrame.Content, _sideBarMenu[MenuItems.Review])) return;
             var page = ((Frame)sender).Content as Page;
             this.Title = page?.Title;
-
-            //var anim = new DoubleAnimation
-            //{
-            //    EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
-            //    To = 0d,
-            //    Duration = TimeSpan.FromSeconds(0.7)
-            //};
-
-            //MFrame.BeginAnimation(OpacityProperty, anim);
-
-            //await Task.Delay(700);
-
-            //await Task.Delay(25);
-
-            //anim.To = 1.0d;
-            //anim.Duration = TimeSpan.FromSeconds(0.7);
-            //MFrame.BeginAnimation(OpacityProperty, anim);
+            _sideBarMenu[MenuItems.Review] = page;
+            Nav(page);
+            BackBtn.IsEnabled = ReviewFrame.CanGoBack;
         }
 
-        public static Frame MainFrame { get; private set; }
+        private async void Nav(Page page)
+        {
+            
+            var anim = new DoubleAnimation
+            {
+                EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
+                To = 0d,
+                Duration = TimeSpan.FromSeconds(0.7)
+            };
 
+            MFrame.BeginAnimation(OpacityProperty, anim);
+
+            await Task.Delay(700);
+
+            MFrame.Content = page;
+            
+            await Task.Delay(25);
+
+            anim.To = 1.0d;
+            anim.Duration = TimeSpan.FromSeconds(0.7);
+            MFrame.BeginAnimation(OpacityProperty, anim);
+        }
+
+        public static Frame ReviewFrame { get; private set; }
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.GoBack();
+            ReviewFrame.GoBack();
         }
 
         private void QuitBtn_Click(object sender, RoutedEventArgs e)
@@ -101,5 +119,43 @@ namespace INCOMSYSTEM.Windows
             new AuthWindow().Show();
             this.Close();
         }
+
+        private readonly Dictionary<MenuItems, Page> _sideBarMenu = new Dictionary<MenuItems, Page>();
+
+        private void ReviewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Title = _sideBarMenu[MenuItems.Review].Title;
+            BackBtn.Visibility = Visibility.Visible;
+            MFrame.Content = _sideBarMenu[MenuItems.Review];
+        }
+        
+        private void ProfileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Title = "Профиль";
+            BackBtn.Visibility = Visibility.Collapsed;
+            MFrame.Content = _sideBarMenu[MenuItems.Profile];
+        }
+        
+        private void ChatBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Title = "Мессенджер";
+            BackBtn.Visibility = Visibility.Collapsed;
+            MFrame.Content = _sideBarMenu[MenuItems.Chat];
+        }
+
+        private void MainMenuBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ReviewBtn_Click(sender, e);
+            ReviewFrame = new Frame();
+            ReviewFrame.Navigated += MainFrameOnNavigated;
+            SetStartPage();
+        }
+    }
+
+    internal enum MenuItems
+    {
+        Review = 0,
+        Profile = 1,
+        Chat = 2
     }
 }

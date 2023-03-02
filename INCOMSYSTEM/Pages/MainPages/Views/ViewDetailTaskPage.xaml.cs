@@ -79,7 +79,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
             MessageBox.Show("Заказ успешно сформирован!");
             
-            MainWindow.MainFrame.GoBack();
+            MainWindow.ReviewFrame.GoBack();
         }
     }
 }

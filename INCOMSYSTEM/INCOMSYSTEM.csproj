@@ -116,6 +116,7 @@
     <Compile Include="Context\UsersDetail.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BorderEx.cs" />
     <Compile Include="Controls\DatePickerEx.cs" />
     <Compile Include="Controls\InputTextBox.cs" />
     <Compile Include="Pages\Details\TaskDetailPage.xaml.cs">
