@@ -42,7 +42,7 @@
     <Style TargetType="controls:InputTextBox" BasedOn="{StaticResource MainStyle}">
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="Padding" Value="3 2"/>
         <Setter Property="IsTabStop" Value="True"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="CaretBrush" Value="White"/>
@@ -289,7 +289,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <Label Content="{TemplateBinding Content}" Style="{x:Null}"/>
+                    <Label Content="{TemplateBinding Content}" Padding="0" Style="{x:Null}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

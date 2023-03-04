@@ -7,11 +7,10 @@
         mc:Ignorable="d"
         AllowsTransparency="True"
         WindowStyle="None"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Height="400"
-        MinHeight="350"
+        Height="475"
         Width="600"
-        MinWidth="550"
         Background="DimGray"
         BorderBrush="Black"
         BorderThickness="2">

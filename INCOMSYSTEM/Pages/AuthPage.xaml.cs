@@ -23,7 +23,7 @@ namespace INCOMSYSTEM.Pages
 
         private void RegBtnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Test");
+            AuthWindow.AuthFrame.Navigate(new RegPage());
         }
 
 
