@@ -254,7 +254,8 @@
                                            TextAlignment="Center"/>
                                 <Slider ValueChanged="Slider_ValueChanged"
                                         Minimum="0"
-                                        x:Name="LeftSlider"/>
+                                        x:Name="LeftSlider"
+                                        Maximum="{Binding ElementName=RightSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBox Text="{Binding ElementName=LeftSlider, Path=Value, StringFormat='{}{0:0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextAlignment="Center"
                                          Style="{StaticResource TextBoxStyle}"/>
@@ -263,7 +264,7 @@
                                 <TextBlock Text="До"
                                            TextAlignment="Center"/>
                                 <Slider ValueChanged="Slider_ValueChanged"
-                                        Minimum="0"
+                                        Minimum="{Binding ElementName=LeftSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         x:Name="RightSlider"/>
                                 <TextBox Text="{Binding ElementName=RightSlider, Path=Value, StringFormat='{}{0:0}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextAlignment="Center"

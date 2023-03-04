@@ -27,7 +27,6 @@ namespace INCOMSYSTEM.Pages.MainPages
 
                 var max = db.Tasks.Max(s => s.price);
 
-                LeftSlider.Maximum = (long)max;
                 RightSlider.Maximum = (long)max;
 
                 LeftSlider.Value = 0;
