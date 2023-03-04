@@ -44,13 +44,11 @@
                 <TextBlock Text="Цена"/>
                 <TextBlock Text="Сложность"/>
                 <TextBlock Text="Плановая дата начала"/>
-                <TextBlock Text="Фактическая дата начала"/>
                 <TextBlock Text="Плановая дата выполнения"/>
-                <TextBlock Text="Фактическая дата выполнения"/>
                 <TextBlock Text="Вложение" Height="85"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Width="175">
+            <StackPanel Grid.Column="1" Width="175" Margin="5 0">
                 <StackPanel.Resources>
                     <Style TargetType="controls:InputTextBox" BasedOn="{StaticResource {x:Type controls:InputTextBox}}">
                         <Setter Property="Height" Value="30"/>
@@ -76,9 +74,9 @@
                             <TextBlock Style="{StaticResource ComboBoxTextBlockStyle}">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1} {2}">
-                                        <Binding Path="surname"/>
-                                        <Binding Path="name"/>
-                                        <Binding Path="patronymic"/>
+                                        <Binding Path="Employees.surname"/>
+                                        <Binding Path="Employees.name"/>
+                                        <Binding Path="Employees.patronymic"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -89,9 +87,7 @@
                 <controls:InputTextBox x:Name="PriceBox" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="DifficultyBox" TextChanged="DifficultyBox_TextChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
-                <controls:DatePickerEx x:Name="FactDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
-                <controls:DatePickerEx x:Name="FactDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

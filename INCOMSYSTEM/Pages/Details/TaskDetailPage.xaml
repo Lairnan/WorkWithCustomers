@@ -32,8 +32,9 @@
             <TextBlock Text="Введите описание"/>
             <TextBlock Text="Введите цену"/>
             <TextBlock Text="Введите скидку"/>
+            <TextBlock Text="Введите преиод поддержки (дни)" Height="40"/>
             <TextBlock Text="Введите примерное время выполнения (дни)" Height="70"/>
-            <TextBlock Text="Добавьте вложение"/>
+            <TextBlock Text="Добавьте вложение" Height="100"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5 0">
             <StackPanel.Resources>
@@ -46,11 +47,18 @@
                 </Style>
             </StackPanel.Resources>
             <controls:InputTextBox PlaceHolder="Название" x:Name="NameBox"/>
-            <ComboBox DisplayMemberPath="name" x:Name="SpecBox" Height="30" Margin="0 10 0 0" SelectedIndex="0"/>
+            <ComboBox x:Name="SpecBox" Height="30" Margin="0 10 0 0" SelectedIndex="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource ComboBoxTextBlockStyle}" Text="{Binding name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <controls:InputTextBox PlaceHolder="Описание" x:Name="DescriptionBox"/>
             <controls:InputTextBox PlaceHolder="Цена" x:Name="PriceBox"/>
             <controls:InputTextBox PlaceHolder="Скидка" x:Name="DiscountBox"/>
-            <controls:InputTextBox PlaceHolder="Примерное время выполнения" x:Name="ApproxTimeBox" Margin="0 20 0 10"/>
+            <controls:InputTextBox PlaceHolder="Период поддержки" x:Name="SupportPeriod" Margin="0 10 0 0"/>
+            <controls:InputTextBox PlaceHolder="Примерное время выполнения" x:Name="ApproxTimeBox" Margin="0 15 0 15"/>
             <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -81,6 +89,7 @@
             <TextBlock Text="*"/>
             <TextBlock Text="*"/>
             <TextBlock Text=""/>
+            <TextBlock Text="*" Margin="0 10 0 5"/>
             <TextBlock Text="*" Margin="0 15 0 0"/>
             <TextBlock Text=""/>
         </StackPanel>

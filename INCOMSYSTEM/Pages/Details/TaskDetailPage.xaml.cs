@@ -40,6 +40,7 @@ namespace INCOMSYSTEM.Pages.Details
             PriceBox.Text = $"{task.price:0.00}";
             if (task.discount != null) DiscountBox.Text = $"{task.discount}";
             ApproxTimeBox.Text = $"{task.approxCompleteTime}";
+            SupportPeriod.Text = task.supportPeriod.ToString();
         }
 
         private void SetFileValues(Tasks task)
@@ -207,6 +208,7 @@ namespace INCOMSYSTEM.Pages.Details
                 else task.discount = null;
                 task.approxCompleteTime = _approx;
                 task.idSpecialization = _spec.id;
+                task.supportPeriod = _support;
                 task.attachment = TempFile;
                 task.fileExtension = TempFileExtension;
 
@@ -234,6 +236,7 @@ namespace INCOMSYSTEM.Pages.Details
                     price = _price,
                     approxCompleteTime = _approx,
                     idSpecialization = _spec.id,
+                    supportPeriod = _support,
                     attachment = TempFile,
                     fileExtension = TempFileExtension
                 };
@@ -251,28 +254,39 @@ namespace INCOMSYSTEM.Pages.Details
         private Specializations _spec;
         private string _desc;
         private decimal _price;
+        public int _support;
         private byte _disc;
         private int _approx;
 
         private bool GetValues()
         {
+            if (IsNullOrWhiteSpace())
+            {
+                AdditionalWindow.ShowError("Поля не могут быть пустыми");
+                return false;
+            }
             _name = NameBox.Value;
             _spec = SpecBox.SelectedItem as Specializations;
             _desc = DescriptionBox.Value;
             if (!decimal.TryParse(PriceBox.Value, out _price))
             {
-                AdditionalWindow.ShowError("Поля не могут быть пустыми");
+                AdditionalWindow.ShowError("Не удалось преобразовать строку в число");
+                return false;
+            }
+
+            if(!int.TryParse(SupportPeriod.Value, out _support))
+            {
+                AdditionalWindow.ShowError("Не удалось преобразовать период поддержки в число");
                 return false;
             }
 
             if (!DiscountBox.IsWhiteSpace && !byte.TryParse(DiscountBox.Value, out _disc))
             {
-                AdditionalWindow.ShowError("Поля не могут быть пустыми");
+                AdditionalWindow.ShowError("Не удалось преобразовать скидку в число");
                 return false;
             }
 
             if (int.TryParse(ApproxTimeBox.Value, out _approx)) return true;
-            AdditionalWindow.ShowError("Поля не могут быть пустыми");
             return false;
 
         }
@@ -280,7 +294,7 @@ namespace INCOMSYSTEM.Pages.Details
         private bool IsNullOrWhiteSpace()
         {
             return NameBox.IsWhiteSpace || DescriptionBox.IsWhiteSpace || PriceBox.IsWhiteSpace ||
-                   ApproxTimeBox.IsWhiteSpace;
+                   ApproxTimeBox.IsWhiteSpace || SupportPeriod.IsWhiteSpace;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -296,18 +310,20 @@ namespace INCOMSYSTEM.Pages.Details
 
         private bool IsEqualsOrNull()
         {
-            if(_isEdit) return NameBox.Value == _task.name
-                       && ((Specializations)SpecBox.SelectedItem).id == _task.idSpecialization
-                       && DescriptionBox.Value == _task.description
-                       && PriceBox.Value == _task.price.ToString("0.00")
-                       && DiscountBox.Value == _task.discount.ToString()
-                       && ApproxTimeBox.Value == _task.approxCompleteTime.ToString()
-                       && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
+            if (_isEdit) return NameBox.Value == _task.name
+                        && ((Specializations)SpecBox.SelectedItem).id == _task.idSpecialization
+                        && DescriptionBox.Value == _task.description
+                        && PriceBox.Value == _task.price.ToString("0.00")
+                        && SupportPeriod.Value == _task.supportPeriod.ToString()
+                        && DiscountBox.Value == _task.discount.ToString()
+                        && ApproxTimeBox.Value == _task.approxCompleteTime.ToString()
+                        && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
 
             return NameBox.IsWhiteSpace
                    && DescriptionBox.IsWhiteSpace
                    && PriceBox.IsWhiteSpace
                    && DiscountBox.IsWhiteSpace
+                   && SupportPeriod.IsWhiteSpace
                    && ApproxTimeBox.IsWhiteSpace
                    && string.IsNullOrWhiteSpace(FileName);
         }

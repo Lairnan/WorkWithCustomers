@@ -37,6 +37,7 @@
                             <Setter Property="TextAlignment" Value="Center"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
                         </Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="DimGray"/>
@@ -189,16 +190,16 @@
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <Border>
-                                                <TextBlock Text="Плановая дата начала"/>
+                                                <TextBlock Text="Плановая дата начала" FontWeight="Bold"/>
                                             </Border>
                                             <Border Grid.Column="1">
-                                                <TextBlock Text="Фактическая дата начала"/>
+                                                <TextBlock Text="Фактическая дата начала" FontWeight="Bold"/>
                                             </Border>
                                             <Border Grid.Column="2">
-                                                <TextBlock Text="Плановая дата завершения"/>
+                                                <TextBlock Text="Плановая дата завершения" FontWeight="Bold"/>
                                             </Border>
                                             <Border Grid.Column="3">
-                                                <TextBlock Text="Фактическая дата завершения"/>
+                                                <TextBlock Text="Фактическая дата завершения" FontWeight="Bold"/>
                                             </Border>
                                             <Border Grid.Row="1">
                                                 <TextBlock Text="{Binding planDateStart,

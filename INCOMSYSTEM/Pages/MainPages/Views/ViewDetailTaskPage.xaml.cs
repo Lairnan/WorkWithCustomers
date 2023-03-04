@@ -25,6 +25,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             PriceTask.Text = $"Цена: {task.price:0.00}";
             DiscountTask.Text = $"Скидка: {task.discount}%";
             NewPriceTask.Text = $"Новая цена: {task.newPrice:0.00}";
+            SupportPeriodTask.Text = $"Период поддержки: {task.supportPeriod} дней";
             ApproxCompleteTime.Text = $"Примерное время выполнения {task.approxCompleteTime} дней";
             AttachmentBlock.Visibility = task.attachment == null ? Visibility.Collapsed : Visibility.Visible;
             Task = task;

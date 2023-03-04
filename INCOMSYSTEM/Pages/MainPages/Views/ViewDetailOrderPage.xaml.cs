@@ -27,8 +27,10 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
             using(var db = new INCOMSYSTEMEntities())
             {
-                ExecutorBox.ItemsSource = db.Employees.Include(s => s.UsersDetail).Where(s => s.UsersDetail.idPos == 2).ToList();
-                if (order.idExecutor != null) ExecutorBox.SelectedItem = ExecutorBox.ItemsSource.Cast<Employees>().First(s => s.idUser == order.idExecutor);
+                ExecutorBox.ItemsSource = db.Employees.SelectMany(s => s.SpecializationsEmployee)
+                    .Include(s => s.Employees.UsersDetail)
+                    .Where(s => s.Employees.UsersDetail.idPos == 2 && s.idSpecialization == order.Tasks.idSpecialization).ToList();
+                if (order.idExecutor != null) ExecutorBox.SelectedItem = ExecutorBox.ItemsSource.Cast<SpecializationsEmployee>().First(s => s.Employees.idUser == order.idExecutor);
             }
         }
 
@@ -44,10 +46,13 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                     ? $" {order.Chats.Employees.patronymic}"
                     : "";
             }
+            if(order.factDateStart != null)
+            {
+                PlanDateStartBox.IsHitTestVisible = false;
+                PlanDateCompleteBox.IsHitTestVisible = false;
+            }
             PlanDateStartBox.SelectedDate = order.planDateStart;
-            FactDateStartBox.SelectedDate = order.factDateStart;
             PlanDateCompleteBox.SelectedDate = order.planDateComplete;
-            FactDateCompleteBox.SelectedDate = order.factDateComplete;
             DateOrderBlock.Text = order.dateOrder.ToString("dd MMMM yyyy", CultureInfo.CurrentCulture);
         }
 
@@ -180,16 +185,19 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             }
             if (!IsEquals())
             {
+                byte? status = null;
+                if (_order.factDateStart != null && _order.factDateComplete != null) status = 4;
+                else if ((_order.factDateStart != null && _order.factDateComplete == null)
+                            || (PlanDateStartBox.SelectedDate != null && PlanDateCompleteBox.SelectedDate != null)) status = 3;
                 using (var db = new INCOMSYSTEMEntities())
                 {
                     var order = db.Orders.First(s => s.id == _order.id);
-                    order.idExecutor = ((Employees)ExecutorBox.SelectedItem).idUser;
+                    order.idExecutor = ((SpecializationsEmployee)ExecutorBox.SelectedItem)?.idEmployee;
                     order.price = Math.Round(_order.Tasks.newPrice * difficulty);
                     order.difficulty = (double)difficulty;
                     order.planDateStart = PlanDateStartBox.SelectedDate;
-                    order.factDateStart = FactDateStartBox.SelectedDate;
                     order.planDateComplete = PlanDateCompleteBox.SelectedDate;
-                    order.factDateComplete = FactDateCompleteBox.SelectedDate;
+                    if (status != null) order.idStatus = status.Value;
                     order.attachment = TempFile;
                     order.fileExtension = TempFileExtension;
                     db.SaveChanges();
@@ -215,30 +223,19 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
         private bool IsEquals()
         {
-            return ((Employees)ExecutorBox.SelectedItem).idUser == _order.idExecutor
+            return ((SpecializationsEmployee)ExecutorBox.SelectedItem)?.idEmployee == _order.idExecutor
                         && DifficultyBox.Text == _order.difficulty.ToString(CultureInfo.InvariantCulture)
                         && PlanDateStartBox.SelectedDate == _order.planDateStart
-                        && FactDateStartBox.SelectedDate == _order.factDateStart
                         && PlanDateCompleteBox.SelectedDate == _order.planDateComplete
-                        && FactDateCompleteBox.SelectedDate == _order.factDateComplete
                         && (_fileOrder == TempFile && _fileOrderExtension == TempFileExtension);
         }
 
         private void DateBox_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            PlanDateStartBox.IsWrong = PlanDateStartBox.SelectedDate != null &&  PlanDateCompleteBox.SelectedDate != null
+            PlanDateStartBox.IsWrong = PlanDateStartBox.SelectedDate != null && PlanDateCompleteBox.SelectedDate != null
                                        && PlanDateStartBox.SelectedDate.Value > PlanDateCompleteBox.SelectedDate.Value;
-            FactDateStartBox.IsWrong = FactDateStartBox.SelectedDate != null &&  FactDateCompleteBox.SelectedDate != null
-                                       && FactDateStartBox.SelectedDate.Value > FactDateCompleteBox.SelectedDate.Value;
-            PlanDateCompleteBox.IsWrong = PlanDateCompleteBox.SelectedDate != null &&  PlanDateStartBox.SelectedDate != null
-                                          && PlanDateCompleteBox.SelectedDate.Value < PlanDateStartBox.SelectedDate.Value;
-            FactDateCompleteBox.IsWrong = FactDateCompleteBox.SelectedDate != null &&  FactDateStartBox.SelectedDate != null
-                                          && FactDateCompleteBox.SelectedDate.Value < FactDateStartBox.SelectedDate.Value;
             
             if(PlanDateStartBox.IsWrong) AdditionalWindow.ShowError("Плановая дата начала не может быть больше плановой даты завершения");
-            else if(FactDateStartBox.IsWrong) AdditionalWindow.ShowError("Фактическая дата начала не может быть больше фактической даты завершения");
-            else if(PlanDateCompleteBox.IsWrong) AdditionalWindow.ShowError("Плановая дата завершения не может быть меньше плановой даты начала");
-            else if(FactDateCompleteBox.IsWrong) AdditionalWindow.ShowError("Фактическая дата завершения не может быть меньше фактической даты начала");
             else AdditionalWindow.HideError();
         }
     }

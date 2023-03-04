@@ -152,7 +152,7 @@
                     <Button Style="{StaticResource SideBarButton}" Margin="0 5" Click="ChatBtn_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="../Images/profileSettings.png"/>
+                                <Image Source="../Images/chat.png"/>
                                 <TextBlock Text="Мессенджер"/>
                             </StackPanel>
                         </Button.Content>

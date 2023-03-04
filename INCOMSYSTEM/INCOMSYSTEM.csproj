@@ -65,6 +65,8 @@
     <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
     <Compile Include="BehaviorsFiles\Extension.cs" />
     <Compile Include="BehaviorsFiles\NumberInWords.cs" />
+    <Compile Include="BehaviorsFiles\PasswordDifficulty.cs" />
+    <Compile Include="BehaviorsFiles\PasswordGenerator.cs" />
     <Compile Include="Context\Chats.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -137,6 +139,9 @@
     <Compile Include="Pages\MainPages\ViewTasksPage.xaml.cs">
       <DependentUpon>ViewTasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RegPage.xaml.cs">
+      <DependentUpon>RegPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestViewModel.cs" />
     <Compile Include="Windows\AdditionalWindow.xaml.cs">
       <DependentUpon>AdditionalWindow.xaml</DependentUpon>
@@ -169,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPages\ViewTasksPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RegPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +254,8 @@
     <Resource Include="Images\eyeClose.png" />
     <Resource Include="Images\gear.png" />
     <Resource Include="Images\home.png" />
+    <Resource Include="Images\chat.png" />
+    <Resource Include="Images\doorKey.png" />
     <Content Include="Images\oldlogo.png" />
   </ItemGroup>
   <ItemGroup>

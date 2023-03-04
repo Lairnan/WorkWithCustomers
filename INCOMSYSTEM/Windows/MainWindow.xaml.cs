@@ -92,19 +92,19 @@ namespace INCOMSYSTEM.Windows
             {
                 EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut },
                 To = 0d,
-                Duration = TimeSpan.FromSeconds(0.7)
+                Duration = TimeSpan.FromSeconds(0.35)
             };
 
             MFrame.BeginAnimation(OpacityProperty, anim);
 
-            await Task.Delay(700);
+            await Task.Delay(350);
 
             MFrame.Content = page;
             
             await Task.Delay(25);
 
             anim.To = 1.0d;
-            anim.Duration = TimeSpan.FromSeconds(0.7);
+            anim.Duration = TimeSpan.FromSeconds(0.35);
             MFrame.BeginAnimation(OpacityProperty, anim);
         }
 

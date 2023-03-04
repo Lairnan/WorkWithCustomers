@@ -87,6 +87,7 @@
                         <TextBlock x:Name="PriceTask" Style="{StaticResource oldPrice}"/>
                         <TextBlock x:Name="DiscountTask" Style="{StaticResource disc}"/>
                         <TextBlock x:Name="NewPriceTask" Style="{StaticResource disc}"/>
+                        <TextBlock x:Name="SupportPeriodTask"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" x:Name="AttachmentBlock" VerticalAlignment="Center">
                         <TextBlock Text="Вложение" TextAlignment="Center"/>
