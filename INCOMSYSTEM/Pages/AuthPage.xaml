@@ -46,7 +46,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsPassword="True"/>
+                    <controls:InputTextBox x:Name="PassBox" Margin="0 5" PlaceHolder="password" IsPassword="True" Width="155"/>
                     <CheckBox Grid.Column="1"
                               IsChecked="{Binding ElementName=PassBox, Path=IsShowed}">
                         <CheckBox.Style>
@@ -94,13 +94,24 @@
                     Click="GuestBtn_Click"
                     Content="Войти как гость"
                     HorizontalAlignment="Center"/>
-            <TextBlock x:Name="ErrorBlock"
-                       Grid.Row="3"
-                       Visibility="Collapsed"
-                       Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       TextAlignment="Center"
-                       Foreground="Red"/>
+            <Border Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    x:Name="ErrorBorder"
+                    Background="#560b0b"
+                    BorderBrush="Red"
+                    BorderThickness="1"
+                    Visibility="Collapsed"
+                    HorizontalAlignment="Center"
+                    Padding="10 5"
+                    Margin="0 10 0 15">
+                <TextBlock x:Name="ErrorBlock"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="14"/>
+            </Border>
         </Grid>
         <Border Grid.Column="2"
                 BorderBrush="Coral"

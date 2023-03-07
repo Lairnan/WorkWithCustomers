@@ -9,10 +9,12 @@ namespace INCOMSYSTEM.Windows
         public AdditionalWindow()
         {
             InitializeComponent();
+            _errorStaticBorder = ErrorBorder;
             _errorStaticBlock = ErrorBlock;
             MFrame.Navigated += MainFrameOnNavigated;
         }
 
+        private static Border _errorStaticBorder;
         private static TextBlock _errorStaticBlock;
 
         private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
@@ -26,13 +28,13 @@ namespace INCOMSYSTEM.Windows
         public static void ShowError(string error)
         {
             _errorStaticBlock.Text = error;
-            _errorStaticBlock.Visibility = Visibility.Visible;
+            _errorStaticBorder.Visibility = Visibility.Visible;
         }
 
         public static void HideError()
         {
             _errorStaticBlock.Text = string.Empty;
-            _errorStaticBlock.Visibility = Visibility.Collapsed;
+            _errorStaticBorder.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,7 @@ namespace INCOMSYSTEM.Pages.Details
         {
             NameBox.Text = task.name;
             DescriptionBox.Text = task.description;
-            PriceBox.Text = $"{task.price:0.00}";
+            PriceBox.Text = $"{task.price.ToString("#,#", CultureInfo.CurrentCulture)}";
             if (task.discount != null) DiscountBox.Text = $"{task.discount}";
             ApproxTimeBox.Text = $"{task.approxCompleteTime}";
             SupportPeriod.Text = task.supportPeriod.ToString();
@@ -192,7 +193,7 @@ namespace INCOMSYSTEM.Pages.Details
         {
             if (IsNullOrWhiteSpace())
             {
-                AdditionalWindow.ShowError("Поля не могут быть пустыми");
+                AdditionalWindow.ShowError("Поля отмеченные звёздочкой не могут быть пустыми");
                 return false;
             }
             if (!GetValues()) return false;
@@ -313,7 +314,7 @@ namespace INCOMSYSTEM.Pages.Details
             if (_isEdit) return NameBox.Value == _task.name
                         && ((Specializations)SpecBox.SelectedItem).id == _task.idSpecialization
                         && DescriptionBox.Value == _task.description
-                        && PriceBox.Value == _task.price.ToString("0.00")
+                        && PriceBox.Value == _task.price.ToString("#,#", CultureInfo.CurrentCulture)
                         && SupportPeriod.Value == _task.supportPeriod.ToString()
                         && DiscountBox.Value == _task.discount.ToString()
                         && ApproxTimeBox.Value == _task.approxCompleteTime.ToString()

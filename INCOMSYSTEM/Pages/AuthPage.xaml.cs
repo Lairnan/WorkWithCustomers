@@ -51,25 +51,25 @@ namespace INCOMSYSTEM.Pages
                     return;
                 }
 
-                SetError("Неверный логин или пароль");
+                ShowError("Неверный логин или пароль");
             }
         }
 
         private bool CheckEmpty()
         {
-            if (LogBox.IsPlaceHolder || string.IsNullOrWhiteSpace(LogBox.Value)) return SetError("Логин не может быть пустым");
-            if (PassBox.IsPlaceHolder || string.IsNullOrWhiteSpace(PassBox.Value)) return SetError("Пароль не может быть пустым");
+            if (LogBox.IsWhiteSpace) return ShowError("Логин не может быть пустым");
+            if (PassBox.IsWhiteSpace) return ShowError("Пароль не может быть пустым");
 
             AuthBtn.IsEnabled = true;
             ErrorBlock.Text = string.Empty;
-            ErrorBlock.Visibility = Visibility.Collapsed;
+            ErrorBorder.Visibility = Visibility.Collapsed;
             return false;
         }
 
-        private bool SetError(string error)
+        private bool ShowError(string error)
         {
             AuthBtn.IsEnabled = false;
-            ErrorBlock.Visibility = Visibility.Visible;
+            ErrorBorder.Visibility = Visibility.Visible;
             ErrorBlock.Text = error;
             return true;
         }

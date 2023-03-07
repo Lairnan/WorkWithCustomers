@@ -27,12 +27,21 @@
                Margin="5"
                IsTabStop="False"
                NavigationUIVisibility="Hidden"/>
-        <TextBlock Grid.Row="2"
-                   x:Name="ErrorBlock"
-                   Foreground="Red"
-                   HorizontalAlignment="Center"
-                   FontSize="14"
-                   Margin="0 0 0 15"
-                   Visibility="Collapsed"/>
+        <Border Grid.Row="2"
+                x:Name="ErrorBorder"
+                Background="#560b0b"
+                BorderBrush="Red"
+                BorderThickness="1"
+                Visibility="Collapsed"
+                HorizontalAlignment="Center"
+                Padding="10 5"
+                Margin="0 0 0 15">
+            <TextBlock x:Name="ErrorBlock"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="14"/>
+        </Border>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -193,15 +194,31 @@ namespace INCOMSYSTEM.Controls
                     return;
                 }
 
+                if (IsWhiteSpace)
+                {
+                    Value = string.Empty;
+                    return;
+                }
+
                 if (!IsPassword) Value = Text;
                 else
                 {
                     if (_isRemove || !_isChanged) return;
                     _isChanged = false;
+                    
                     var start = SelectionStart;
                     var r = Text[start - 1];
-                    Value = Value.Insert(start - 1, r.ToString());
-                    Text = Text.Replace(r, '●');
+                    Value = !Text.Contains("●") ? Text : Value.Insert(start - 1, r.ToString());
+
+                    if (!Text.Contains("●"))
+                    {
+                        var str = Text.Where(s => s != '●');
+                        foreach (var c in str)
+                        {
+                            Text = Text.Replace(c, '●');
+                        }
+                    }
+                    else Text = Text.Replace(r, '●');
                     SelectionStart = start;
 
                 }

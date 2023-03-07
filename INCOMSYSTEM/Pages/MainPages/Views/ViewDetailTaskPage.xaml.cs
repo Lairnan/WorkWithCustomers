@@ -1,9 +1,11 @@
 ﻿using INCOMSYSTEM.Context;
 using Microsoft.Win32;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Windows;
 
 namespace INCOMSYSTEM.Pages.MainPages.Views
@@ -22,16 +24,16 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             TitleTask.Text = task.name;
             SpecTask.Text = $"{task.Specializations.name}";
             DescriptionTask.Text = task.description;
-            PriceTask.Text = $"Цена: {task.price:0.00}";
+            PriceTask.Text = $"Цена: {task.price.ToString("#,#", CultureInfo.CurrentCulture)} руб.";
             DiscountTask.Text = $"Скидка: {task.discount}%";
             NewPriceTask.Text = $"Новая цена: {task.newPrice:0.00}";
-            SupportPeriodTask.Text = $"Период поддержки: {task.supportPeriod} дней";
-            ApproxCompleteTime.Text = $"Примерное время выполнения {task.approxCompleteTime} дней";
+            SupportPeriodTask.Text = $"Период поддержки: {task.supportPeriod.ConvertDay()}";
+            ApproxCompleteTime.Text = $"Примерное время выполнения {task.approxCompleteTime.ConvertDay()}";
             AttachmentBlock.Visibility = task.attachment == null ? Visibility.Collapsed : Visibility.Visible;
-            Task = task;
+            _task = task;
         }
 
-        private readonly Tasks Task;
+        private readonly Tasks _task;
 
         private void DownloadAttachmentBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -39,14 +41,14 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             {
                 Title = "Скачивание файла",
                 CreatePrompt = true,
-                FileName = $"{Task.name}.{Task.fileExtension}",
-                Filter = $"File | *.{Task.fileExtension}"
+                FileName = $"{_task.name}.{_task.fileExtension}",
+                Filter = $"File | *.{_task.fileExtension}"
             };
             if (saveFileDialog.ShowDialog() != true) return;
 
             using(var file = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                file.Write(Task.attachment, 0, Task.attachment.Length);
+                file.Write(_task.attachment, 0, _task.attachment.Length);
                 file.Dispose();
             }
         }
@@ -59,12 +61,12 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             var order = new Orders
             {
                 idCustomer = MainWindow.AuthUser.idUser,
-                idTask = Task.id,
+                idTask = _task.id,
                 difficulty = 1f,
                 dateOrder = DateTime.Now,
                 idStatus = 1
             };
-            order.price = Task.price * (decimal)order.difficulty;
+            order.price = _task.price * (decimal)order.difficulty;
             var chat = new Chats
             {
                 idChat = order.id,

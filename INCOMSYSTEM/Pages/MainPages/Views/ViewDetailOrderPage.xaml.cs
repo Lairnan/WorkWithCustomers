@@ -20,30 +20,67 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
             Title = $"Подробности заказа №{order.id}";
 
+
             _fileOrder = order.attachment;
             _fileOrderExtension = order.fileExtension;
             SetInputBoxValues(order);
             SetFileValues(order);
 
-            using(var db = new INCOMSYSTEMEntities())
+            if (order.idStatus >= 3)
+            {
+                ChangeExecutorBox();
+                DisableBoxes();
+                return;
+            }
+            
+            using (var db = new INCOMSYSTEMEntities())
             {
                 ExecutorBox.ItemsSource = db.Employees.SelectMany(s => s.SpecializationsEmployee)
                     .Include(s => s.Employees.UsersDetail)
-                    .Where(s => s.Employees.UsersDetail.idPos == 2 && s.idSpecialization == order.Tasks.idSpecialization).ToList();
-                if (order.idExecutor != null) ExecutorBox.SelectedItem = ExecutorBox.ItemsSource.Cast<SpecializationsEmployee>().First(s => s.Employees.idUser == order.idExecutor);
+                    .Where(s => s.Employees.UsersDetail.idPos == 2 &&
+                                s.idSpecialization == order.Tasks.idSpecialization).ToList();
+                if (order.idExecutor != null)
+                    ExecutorBox.SelectedItem = ExecutorBox.ItemsSource.Cast<SpecializationsEmployee>()
+                        .First(s => s.Employees.idUser == order.idExecutor);
             }
+        }
+
+        private void ChangeExecutorBox()
+        {
+            ExecutorBox.Visibility = Visibility.Collapsed;
+            ExecutorBlock.Visibility = Visibility.Visible;
+        }
+
+        private void DisableBoxes()
+        {
+            ExecutorBox.Visibility = Visibility.Collapsed;
+            ExecutorBlock.Visibility = Visibility.Visible;
+            DifficultyBox.IsReadOnly = true;
+            FileDownloadGrid.AllowDrop = false;
+            UploadBtn.IsEnabled = false;
+            ClearBtn.IsEnabled = false;
+            SaveBtn.Visibility = Visibility.Collapsed;
+            CancelBtn.Content = "Закрыть";
         }
 
         private void SetInputBoxValues(Orders order)
         {
             CustomerBlock.Text = $"{order.Customers.name}";
-            PriceBox.Text = $"{order.price:0.00 руб.}";
+            PriceBox.Text = $"{order.price.ToString("#,#", new CultureInfo("ru-RU"))} руб.";
             DifficultyBox.Text = order.difficulty.ToString(CultureInfo.InvariantCulture);
             if (order.Chats.Employees != null)
             {
                 ManagerBlock.Text = $"{order.Chats.Employees.surname} {order.Chats.Employees.name}";
                 ManagerBlock.Text += order.Chats.Employees.patronymic != null
                     ? $" {order.Chats.Employees.patronymic}"
+                    : "";
+            }
+
+            if (order.idStatus >= 3)
+            {
+                ExecutorBlock.Text = $"{order.Employees.surname} {order.Employees.name}";
+                ExecutorBlock.Text += order.Employees.patronymic != null
+                    ? $" {order.Employees.patronymic}"
                     : "";
             }
             if(order.factDateStart != null)
@@ -54,6 +91,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             PlanDateStartBox.SelectedDate = order.planDateStart;
             PlanDateCompleteBox.SelectedDate = order.planDateComplete;
             DateOrderBlock.Text = order.dateOrder.ToString("dd MMMM yyyy", CultureInfo.CurrentCulture);
+            StatusOrderBlock.Text = order.Statuses.name;
         }
 
         private void SetFileValues(Orders order)
@@ -172,7 +210,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 return;
             }
             var price = _order.Tasks.newPrice * difficulty;
-            PriceBox.Text = Math.Round(price).ToString(CultureInfo.InvariantCulture);
+            PriceBox.Text = Math.Round(price).ToString("#,#", new CultureInfo("ru-RU")) + " руб.";
             AdditionalWindow.HideError();
         }
 
@@ -223,6 +261,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
         private bool IsEquals()
         {
+            if (_order.idStatus >= 3) return true;
             return ((SpecializationsEmployee)ExecutorBox.SelectedItem)?.idEmployee == _order.idExecutor
                         && DifficultyBox.Text == _order.difficulty.ToString(CultureInfo.InvariantCulture)
                         && PlanDateStartBox.SelectedDate == _order.planDateStart

@@ -24,15 +24,28 @@ namespace INCOMSYSTEM.Pages
                 CmbLegal.ItemsSource = db.LegalForms.ToList();
             }
             
-            this.KeyDown += (s, e) => { if (e.Key == Key.Enter && AuthBtn.IsEnabled) RegBtn_Click(s, e); };
+            this.KeyDown += (s, e) => { if (e.Key == Key.Enter && RegBtn.IsEnabled) RegBtn_Click(s, e); };
+
+            InpName.TextChanged += (s, e) => CheckEmpty();
+            InpPhone.TextChanged += (s, e) => CheckEmpty();
+            InpPassportSerie.TextChanged += (s, e) => CheckEmpty();
+            InpPassportNumber.TextChanged += (s, e) => CheckEmpty();
+            InpAddress.TextChanged += (s, e) => CheckEmpty();
+            InpLogin.TextChanged += (s, e) => CheckEmpty();
+            InpPassword.TextChanged += (s, e) => CheckEmpty();
         }
         
         private void RegBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CheckEmpty()) return;
+            if (InpPassword.Value.Length < 6)
+            {
+                ShowError("Длина пароля должна достигать минимум 6 символов");
+                return;
+            }
             if (PasswordDifficulty.CheckDifficultyPassword(InpPassword.Value) == DifficultyPassword.Easy)
             {
-                SetError("Пароль не может быть слабым");
+                ShowError("Пароль не может быть слабым");
                 return;
             }
 
@@ -42,9 +55,27 @@ namespace INCOMSYSTEM.Pages
                 if (!InpPhone.IsWhiteSpace)
                 {
                     try { phone = long.Parse(InpPhone.Value); }
-                    catch { /* Ignored */ }
+                    catch { return; }
                 }
-                long.TryParse(InpPassport.Value, out var passport);
+
+                var passportStr = InpPassportSerie.Value + InpPassportNumber.Value;
+                long.TryParse(passportStr, out var passport);
+                
+                if (db.UsersDetail.FirstOrDefault(s => s.login.ToLower() == InpLogin.Value.ToLower().Trim()) != null)
+                {
+                    ShowError("Такой логин уже занят");
+                    return;
+                }
+                if (phone != null && db.UsersDetail.FirstOrDefault(s => s.phone == phone) != null)
+                {
+                    ShowError("Номер телефона уже занят");
+                    return;
+                }
+                if (db.UsersDetail.FirstOrDefault(s => s.passport == passport) != null)
+                {
+                    ShowError("Паспорт уже занят");
+                    return;
+                }
                 
                 var userDetail = new UsersDetail
                 {
@@ -71,37 +102,40 @@ namespace INCOMSYSTEM.Pages
             }
         }
 
-        private void AuthBtn_Click(object sender, RoutedEventArgs e)
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             AuthWindow.AuthFrame.Navigate(new AuthPage());
         }
 
-        private void InpTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckEmpty();
-        }
-
         private bool CheckEmpty()
         {
-            if (InpName.IsWhiteSpace) return SetError("Название/фио не может быть пустым");
-            if (InpPassport.IsWhiteSpace) return SetError("Паспорт не может быть пустым");
-            if (InpAddress.IsWhiteSpace) return SetError("Адрес не может быть пустым");
-            if (InpLogin.IsWhiteSpace) return SetError("Логин не может быть пустым");
-            if (InpPassword.IsWhiteSpace) return SetError("Пароль не может быть пустым");
-
-            if (!long.TryParse(InpPassport.Value, out _)) return SetError("Паспорт не может содержать символы");
-            if (InpPassport.Value.Length != 10) return SetError("Паспорт должен содержать 10 символов");
+            if (InpName.IsWhiteSpace) return ShowError("Название/фио не может быть пустым");
+            
+            if (!InpPhone.IsWhiteSpace && long.TryParse(InpPhone.Value, out _)) return ShowError("Номер телефона не может содержать символы");
+            if (!InpPhone.IsWhiteSpace && InpPhone.Value.Length != 11) return ShowError("Номер телефона должен содержать 11 цифр");
+            
+            if (InpPassportSerie.IsWhiteSpace) return ShowError("Серия паспорта не может быть пустым");
+            if (!long.TryParse(InpPassportSerie.Value, out _)) return ShowError("Серия паспорта не может содержать символы");
+            if (InpPassportSerie.Value.Length != 4) return ShowError("Серия паспорта должен содержать 4 цифры");
+            
+            if (InpPassportNumber.IsWhiteSpace) return ShowError("Номер паспорта не может быть пустым");
+            if (!long.TryParse(InpPassportNumber.Value, out _)) return ShowError("Номер паспорта не может содержать символы");
+            if (InpPassportNumber.Value.Length != 6) return ShowError("Номер паспорта должен содержать 6 цифры");
+            
+            if (InpAddress.IsWhiteSpace) return ShowError("Адрес не может быть пустым");
+            if (InpLogin.IsWhiteSpace) return ShowError("Логин не может быть пустым");
+            if (InpPassword.IsWhiteSpace) return ShowError("Пароль не может быть пустым");
 
             RegBtn.IsEnabled = true;
             ErrorBlock.Text = string.Empty;
-            ErrorBlock.Visibility = Visibility.Collapsed;
+            ErrorBorder.Visibility = Visibility.Collapsed;
             return false;
         }
 
-        private bool SetError(string error)
+        private bool ShowError(string error)
         {
             RegBtn.IsEnabled = false;
-            ErrorBlock.Visibility = Visibility.Visible;
+            ErrorBorder.Visibility = Visibility.Visible;
             ErrorBlock.Text = error;
             return true;
         }

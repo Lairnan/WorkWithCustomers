@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
-      xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d">
     <Grid>
@@ -14,12 +13,19 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right">
-            <TextBlock Text="Дата формирования заказа: " Style="{StaticResource TextBlockStyle}"/>
-            <TextBlock x:Name="DateOrderBlock"
-                       Style="{StaticResource TextBlockStyle}"
-                       Text="{Binding Order.dateOrder, StringFormat='{}{0:dd MMMM yyyy HH:mm:ss}', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
+        <StackPanel HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="Дата формирования заказа: " Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock x:Name="DateOrderBlock"
+                           Style="{StaticResource TextBlockStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="Статус заказа: " Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock x:Name="StatusOrderBlock"
+                           Style="{StaticResource TextBlockStyle}"/>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="1"
@@ -83,12 +89,13 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <controls:InputTextBox x:Name="ExecutorBlock" Visibility="Collapsed" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="ManagerBlock" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="PriceBox" IsReadOnly="True"/>
                 <controls:InputTextBox x:Name="DifficultyBox" TextChanged="DifficultyBox_TextChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
-                <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True">
+                <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True" x:Name="FileDownloadGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
@@ -100,7 +107,7 @@
                             HorizontalContentAlignment="Center"
                             IsEnabled="False"/>
                     <StackPanel Grid.Column="1">
-                        <Button Content="Загрузить" Click="UploadBtn_Click"/>
+                        <Button Content="Загрузить" Click="UploadBtn_Click" x:Name="UploadBtn"/>
                         <Button Content="Очистить" IsEnabled="False" Click="ClearBtn_Click" x:Name="ClearBtn"/>
                         <Button Content="Вернуть" IsEnabled="False" Click="ReturnBtn_Click" x:Name="ReturnBtn"/>
                     </StackPanel>
@@ -111,8 +118,8 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0 5">
-            <Button Content="Сохранить" Click="SaveBtn_Click"/>
-            <Button Content="Отменить" Margin="5 0" Click="CancelBtn_Click"/>
+            <Button x:Name="SaveBtn" Content="Сохранить" Click="SaveBtn_Click"/>
+            <Button x:Name="CancelBtn" Content="Отменить" Margin="5 0" Click="CancelBtn_Click"/>
         </StackPanel>
     </Grid>
 </Page>

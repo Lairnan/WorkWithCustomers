@@ -40,6 +40,7 @@
     <Style x:Key="TextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource MainStyle}"></Style>
     <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource TextPassBoxStyle}"></Style>
     <Style TargetType="controls:InputTextBox" BasedOn="{StaticResource MainStyle}">
+        <Setter Property="Width" Value="175"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
         <Setter Property="Padding" Value="3 2"/>
@@ -57,7 +58,7 @@
                         <Border BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="5"
-                                Width="15"
+                                Width="{TemplateBinding Width}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Bottom"
                                 x:Name="PART_Border"/>
@@ -67,13 +68,13 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsWhiteSpace" Value="False">
+                        <!--<Trigger Property="IsWhiteSpace" Value="False">
                             <Setter TargetName="PART_Border" Property="Width" Value="175"/>
-                        </Trigger>
+                        </Trigger>-->
                         <Trigger Property="IsPlaceHolder" Value="True">
                             <Setter TargetName="PART_ContentHost" Property="Opacity" Value="0.7"/>
                         </Trigger>
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsFocused" Value="True"/>
                                 <Condition Property="IsNull" Value="True"/>
@@ -98,7 +99,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
-                        </MultiTrigger>
+                        </MultiTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

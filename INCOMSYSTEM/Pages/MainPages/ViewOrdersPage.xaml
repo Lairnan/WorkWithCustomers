@@ -41,7 +41,7 @@
                         </Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="DimGray"/>
-                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
                             <Setter Property="BorderThickness" Value="1"/>
                         </Style>
                     </Grid.Resources>
@@ -115,7 +115,7 @@
                                             </Style>
                                             <Style TargetType="Border">
                                                 <Setter Property="Background" Value="DimGray"/>
-                                                <Setter Property="BorderBrush" Value="White"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
                                                 <Setter Property="BorderThickness" Value="1"/>
                                                 <Setter Property="Padding" Value="5"/>
                                             </Style>
@@ -155,7 +155,9 @@
                                             <TextBlock Text="{Binding Tasks.name}"/>
                                         </Border>
                                         <Border Grid.Column="4">
-                                            <TextBlock Text="{Binding price, StringFormat='{}{0:0} руб.'}"/>
+                                            <TextBlock Text="{Binding price, 
+                                                                            StringFormat='{}{0:0,0} руб.', 
+                                                                            ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
                                         </Border>
                                         <Border Grid.Column="5">
                                             <TextBlock Text="{Binding difficulty}"/>
