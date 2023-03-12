@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using INCOMSYSTEM.Context;
 using System.Linq;
+using INCOMSYSTEM.Pages;
 using INCOMSYSTEM.Pages.MainPages;
 
 namespace INCOMSYSTEM.Windows
@@ -21,12 +22,14 @@ namespace INCOMSYSTEM.Windows
             InitializeComponent();
             ReviewFrame = new Frame();
             _sideBarMenu.Add(MenuItems.Review, null);
-            _sideBarMenu.Add(MenuItems.Profile, new ViewOrdersPage());
-            _sideBarMenu.Add(MenuItems.Chat, new Page());
+            _sideBarMenu.Add(MenuItems.Profile, null);
+            _sideBarMenu.Add(MenuItems.Chat, null);
+            IsClosed = false;
             ReviewFrame.Navigated += MainFrameOnNavigated;
             if (AuthUser == null)
             {
                 AuthBlock.Text = "Вы вошли как гость!";
+                ChatBtn.Visibility = Visibility.Collapsed;
                 ReviewFrame.Navigate(new ViewTasksPage());
                 return;
             }
@@ -62,6 +65,7 @@ namespace INCOMSYSTEM.Windows
                     break;
                 case 2:
                     ReviewFrame.Navigate(new ViewOrdersPage());
+                    ChatBtn.Visibility = Visibility.Collapsed;
                     break;
                 case 3:
                     ReviewFrame.Navigate(new ManagerPage());
@@ -116,6 +120,7 @@ namespace INCOMSYSTEM.Windows
 
         private void QuitBtn_Click(object sender, RoutedEventArgs e)
         {
+            IsClosed = true;
             new AuthWindow().Show();
             this.Close();
         }
@@ -131,13 +136,19 @@ namespace INCOMSYSTEM.Windows
         
         private void ProfileBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (_sideBarMenu[MenuItems.Profile] == null) _sideBarMenu[MenuItems.Profile] = new Page();
+            
             this.Title = "Профиль";
             BackBtn.Visibility = Visibility.Collapsed;
             MFrame.Content = _sideBarMenu[MenuItems.Profile];
         }
         
+        public static bool IsClosed { get; private set; }
+        
         private void ChatBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (_sideBarMenu[MenuItems.Chat] == null) _sideBarMenu[MenuItems.Chat] = new ChatListPage();
+
             this.Title = "Мессенджер";
             BackBtn.Visibility = Visibility.Collapsed;
             MFrame.Content = _sideBarMenu[MenuItems.Chat];

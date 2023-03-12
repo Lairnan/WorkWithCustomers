@@ -14,8 +14,10 @@
                                 Margin="30 5 0 0"
                                 Text="Список пуст"
                                 VerticalAlignment="Top"
+                                Style="{StaticResource TextBlockStyle}"
                                 Visibility="{Binding Path=Items,
                                                      RelativeSource={RelativeSource TemplatedParent},
+                                                     UpdateSourceTrigger=PropertyChanged,
                                                      Converter={StaticResource AnyItemsToVisibilityConverter}}"/>
                             <ItemsPresenter/>
                         </Grid>

@@ -122,6 +122,13 @@ namespace INCOMSYSTEM.Pages.MainPages
             addWindow.MFrame.Navigate(new TaskDetailPage(task));
             if (addWindow.ShowDialog() != true) return;
             
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var max = db.Tasks.Max(s => s.price);
+
+                RightSlider.Maximum = (long)max;
+            }
+            
             ApplyFilter();
         }
 
@@ -135,6 +142,10 @@ namespace INCOMSYSTEM.Pages.MainPages
             {
                 db.Tasks.Remove(db.Tasks.First(s => s.id == task.id));
                 db.SaveChanges();
+                
+                var max = db.Tasks.Max(s => s.price);
+
+                RightSlider.Maximum = (long)max;
             }
             
             ApplyFilter();
@@ -145,6 +156,13 @@ namespace INCOMSYSTEM.Pages.MainPages
             var addWindow = new AdditionalWindow();
             addWindow.MFrame.Navigate(new TaskDetailPage());
             if (addWindow.ShowDialog() != true) return;
+            
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var max = db.Tasks.Max(s => s.price);
+
+                RightSlider.Maximum = (long)max;
+            }
             
             ApplyFilter();
         }

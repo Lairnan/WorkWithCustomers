@@ -328,5 +328,25 @@ namespace INCOMSYSTEM.Pages.Details
                    && ApproxTimeBox.IsWhiteSpace
                    && string.IsNullOrWhiteSpace(FileName);
         }
+
+        private void PriceBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (PriceBox.IsWhiteSpace) return;
+            
+            if (!decimal.TryParse(PriceBox.Value, out _price))
+            {
+                AdditionalWindow.ShowError("Не удалось преобразовать строку в число");
+                return;
+            }
+            
+            AdditionalWindow.HideError();
+            var selStart = PriceBox.SelectionStart;
+            var selLength = PriceBox.SelectionLength;
+            var length = PriceBox.Text.Length;
+            PriceBox.Text = _price.ToString("#,#", CultureInfo.CurrentCulture);
+            if (length == PriceBox.Text.Length - 1) selStart++;
+            PriceBox.SelectionStart = selStart;
+            PriceBox.SelectionLength = selLength;
+        }
     }
 }

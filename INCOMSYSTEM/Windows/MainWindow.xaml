@@ -73,7 +73,7 @@
                 <Style TargetType="controls:BorderEx">
                     <Setter Property="Width" Value="50"/>
                     <Setter Property="Panel.ZIndex" Value="1"/>
-                    <Setter Property="Background" Value="#93696969"/>
+                    <Setter Property="Background" Value="#F0696969"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseEnter" Value="True">
                             <Trigger.EnterActions>
@@ -149,7 +149,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Style="{StaticResource SideBarButton}" Margin="0 5" Click="ChatBtn_Click">
+                    <Button x:Name="ChatBtn" Style="{StaticResource SideBarButton}" Margin="0 5" Click="ChatBtn_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="../Images/chat.png"/>

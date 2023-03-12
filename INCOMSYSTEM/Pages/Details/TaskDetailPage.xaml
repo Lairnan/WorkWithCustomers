@@ -55,7 +55,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <controls:InputTextBox PlaceHolder="Описание" x:Name="DescriptionBox"/>
-            <controls:InputTextBox PlaceHolder="Цена" x:Name="PriceBox"/>
+            <controls:InputTextBox PlaceHolder="Цена" x:Name="PriceBox" TextChanged="PriceBox_OnTextChanged"/>
             <controls:InputTextBox PlaceHolder="Скидка" x:Name="DiscountBox"/>
             <controls:InputTextBox PlaceHolder="Период поддержки" x:Name="SupportPeriod" Margin="0 10 0 0"/>
             <controls:InputTextBox PlaceHolder="Примерное время выполнения" x:Name="ApproxTimeBox" Margin="0 15 0 15"/>

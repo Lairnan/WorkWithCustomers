@@ -205,8 +205,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="#555"
-                        Opacity="0.7"
+                    <Border Background="#F0696969"
                         Grid.RowSpan="5"
                         Grid.ColumnSpan="5"/>
                     <StackPanel>
