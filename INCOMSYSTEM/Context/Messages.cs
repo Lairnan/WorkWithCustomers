@@ -24,5 +24,7 @@ namespace INCOMSYSTEM.Context
     
         public virtual Chats Chats { get; set; }
         public virtual UsersDetail UsersDetail { get; set; }
+
+        public string shortMessage => message.Length > 125 ? message.Substring(0, 125) + "..." : message;
     }
 }

@@ -60,6 +60,8 @@ namespace INCOMSYSTEM.Pages
                             FileName = message.attachment != null ? $"{message.Chats.Orders.Tasks.name}.{message.fileExtension}" : string.Empty
                         };
 
+                        if (MainWindow.AuthUser.idUser == message.idUser) dialogMess.ThisUser = true;
+
                         switch (message.UsersDetail.idPos)
                         {
                             case 1:
@@ -89,5 +91,6 @@ namespace INCOMSYSTEM.Pages
         public string FileExtension { get; set; }
         public string FileName { get; set; }
         public DateTime SendDate { get; set; }
+        public bool ThisUser { get; set; }
     }
 }

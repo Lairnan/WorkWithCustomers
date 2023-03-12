@@ -4,14 +4,69 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d">
-    <Grid HorizontalAlignment="Center">
+    <Grid Margin="30 10">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
         <ItemsControl x:Name="MessagesList"
-                      Style="{StaticResource ItemsVisible}">
+                      Style="{StaticResource ItemsVisible}"
+                      BorderBrush="Wheat"
+                      BorderThickness="1"
+                      Padding="10 0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Message}"/>
+                    <Border Margin="5 3"
+                            CornerRadius="15"
+                            BorderBrush="Wheat"
+                            BorderThickness="1"
+                            Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                            AncestorType=ItemsControl},
+                                                            Path=ActualWidth,
+                                                            Converter={StaticResource WidthConverter}}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ThisUser}" Value="True">
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Grid Margin="5">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Sender}"/>
+                            <TextBlock Text="{Binding Message}"
+                                       Grid.Row="1"
+                                       TextWrapping="Wrap"
+                                       Margin="0 0 30 0"/>
+                            <TextBlock Text="{Binding SendDate, StringFormat='{}{0:dd.MM.yy HH:ss}'}"
+                                       FontSize="12"
+                                       Margin="10 0"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Row="1"
+                                       Grid.Column="1"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Border BorderBrush="Wheat"
+                BorderThickness="1"
+                Grid.Row="1"
+                Margin="0 10 0 0">
+            <Grid></Grid>
+        </Border>
     </Grid>
 </Page>

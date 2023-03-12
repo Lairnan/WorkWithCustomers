@@ -9,7 +9,7 @@ namespace INCOMSYSTEM.BehaviorsFiles
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value - 14d;
+            return (double)value - 125d;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
