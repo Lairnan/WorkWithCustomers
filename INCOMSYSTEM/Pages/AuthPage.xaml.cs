@@ -40,7 +40,10 @@ namespace INCOMSYSTEM.Pages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                var user = db.UsersDetail.Include(s => s.Positions).FirstOrDefault(s => s.login == login && s.password == password);
+                var user = db.UsersDetail.Include(s => s.Positions)
+                    .Include(s => s.Employees)
+                    .Include(s => s.Customers)
+                    .FirstOrDefault(s => s.login == login && s.password == password);
                 if (user != null)
                 {
                     MainWindow.AuthUser = user;

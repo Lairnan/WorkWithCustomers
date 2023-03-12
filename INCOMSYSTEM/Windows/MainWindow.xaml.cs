@@ -9,6 +9,7 @@ using INCOMSYSTEM.Context;
 using System.Linq;
 using INCOMSYSTEM.Pages;
 using INCOMSYSTEM.Pages.MainPages;
+using System.Windows.Input;
 
 namespace INCOMSYSTEM.Windows
 {
@@ -22,6 +23,10 @@ namespace INCOMSYSTEM.Windows
             InitializeComponent();
             ReviewFrame = new Frame();
             ChatFrame = new Frame();
+            NavigationCommands.BrowseBack.InputGestures.Clear();
+            NavigationCommands.BrowseForward.InputGestures.Clear();
+            NavigationCommands.BrowseHome.InputGestures.Clear();
+            NavigationCommands.BrowseStop.InputGestures.Clear();
             _sideBarMenu.Add(MenuItems.Review, null);
             _sideBarMenu.Add(MenuItems.Profile, null);
             _sideBarMenu.Add(MenuItems.Chat, null);

@@ -2,12 +2,13 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
       mc:Ignorable="d">
     <Grid Margin="30 10">
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ItemsControl x:Name="MessagesList"
                       Style="{StaticResource ItemsVisible}"
@@ -66,7 +67,40 @@
                 BorderThickness="1"
                 Grid.Row="1"
                 Margin="0 10 0 0">
-            <Grid></Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <controls:InputTextBox x:Name="InputMessageBox"
+                                       PlaceHolder="Текст"
+                                       BorderBrush="Transparent"
+                                       BorderThickness="0"
+                                       MaxLength="255"
+                                       TextAlignment="Left"
+                                       TextWrapping="Wrap"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <Button x:Name="SendMessageBtn"
+                            Content="Отправить"
+                            Click="SendMessageBtn_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2"
+                x:Name="ErrorBorder"
+                Background="#560b0b"
+                BorderBrush="Red"
+                BorderThickness="1"
+                Visibility="Collapsed"
+                HorizontalAlignment="Center"
+                Padding="10 5"
+                Margin="0 0 0 15">
+            <TextBlock x:Name="ErrorBlock"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="14"/>
         </Border>
     </Grid>
 </Page>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.ViewModels;
 using INCOMSYSTEM.Windows;
@@ -24,6 +24,16 @@ namespace INCOMSYSTEM.Pages
             Title = chatMess.IsConnected ? $"Переписка с {chatMess.Recipient}" : chatMess.Recipient;
             CollectionViewMessages.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Ascending));
             MessagesList.ItemsSource = CollectionViewMessages;
+
+            InputMessageBox.KeyDown += (s, e) =>
+            {
+                if (e.Key != Key.Enter) return;
+                
+                var start = InputMessageBox.SelectionStart;
+                InputMessageBox.Text = InputMessageBox.Text.Insert(start++, "\n");
+                InputMessageBox.SelectionStart = start;
+            };
+
             Task.Run(RefreshMessages);
         }
 
@@ -79,6 +89,98 @@ namespace INCOMSYSTEM.Pages
                     await Task.Delay(2500);
                 }
             }
+        }
+
+        private bool _canSend = true;
+
+        private void SendMessageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (InputMessageBox.IsWhiteSpace)
+            {
+                ErrorBorder.Visibility = Visibility.Visible;
+                SetError("Сообщение не может быть пустым");
+                return;
+            }
+
+            if (InputMessageBox.Text.Length > 255)
+            {
+                ErrorBorder.Visibility = Visibility.Visible;
+                SetError("Сообщение не должно превышать 255 символов");
+                return;
+            }
+            
+            if (!_canSend) { ErrorBorder.Visibility = Visibility.Visible; return; }
+
+            Task.Run(async () =>
+            {
+                SendMessageBtn.IsEnabled = false;
+                _canSend = false;
+                for (var i = 5; i >= 0; i--)
+                {
+                    string timerStr;
+                    if (i > 1) timerStr = $"{i} секунды";
+                    else if (i == 1) timerStr = $"{i} секунду";
+                    else timerStr = $"{i} секунд";
+                    SetError($"Перед отправкой следующего сообщения подождите {timerStr}");
+                    await Task.Delay(1000);
+                }
+
+                _canSend = true;
+                SendMessageBtn.IsEnabled = true;
+                HideError();
+            });
+            
+            SendMessage();
+        }
+    
+        private async void SendMessage()
+        {
+            using (var db = await Task.Run(() => new INCOMSYSTEMEntities()))
+            {
+                var message = new Messages
+                {
+                    idChat = _chatMess.Chat.idChat,
+                    idUser = MainWindow.AuthUser.idUser,
+                    message = InputMessageBox.Text,
+                    dateSend = DateTime.Now
+                };
+
+                db.Messages.Add(message);
+                await db.SaveChangesAsync();
+
+                var dialogMess = new DialogMess
+                {
+                    Id = message.id,
+                    Message = message.message,
+                    SendDate = message.dateSend,
+                    ThisUser = true,
+                };
+
+                switch (MainWindow.AuthUser.idPos)
+                {
+                    case 1:
+                        dialogMess.Sender = MainWindow.AuthUser.Customers.name;
+                        break;
+                    case 3:
+                        dialogMess.Sender = $"{MainWindow.AuthUser.Employees}";
+                        break;
+                }
+                
+                Application.Current.Dispatcher.Invoke(() => MessagesCollection.Add(dialogMess));
+
+                InputMessageBox.Clear();
+            }
+        }
+
+        private void SetError(string error)
+        {
+            ErrorBlock.Text = error;
+        }
+
+        private void HideError()
+        {
+            ErrorBorder.Visibility = Visibility.Collapsed;
+            ErrorBlock.Text = string.Empty;
         }
     }
 
