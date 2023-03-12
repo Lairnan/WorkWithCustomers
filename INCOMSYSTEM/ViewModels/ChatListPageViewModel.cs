@@ -3,8 +3,10 @@ using INCOMSYSTEM.Windows;
 using System;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using INCOMSYSTEM.BehaviorsFiles;
 
 namespace INCOMSYSTEM.ViewModels
@@ -14,11 +16,14 @@ namespace INCOMSYSTEM.ViewModels
         public ChatListPageViewModel()
         {
             ChatsCollection = new ObservableCollection<ChatMess>();
+            CollectionViewChat = CollectionViewSource.GetDefaultView(ChatsCollection);
+            CollectionViewChat.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Descending));
             ChatsCollection.CollectionChanged += (s, e) => OnRaiseChanged();
             RefreshCollection();
         }
 
         public ObservableCollection<ChatMess> ChatsCollection { get; }
+        public ICollectionView CollectionViewChat { get; }
 
         public async void RefreshCollection()
         {
@@ -73,7 +78,7 @@ namespace INCOMSYSTEM.ViewModels
 
                         if (MainWindow.AuthUser.idUser == chat.idCustomer) chatMess.Recipient = chat.Employees == null
                                 ? "Ожидание подключения менеджера"
-                                : $"{chat.Employees.surname} {chat.Employees.name} {chat.Employees.patronymic}".Trim();
+                                : $"{chat.Employees}";
                         else chatMess.Recipient = chat.Customers.name;
 
                         var chatMessColl = ChatsCollection.FirstOrDefault(s => s.Id == chatMess.Id);
@@ -87,11 +92,11 @@ namespace INCOMSYSTEM.ViewModels
                                 chatMessColl.Chat.Employees = chat.Employees;
                                 chatMessColl.Recipient = chatMess.Recipient;
                             }
-                            if (chatMessColl.Chat.Employees != null && chatMessColl.Message.id != chatMess.Id)
-                            {
-                                chatMessColl.SendDate = chatMess.SendDate;
-                                chatMessColl.Message = chatMess.Message;
-                            }
+
+                            if (chatMessColl.Chat.Employees == null || chatMessColl.Message.id == chatMess.Id) continue;
+                            
+                            chatMessColl.SendDate = chatMess.SendDate;
+                            chatMessColl.Message = chatMess.Message;
                         }
                     }
                 }

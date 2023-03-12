@@ -260,7 +260,7 @@
     <Resource Include="Images\shutdown.png" />
     <Resource Include="Images\user.png" />
     <Resource Include="Images\authImage.png" />
-    <Content Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
     <Resource Include="Images\eyeOpen.png" />
     <Resource Include="Images\eyeClose.png" />
     <Resource Include="Images\gear.png" />

@@ -21,11 +21,13 @@ namespace INCOMSYSTEM.Windows
         {
             InitializeComponent();
             ReviewFrame = new Frame();
+            ChatFrame = new Frame();
             _sideBarMenu.Add(MenuItems.Review, null);
             _sideBarMenu.Add(MenuItems.Profile, null);
             _sideBarMenu.Add(MenuItems.Chat, null);
             IsClosed = false;
-            ReviewFrame.Navigated += MainFrameOnNavigated;
+            ReviewFrame.Navigated += ReviewFrameOnNavigated;
+            ChatFrame.Navigated += ChatFrameOnNavigated;
             if (AuthUser == null)
             {
                 AuthBlock.Text = "Вы вошли как гость!";
@@ -37,21 +39,20 @@ namespace INCOMSYSTEM.Windows
             SetStartPage();
         }
 
+        #region StartSettings
         private void SetAuthUserText()
         {
-            AuthBlock.Text = $"{AuthUser.Positions.name}, ";
             using (var db = new INCOMSYSTEMEntities())
             {
                 if (AuthUser.idPos == 1)
                 {
                     var user = db.Customers.First(s => s.idUser == AuthUser.idUser);
-                    AuthBlock.Text += $"{user.name}!";
+                    AuthBlock.Text = $"{user.name}";
                 }
                 else
                 {
                     var user = db.Employees.First(s => s.idUser == AuthUser.idUser);
-                    AuthBlock.Text += $"{user.surname} {user.name}";
-                    AuthBlock.Text += user.patronymic != null ? $" {user.patronymic}" : "";
+                    AuthBlock.Text = $"{user}";
                 }
             }
         }
@@ -76,10 +77,12 @@ namespace INCOMSYSTEM.Windows
                     break;
             }
         }
+        #endregion
 
         public static UsersDetail AuthUser { get; set; }
 
-        private void MainFrameOnNavigated(object sender, NavigationEventArgs e)
+        #region ReviewNavigated
+        private void ReviewFrameOnNavigated(object sender, NavigationEventArgs e)
         {
             if (!Equals(MFrame.Content, _sideBarMenu[MenuItems.Review])) return;
             var page = ((Frame)sender).Content as Page;
@@ -88,6 +91,7 @@ namespace INCOMSYSTEM.Windows
             Nav(page);
             BackBtn.IsEnabled = ReviewFrame.CanGoBack;
         }
+        #endregion
 
         private async void Nav(Page page)
         {
@@ -112,7 +116,20 @@ namespace INCOMSYSTEM.Windows
             MFrame.BeginAnimation(OpacityProperty, anim);
         }
 
+        #region ChatNavigated
+        private void ChatFrameOnNavigated(object sender, NavigationEventArgs e)
+        {
+            if (!Equals(MFrame.Content, _sideBarMenu[MenuItems.Chat])) return;
+            var page = ((Frame)sender).Content as Page;
+            this.Title = page?.Title;
+            _sideBarMenu[MenuItems.Chat] = page;
+            Nav(page);
+            BackChatBtn.IsEnabled = !(page is ChatListPage);
+        }
+        #endregion
+
         public static Frame ReviewFrame { get; private set; }
+        public static Frame ChatFrame { get; private set; }
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             ReviewFrame.GoBack();
@@ -126,31 +143,39 @@ namespace INCOMSYSTEM.Windows
         }
 
         private readonly Dictionary<MenuItems, Page> _sideBarMenu = new Dictionary<MenuItems, Page>();
+        public static bool IsClosed { get; private set; }
+        private Page ChatListPage { get; set; }
 
+        #region Buttons
         private void ReviewBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Title = _sideBarMenu[MenuItems.Review].Title;
             BackBtn.Visibility = Visibility.Visible;
+            BackChatBtn.Visibility = Visibility.Collapsed;
             MFrame.Content = _sideBarMenu[MenuItems.Review];
         }
-        
+
         private void ProfileBtn_Click(object sender, RoutedEventArgs e)
         {
             if (_sideBarMenu[MenuItems.Profile] == null) _sideBarMenu[MenuItems.Profile] = new Page();
             
             this.Title = "Профиль";
             BackBtn.Visibility = Visibility.Collapsed;
+            BackChatBtn.Visibility = Visibility.Collapsed;
             MFrame.Content = _sideBarMenu[MenuItems.Profile];
         }
-        
-        public static bool IsClosed { get; private set; }
-        
+
         private void ChatBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_sideBarMenu[MenuItems.Chat] == null) _sideBarMenu[MenuItems.Chat] = new ChatListPage();
-
-            this.Title = "Мессенджер";
+            if (_sideBarMenu[MenuItems.Chat] == null)
+            {
+                ChatListPage = new ChatListPage();
+                _sideBarMenu[MenuItems.Chat] = ChatListPage;
+            }
+            
+            this.Title = _sideBarMenu[MenuItems.Chat].Title;
             BackBtn.Visibility = Visibility.Collapsed;
+            BackChatBtn.Visibility = Visibility.Visible;
             MFrame.Content = _sideBarMenu[MenuItems.Chat];
         }
 
@@ -158,9 +183,15 @@ namespace INCOMSYSTEM.Windows
         {
             ReviewBtn_Click(sender, e);
             ReviewFrame = new Frame();
-            ReviewFrame.Navigated += MainFrameOnNavigated;
+            ReviewFrame.Navigated += ReviewFrameOnNavigated;
             SetStartPage();
         }
+
+        private void BackChatBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ChatFrame.Navigate(ChatListPage);
+        }
+        #endregion
     }
 
     internal enum MenuItems

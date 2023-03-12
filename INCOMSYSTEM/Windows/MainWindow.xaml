@@ -45,6 +45,11 @@
                 <Button x:Name="BackBtn"
                         Content="&lt;-"
                         Click="BackBtn_Click"/>
+                <Button x:Name="BackChatBtn"
+                        Content="&lt;-"
+                        Visibility="Collapsed"
+                        IsEnabled="False"
+                        Click="BackChatBtn_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">

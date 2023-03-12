@@ -12,7 +12,7 @@
     </Page.DataContext>
     <Grid>
         <ItemsControl BorderThickness="0"
-                      ItemsSource="{Binding ChatsCollection, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding CollectionViewChat, UpdateSourceTrigger=PropertyChanged}"
                       BorderBrush="Transparent"
                       Margin="75 0">
             

@@ -27,21 +27,21 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0"
-                                   FontFamily="Comic sans MS"
-                                   FontSize="18"
+                                   FontFamily="/INCOMSYSTEM;component/Fonts/#Roboto"
+                                   FontSize="16"
                                    Foreground="White"
                                    Margin="0 5 5 0"
                                    Text="ИНКОМСИСТЕМ"/>
                         <TextBlock Grid.Row="1"
-                                   FontFamily="Comic sans MS"
-                                   FontSize="10"
+                                   FontFamily="/INCOMSYSTEM;component/Fonts/#Roboto"
+                                   FontSize="12"
                                    Foreground="White"
                                    Margin="0 0 5 5"
                                    Text="Научный Инженерный Центр"/>
                     </Grid>
                 </StackPanel>
                 <TextBlock Grid.Column="1"
-                           FontFamily="Comic sans MS"
+                           FontFamily="/INCOMSYSTEM;component/Fonts/#Roboto"
                            TextAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="18"
