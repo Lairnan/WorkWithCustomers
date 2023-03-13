@@ -147,6 +147,9 @@
     <Compile Include="Pages\MainPages\ViewTasksPage.xaml.cs">
       <DependentUpon>ViewTasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RegPage.xaml.cs">
       <DependentUpon>RegPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ProfilePage.xaml" />
     <Page Include="Pages\RegPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,6 +260,8 @@
     <AdditionalFiles Include="Resources\AgreementTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\profile.png" />
     <Resource Include="Images\profileSettings.png" />
     <Resource Include="Images\shutdown.png" />
     <Resource Include="Images\user.png" />

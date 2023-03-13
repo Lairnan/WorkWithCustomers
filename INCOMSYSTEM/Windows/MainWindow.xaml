@@ -146,7 +146,7 @@
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button Style="{StaticResource SideBarButton}" Margin="0 5" Click="ProfileBtn_Click">
+                    <Button x:Name="ProfileBtn" Style="{StaticResource SideBarButton}" Margin="0 5" Click="ProfileBtn_Click">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="../Images/profileSettings.png"/>

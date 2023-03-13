@@ -43,6 +43,7 @@ namespace INCOMSYSTEM.Pages
                 var user = db.UsersDetail.Include(s => s.Positions)
                     .Include(s => s.Employees)
                     .Include(s => s.Customers)
+                    .Include(s => s.Customers.LegalForms)
                     .FirstOrDefault(s => s.login == login && s.password == password);
                 if (user != null)
                 {

@@ -36,6 +36,7 @@ namespace INCOMSYSTEM.Windows
             if (AuthUser == null)
             {
                 AuthBlock.Text = "Вы вошли как гость!";
+                ProfileBtn.Visibility = Visibility.Collapsed;
                 ChatBtn.Visibility = Visibility.Collapsed;
                 ReviewFrame.Navigate(new ViewTasksPage());
                 return;
@@ -162,7 +163,7 @@ namespace INCOMSYSTEM.Windows
 
         private void ProfileBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_sideBarMenu[MenuItems.Profile] == null) _sideBarMenu[MenuItems.Profile] = new Page();
+            if (_sideBarMenu[MenuItems.Profile] == null) _sideBarMenu[MenuItems.Profile] = new ProfilePage(AuthUser);
             
             this.Title = "Профиль";
             BackBtn.Visibility = Visibility.Collapsed;
