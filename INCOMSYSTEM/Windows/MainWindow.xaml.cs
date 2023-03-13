@@ -185,6 +185,15 @@ namespace INCOMSYSTEM.Windows
             MFrame.Content = _sideBarMenu[MenuItems.Chat];
         }
 
+        public void GoChat(Chats chat)
+        {
+            ChatBtn_Click(null, new RoutedEventArgs());
+
+            var chatPage = ChatListPage as ChatListPage;
+            chatPage.Chat = chat;
+            chatPage.ChatEnter_LeftBtnUp(null, null);
+        }
+
         private void MainMenuBtn_Click(object sender, RoutedEventArgs e)
         {
             ReviewBtn_Click(sender, e);

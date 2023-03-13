@@ -26,7 +26,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             SetInputBoxValues(order);
             SetFileValues(order);
 
-            if (order.idStatus >= 3)
+            if (order.idStatus >= 4 || order.factDateStart != null || MainWindow.AuthUser.idPos == 2)
             {
                 ChangeExecutorBox();
                 DisableBoxes();

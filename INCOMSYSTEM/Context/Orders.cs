@@ -37,14 +37,34 @@ namespace INCOMSYSTEM.Context
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
 
+        public Visibility CanViewDetail =>
+            Chats.idManager != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
         public Visibility CanJoinChat =>
-            Chats.idManager == null || MainWindow.AuthUser?.idUser == Chats.idManager
+            (Chats.idManager == null || MainWindow.AuthUser?.idUser == Chats.idManager) && MainWindow.AuthUser?.idPos == 3
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
         public Visibility CanFormAgreement =>
-            idExecutor != null && planDateStart != null && planDateComplete != null
+            (idExecutor != null && planDateStart != null && planDateComplete != null)  && MainWindow.AuthUser?.idPos == 3
                 ? Visibility.Visible
                 : Visibility.Collapsed;
+        
+        public Visibility CanSetFactStartDate =>
+            MainWindow.AuthUser?.idPos == 2 && factDateStart == null && planDateStart != null && planDateComplete != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        
+        public Visibility CanSetFactCompleteDate =>
+            MainWindow.AuthUser?.idPos == 2 && factDateStart != null && factDateComplete == null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+        public bool IsStartLateYellow => factDateStart > planDateStart?.AddDays(5);
+        public bool IsStartLateRed => factDateStart > planDateComplete;
+        public bool IsCompleteLateYellow => factDateComplete > planDateComplete?.AddDays(5);
+        public bool IsCompleteLateRed => factDateComplete > planDateComplete;
     }
 }

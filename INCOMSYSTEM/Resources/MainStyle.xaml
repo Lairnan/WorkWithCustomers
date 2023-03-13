@@ -149,6 +149,7 @@
                         </Grid.ColumnDefinitions>
                         <DatePickerTextBox
                             x:Name="PART_TextBox"
+                            IsReadOnly="True"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Style="{StaticResource DatePickerTextBoxStyle}"/>
                         <Button
@@ -239,7 +240,11 @@
                                        Style="{x:Null}"
                                        Width="20"/>
                             </Border>
-                            <TextBlock Text="{TemplateBinding Header}" Grid.Column="1" FontSize="15"/>
+                            <TextBlock Text="{TemplateBinding Header}" Grid.Column="1" FontSize="15">
+                                <TextBlock.ToolTip>
+                                    <Binding RelativeSource="{RelativeSource Mode=Self}" Path="Text"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

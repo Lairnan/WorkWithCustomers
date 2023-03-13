@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+      xmlns:wnd="clr-namespace:INCOMSYSTEM.Windows"
       mc:Ignorable="d"
       Title="Список заказов">
     <Page.Resources>
@@ -47,6 +48,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="100"/>
@@ -60,22 +62,36 @@
                     <Border Grid.Column="1">
                         <TextBlock Text="Заказчик"/>
                     </Border>
-                    <Border Grid.Column="2">
+                    <Border Grid.Column="2" Width="200">
+                        <Border.Style>
+                            <Style TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}"
+                                                 Value="2">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <TextBlock Text="Исполнитель"/>
                     </Border>
                     <Border Grid.Column="3">
-                        <TextBlock Text="Задача"/>
+                        <TextBlock Text="Менеджер"/>
                     </Border>
                     <Border Grid.Column="4">
-                        <TextBlock Text="Цена"/>
+                        <TextBlock Text="Задача"/>
                     </Border>
                     <Border Grid.Column="5">
-                        <TextBlock Text="Сложность"/>
+                        <TextBlock Text="Цена"/>
                     </Border>
                     <Border Grid.Column="6">
-                        <TextBlock Text="Дата формирования заказа"/>
+                        <TextBlock Text="Сложность"/>
                     </Border>
                     <Border Grid.Column="7">
+                        <TextBlock Text="Дата формирования заказа"/>
+                    </Border>
+                    <Border Grid.Column="8">
                         <TextBlock Text="Статус"/>
                     </Border>
                 </Grid>
@@ -89,6 +105,7 @@
                                     <ContextMenu>
                                         <MenuItem Header="Просмотреть заказ"
                                                   Click="ViewOrderMenu_Click"
+                                                  Visibility="{Binding CanViewDetail}"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                             Path=DataContext}"/>
                                         <MenuItem Header="Перейти к чату"
@@ -99,6 +116,16 @@
                                         <MenuItem Header="Сформировать договор"
                                                   Click="FormAgreementOrderMenu_Click"
                                                   Visibility="{Binding CanFormAgreement}"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                            Path=DataContext}"/>
+                                        <MenuItem Header="Установить фактическую дату начала"
+                                                  Click="SetFactDateStartMenu_Click"
+                                                  Visibility="{Binding CanSetFactStartDate}"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                            Path=DataContext}"/>
+                                        <MenuItem Header="Установить фактическую дату завершения"
+                                                  Click="SetFactDateCompleteMenu_Click"
+                                                  Visibility="{Binding CanSetFactCompleteDate}"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                             Path=DataContext}"/>
                                     </ContextMenu>
@@ -126,6 +153,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
                                             <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="200"/>
                                             <ColumnDefinition Width="150"/>
                                             <ColumnDefinition Width="100"/>
@@ -139,39 +167,49 @@
                                         <Border Grid.Column="1">
                                             <TextBlock Text="{Binding Customers.name}"/>
                                         </Border>
-                                        <Border Grid.Column="2">
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0} {1} {2}" TargetNullValue="Отсутствует">
-                                                        <Binding Path="Employees.surname"/>
-                                                        <Binding Path="Employees.name"/>
-                                                        <Binding Path="Employees.patronymic"/>
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
+                                        <Border Grid.Column="2" Width="200">
+                                            <Border.Style>
+                                                <Style TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}"
+                                                                     Value="2">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding Employees, TargetNullValue='Отсутствует'}"/>
                                         </Border>
                                         <Border Grid.Column="3">
-                                            <TextBlock Text="{Binding Tasks.name}"/>
+                                            <TextBlock Text="{Binding Chats.Employees, TargetNullValue='Отсутствует'}"/>
                                         </Border>
                                         <Border Grid.Column="4">
+                                            <TextBlock Text="{Binding Tasks.name}"/>
+                                        </Border>
+                                        <Border Grid.Column="5">
                                             <TextBlock Text="{Binding price, 
                                                                             StringFormat='{}{0:0,0} руб.', 
                                                                             ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
                                         </Border>
-                                        <Border Grid.Column="5">
+                                        <Border Grid.Column="6">
                                             <TextBlock Text="{Binding difficulty}"/>
                                         </Border>
-                                        <Border Grid.Column="6">
+                                        <Border Grid.Column="7">
                                             <TextBlock Text="{Binding dateOrder,
                                                                     StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                     ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
                                         </Border>
-                                        <Border Grid.Column="7">
+                                        <Border Grid.Column="8">
                                             <TextBlock Text="{Binding Statuses.name}"/>
                                         </Border>
-                                        <Grid Grid.Row="1" Grid.ColumnSpan="8" Grid.Column="0">
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
+                                        <UniformGrid Grid.Row="1"
+                                                     Grid.ColumnSpan="9"
+                                                     Grid.Column="0"
+                                                     Columns="4"
+                                                     Height="80">
+                                            <UniformGrid.Style>
+                                                <Style TargetType="UniformGrid">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding ElementName=OrderGrid, Path=IsChecked}" Value="True">
@@ -179,54 +217,70 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Grid.Style>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="40"/>
-                                                <RowDefinition Height="40"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
+                                            </UniformGrid.Style>
                                             <Border>
                                                 <TextBlock Text="Плановая дата начала" FontWeight="Bold"/>
                                             </Border>
-                                            <Border Grid.Column="1">
+                                            <Border>
                                                 <TextBlock Text="Фактическая дата начала" FontWeight="Bold"/>
                                             </Border>
-                                            <Border Grid.Column="2">
+                                            <Border>
                                                 <TextBlock Text="Плановая дата завершения" FontWeight="Bold"/>
                                             </Border>
-                                            <Border Grid.Column="3">
+                                            <Border>
                                                 <TextBlock Text="Фактическая дата завершения" FontWeight="Bold"/>
                                             </Border>
-                                            <Border Grid.Row="1">
+                                            <Border>
                                                 <TextBlock Text="{Binding planDateStart,
                                                                          StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                          ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                          TargetNullValue='Отсутствует'}"/>
                                             </Border>
-                                            <Border Grid.Row="1" Grid.Column="1">
+                                            <Border>
                                                 <TextBlock Text="{Binding factDateStart,
                                                                          StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                          ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                         TargetNullValue='Отсутствует'}"/>
+                                                                         TargetNullValue='Отсутствует'}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsStartLateYellow}" Value="True">
+                                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsStartLateRed}" Value="True">
+                                                                    <Setter Property="Foreground" Value="Red"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
                                             </Border>
-                                            <Border Grid.Row="1" Grid.Column="2">
+                                            <Border>
                                                 <TextBlock Text="{Binding planDateComplete,
                                                                          StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                          ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                         TargetNullValue='Отсутствует'}"/>
+                                                                         TargetNullValue='Отсутствует'}">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsCompleteLateYellow}" Value="True">
+                                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsCompleteLateRed}" Value="True">
+                                                                    <Setter Property="Foreground" Value="Red"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
                                             </Border>
-                                            <Border Grid.Row="1" Grid.Column="3">
+                                            <Border>
                                                 <TextBlock Text="{Binding factDateComplete,
                                                                          StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                          ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                          TargetNullValue='Отсутствует'}"/>
                                             </Border>
-                                        </Grid>
+                                        </UniformGrid>
                                     </Grid>
                                 </CheckBox.Content>
                             </CheckBox>

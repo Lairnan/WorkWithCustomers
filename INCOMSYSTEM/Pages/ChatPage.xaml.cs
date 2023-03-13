@@ -113,23 +113,24 @@ namespace INCOMSYSTEM.Pages
 
             Task.Run(async () =>
             {
-                SendMessageBtn.IsEnabled = false;
-                _canSend = false;
+                Application.Current.Dispatcher.Invoke(() => SendMessageBtn.IsEnabled = false);
+                Application.Current.Dispatcher.Invoke(() => _canSend = false);
                 for (var i = 5; i >= 0; i--)
                 {
                     string timerStr;
                     if (i > 1) timerStr = $"{i} секунды";
                     else if (i == 1) timerStr = $"{i} секунду";
                     else timerStr = $"{i} секунд";
-                    SetError($"Перед отправкой следующего сообщения подождите {timerStr}");
+                    Application.Current.Dispatcher.Invoke(() => SetError($"Перед отправкой следующего сообщения подождите {timerStr}"));
                     await Task.Delay(1000);
                 }
 
-                _canSend = true;
-                SendMessageBtn.IsEnabled = true;
+                Application.Current.Dispatcher.Invoke(() => _canSend = true);
+                Application.Current.Dispatcher.Invoke(() => SendMessageBtn.IsEnabled = true);
                 HideError();
             });
             
+            HideError();
             SendMessage();
         }
     
@@ -139,7 +140,7 @@ namespace INCOMSYSTEM.Pages
             {
                 var message = new Messages
                 {
-                    idChat = _chatMess.Chat.idChat,
+                    idChat = _chatMess.Id,
                     idUser = MainWindow.AuthUser.idUser,
                     message = InputMessageBox.Text,
                     dateSend = DateTime.Now
@@ -170,6 +171,14 @@ namespace INCOMSYSTEM.Pages
 
                 InputMessageBox.Clear();
             }
+
+            if (MessagesCollection.Count >= 2) return;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var style = MessagesCollection.Count < 2 ? MessagesList.Style : null;
+                MessagesList.Style = null;
+                MessagesList.Style = style;
+            });
         }
 
         private void SetError(string error)

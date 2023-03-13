@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using INCOMSYSTEM.Context;
 using INCOMSYSTEM.ViewModels;
 using INCOMSYSTEM.Windows;
 using Page = System.Windows.Controls.Page;
@@ -17,20 +16,46 @@ namespace INCOMSYSTEM.Pages
         }
 
         private Dictionary<long, Page> ChatPages { get; } = new Dictionary<long, Page>();
+        public Chats Chat { get; set; }
 
-        private void ChatEnter_LeftBtnUp(object sender, MouseButtonEventArgs e)
+        public void ChatEnter_LeftBtnUp(object sender, MouseButtonEventArgs e)
         {
-            var chatMess = (sender as Grid).DataContext as ChatMess;
-            if (ChatPages.ContainsKey(chatMess.Id))
+            ChatMess chatMess;
+            if (Chat != null)
             {
-                MainWindow.ChatFrame.Navigate(ChatPages[chatMess.Id]);
+                if (ChatPages.ContainsKey(Chat.idChat))
+                {
+                    MainWindow.ChatFrame.Navigate(ChatPages[Chat.idChat]);
+                }
+                else
+                {
+                    chatMess = new ChatMess
+                    {
+                        Id = Chat.idChat,
+                        IsConnected = true,
+                        Recipient = Chat.Customers.name
+                    };
+                    var chatPage = new ChatPage(chatMess);
+                    ChatPages.Add(Chat.idChat, chatPage);
+                    MainWindow.ChatFrame.Navigate(chatPage);
+                }
             }
             else
             {
-                var chatPage = new ChatPage(chatMess);
-                ChatPages.Add(chatMess.Id, chatPage);
-                MainWindow.ChatFrame.Navigate(chatPage);
+                chatMess = (sender as Grid).DataContext as ChatMess;
+                if (ChatPages.ContainsKey(chatMess.Id))
+                {
+                    MainWindow.ChatFrame.Navigate(ChatPages[chatMess.Id]);
+                }
+                else
+                {
+                    var chatPage = new ChatPage(chatMess);
+                    ChatPages.Add(chatMess.Id, chatPage);
+                    MainWindow.ChatFrame.Navigate(chatPage);
+                }
             }
+
+            Chat = null;
         }
     }
 }

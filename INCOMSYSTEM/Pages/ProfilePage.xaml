@@ -257,67 +257,59 @@
                                                 <Border Grid.Column="7">
                                                     <TextBlock Text="{Binding Statuses.name}" />
                                                 </Border>
-                                                <Grid Grid.Row="1" Grid.ColumnSpan="8" Grid.Column="0">
-                                                    <Grid.Style>
-                                                        <Style TargetType="Grid">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                <UniformGrid Grid.Row="1"
+                                                             Grid.ColumnSpan="9"
+                                                             Grid.Column="0"
+                                                             Columns="4"
+                                                             Height="80">
+                                                    <UniformGrid.Style>
+                                                        <Style TargetType="UniformGrid">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger
-                                                                    Binding="{Binding ElementName=OrderGrid, Path=IsChecked}"
-                                                                    Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                <DataTrigger Binding="{Binding ElementName=OrderGrid, Path=IsChecked}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
-                                                    </Grid.Style>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="40" />
-                                                        <RowDefinition Height="40" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
+                                                    </UniformGrid.Style>
                                                     <Border>
                                                         <TextBlock Text="Плановая дата начала" FontWeight="Bold" />
                                                     </Border>
-                                                    <Border Grid.Column="1">
+                                                    <Border>
                                                         <TextBlock Text="Фактическая дата начала" FontWeight="Bold" />
                                                     </Border>
-                                                    <Border Grid.Column="2">
+                                                    <Border>
                                                         <TextBlock Text="Плановая дата завершения" FontWeight="Bold" />
                                                     </Border>
-                                                    <Border Grid.Column="3">
+                                                    <Border>
                                                         <TextBlock Text="Фактическая дата завершения" FontWeight="Bold" />
                                                     </Border>
-                                                    <Border Grid.Row="1">
+                                                    <Border>
                                                         <TextBlock
                                                             Text="{Binding planDateStart,
                                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                                 TargetNullValue='Отсутствует'}" />
                                                     </Border>
-                                                    <Border Grid.Row="1" Grid.Column="1">
+                                                    <Border>
                                                         <TextBlock Text="{Binding factDateStart,
                                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                                 TargetNullValue='Отсутствует'}" />
                                                     </Border>
-                                                    <Border Grid.Row="1" Grid.Column="2">
+                                                    <Border>
                                                         <TextBlock Text="{Binding planDateComplete,
                                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                                 TargetNullValue='Отсутствует'}" />
                                                     </Border>
-                                                    <Border Grid.Row="1" Grid.Column="3">
+                                                    <Border>
                                                         <TextBlock Text="{Binding factDateComplete,
                                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                                 TargetNullValue='Отсутствует'}" />
                                                     </Border>
-                                                </Grid>
+                                                </UniformGrid>
                                             </Grid>
                                         </CheckBox.Content>
                                     </CheckBox>
