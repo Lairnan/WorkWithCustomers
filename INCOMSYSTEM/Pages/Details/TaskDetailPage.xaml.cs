@@ -14,7 +14,7 @@ namespace INCOMSYSTEM.Pages.Details
         public TaskDetailPage(Tasks task)
         {
             InitializeComponent();
-            Title = "Редактирование заказа";
+            Title = "Редактирование задачи";
             _isEdit = true;
             SaveBtn.Content = "Сохранить";
             
@@ -64,7 +64,7 @@ namespace INCOMSYSTEM.Pages.Details
         public TaskDetailPage()
         {
             InitializeComponent();
-            Title = "Добавление заказа";
+            Title = "Добавление задачи";
             _isEdit = false;
             SaveBtn.Content = "Добавить";
 
