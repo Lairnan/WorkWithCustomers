@@ -259,6 +259,12 @@
                                                 <TextBlock Text="{Binding planDateComplete,
                                                                          StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                          ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
+                                                                         TargetNullValue='Отсутствует'}"/>
+                                            </Border>
+                                            <Border>
+                                                <TextBlock Text="{Binding factDateComplete,
+                                                                         StringFormat='{}{0:dd MMMM yyyy} г.',
+                                                                         ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                          TargetNullValue='Отсутствует'}">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -273,12 +279,6 @@
                                                         </Style>
                                                     </TextBlock.Style>
                                                 </TextBlock>
-                                            </Border>
-                                            <Border>
-                                                <TextBlock Text="{Binding factDateComplete,
-                                                                         StringFormat='{}{0:dd MMMM yyyy} г.',
-                                                                         ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
-                                                                         TargetNullValue='Отсутствует'}"/>
                                             </Border>
                                         </UniformGrid>
                                     </Grid>
