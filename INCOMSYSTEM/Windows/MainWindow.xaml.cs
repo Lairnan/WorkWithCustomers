@@ -65,6 +65,12 @@ namespace INCOMSYSTEM.Windows
 
         private void SetStartPage()
         {
+            if (AuthUser == null)
+            {
+                ReviewFrame.Navigate(new ViewTasksPage());
+                return;
+            }
+            
             switch (AuthUser.idPos)
             {
                 case 1:

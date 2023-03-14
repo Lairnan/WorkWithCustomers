@@ -80,7 +80,9 @@ namespace INCOMSYSTEM.Pages
 
         private void GuestBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            MainWindow.AuthUser = null;
+            new MainWindow().Show();
+            Application.Current.Windows.OfType<AuthWindow>().First().Close();
         }
     }
 }
