@@ -10,32 +10,47 @@ namespace TestDifficultyPassword
         [Test]
         public void Test1()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Z#d$NmJwRDK"), DifficultyPassword.Hard);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Ht9Ym$F5&pL@#dKqW7"), DifficultyPassword.Hard);
         }
         [Test]
         public void Test2()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("k5OjB9DQO6"), DifficultyPassword.Hard);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("37V#sGf4*5QmaR8NlJ"), DifficultyPassword.Hard);
         }
         [Test]
         public void Test3()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("X1JMF1t"), DifficultyPassword.Easy);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("pL!jkf#3@Uqwe$rt"), DifficultyPassword.Hard);
         }
         [Test]
         public void Test4()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("123321"), DifficultyPassword.Easy);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Kq2@pWcD1n"), DifficultyPassword.Medium);
         }
         [Test]
         public void Test5()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("k5OjB9DQO6"), DifficultyPassword.Medium);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("5fR$loBoP9"), DifficultyPassword.Medium);
         }
         [Test]
         public void Test6()
         {
-            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Asm0GH37uKd"), DifficultyPassword.Medium);
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Bvw87*ekdGp"), DifficultyPassword.Medium);
+        }
+        [Test]
+        public void Test7()
+        {
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("sunshine"), DifficultyPassword.Easy);
+        }
+        [Test]
+        public void Test8()
+        {
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("123456789"), DifficultyPassword.Easy);
+        }
+        [Test]
+        public void Test9()
+        {
+            Assert.AreEqual(PasswordDifficulty.CheckDifficultyPassword("Password123"), DifficultyPassword.Easy);
         }
     }
 }
