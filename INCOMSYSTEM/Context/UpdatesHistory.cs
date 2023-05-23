@@ -12,21 +12,19 @@ namespace INCOMSYSTEM.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Messages
+    public partial class UpdatesHistory
     {
-        public long id { get; set; }
-        public long idChat { get; set; }
+        public System.Guid id { get; set; }
+        public string tableName { get; set; }
+        public long idRecord { get; set; }
+        public string field { get; set; }
+        public string oldValue { get; set; }
+        public string newValue { get; set; }
+        public System.DateTime dateUpdate { get; set; }
+        public byte idStatus { get; set; }
         public long idUser { get; set; }
-        public string message { get; set; }
-        public byte[] attachment { get; set; }
-        public string fileExtension { get; set; }
-        public System.DateTime dateSend { get; set; }
-        public Nullable<long> idFile { get; set; }
     
-        public virtual Chats Chats { get; set; }
+        public virtual StatusesUpdate StatusesUpdate { get; set; }
         public virtual UsersDetail UsersDetail { get; set; }
-        public virtual HistoryUploaded HistoryUploaded { get; set; }
-
-        public string shortMessage => message.Length > 125 ? message.Substring(0, 125) + "..." : message;
     }
 }

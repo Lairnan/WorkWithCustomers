@@ -12,27 +12,21 @@ namespace INCOMSYSTEM.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class Employees
+    public partial class TaskStages
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employees()
+        public TaskStages()
         {
-            this.Chats = new HashSet<Chats>();
-            this.Orders = new HashSet<Orders>();
-            this.SpecializationsEmployee = new HashSet<SpecializationsEmployee>();
+            this.OrderStages = new HashSet<OrderStages>();
         }
     
-        public long idUser { get; set; }
-        public string surname { get; set; }
+        public long id { get; set; }
+        public long idTask { get; set; }
         public string name { get; set; }
-        public string patronymic { get; set; }
+        public byte planDateCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Chats> Chats { get; set; }
-        public virtual UsersDetail UsersDetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Orders> Orders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpecializationsEmployee> SpecializationsEmployee { get; set; }
+        public virtual ICollection<OrderStages> OrderStages { get; set; }
+        public virtual Tasks Tasks { get; set; }
     }
 }

@@ -13,9 +13,15 @@ namespace INCOMSYSTEM.Context
     using System.Windows;
     using System.Collections.Generic;
     using INCOMSYSTEM.Windows;
-    
+
     public partial class Orders
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Orders()
+        {
+            this.OrderStages = new HashSet<OrderStages>();
+        }
+    
         public long id { get; set; }
         public long idCustomer { get; set; }
         public Nullable<long> idExecutor { get; set; }
@@ -30,12 +36,17 @@ namespace INCOMSYSTEM.Context
         public byte[] attachment { get; set; }
         public string fileExtension { get; set; }
         public byte idStatus { get; set; }
+        public Nullable<long> idFile { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }
         public virtual Employees Employees { get; set; }
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
+        public virtual HistoryUploaded HistoryUploaded { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderStages> OrderStages { get; set; }
+
 
         public Visibility CanViewDetail =>
             Chats.idManager != null
@@ -48,15 +59,15 @@ namespace INCOMSYSTEM.Context
                 : Visibility.Collapsed;
 
         public Visibility CanFormAgreement =>
-            (idExecutor != null && planDateStart != null && planDateComplete != null)  && MainWindow.AuthUser?.idPos == 3
+            (idExecutor != null && planDateStart != null && planDateComplete != null) && MainWindow.AuthUser?.idPos == 3
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-        
+
         public Visibility CanSetFactStartDate =>
             MainWindow.AuthUser?.idPos == 2 && factDateStart == null && planDateStart != null && planDateComplete != null
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-        
+
         public Visibility CanSetFactCompleteDate =>
             MainWindow.AuthUser?.idPos == 2 && factDateStart != null && factDateComplete == null
                 ? Visibility.Visible

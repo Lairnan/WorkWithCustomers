@@ -18,6 +18,8 @@ namespace INCOMSYSTEM.Context
         public UsersDetail()
         {
             this.Messages = new HashSet<Messages>();
+            this.HistoryUploaded = new HashSet<HistoryUploaded>();
+            this.UpdatesHistory = new HashSet<UpdatesHistory>();
         }
     
         public long idUser { get; set; }
@@ -34,6 +36,10 @@ namespace INCOMSYSTEM.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Messages> Messages { get; set; }
         public virtual Positions Positions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HistoryUploaded> HistoryUploaded { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UpdatesHistory> UpdatesHistory { get; set; }
 
         public string SeriePassport => passport.ToString().Substring(0, 4);
         public string NumberPassport => passport.ToString().Substring(4, 6);

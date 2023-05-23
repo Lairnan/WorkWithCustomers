@@ -37,5 +37,12 @@ namespace INCOMSYSTEM.Context
         public virtual DbSet<Statuses> Statuses { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<UsersDetail> UsersDetail { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<HistoryUploaded> HistoryUploaded { get; set; }
+        public virtual DbSet<OrderStages> OrderStages { get; set; }
+        public virtual DbSet<StagesTypes> StagesTypes { get; set; }
+        public virtual DbSet<StatusesUpdate> StatusesUpdate { get; set; }
+        public virtual DbSet<TaskStages> TaskStages { get; set; }
+        public virtual DbSet<UpdatesHistory> UpdatesHistory { get; set; }
     }
 }

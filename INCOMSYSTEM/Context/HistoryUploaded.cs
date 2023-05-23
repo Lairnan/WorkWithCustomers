@@ -9,44 +9,35 @@
 
 namespace INCOMSYSTEM.Context
 {
-    using INCOMSYSTEM.BehaviorsFiles;
     using System;
     using System.Collections.Generic;
     
-    public partial class Tasks
+    public partial class HistoryUploaded
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tasks()
+        public HistoryUploaded()
         {
+            this.Messages = new HashSet<Messages>();
             this.Orders = new HashSet<Orders>();
-            this.TaskStages = new HashSet<TaskStages>();
+            this.Tasks = new HashSet<Tasks>();
         }
     
         public long id { get; set; }
-        public string name { get; set; }
-        public int idSpecialization { get; set; }
-        public string description { get; set; }
-        public decimal price { get; set; }
-        public Nullable<byte> discount { get; set; }
-        public int approxCompleteTime { get; set; }
-        public int supportPeriod { get; set; }
-        public byte[] attachment { get; set; }
+        public string tableName { get; set; }
+        public long tableId { get; set; }
+        public string fileName { get; set; }
         public string fileExtension { get; set; }
-        public Nullable<long> idFile { get; set; }
+        public int fileSize { get; set; }
+        public byte[] fileContent { get; set; }
+        public System.DateTime dateAdded { get; set; }
+        public long uploadedBy { get; set; }
     
+        public virtual UsersDetail UsersDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Messages> Messages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
-        public virtual Specializations Specializations { get; set; }
-        public virtual HistoryUploaded HistoryUploaded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaskStages> TaskStages { get; set; }
-
-
-        public bool discoutStyle => discount != null && discount > 10;
-        public decimal newPrice => discount != null ? (decimal)(price - (price * (discount / 100m))) : price;
-        public bool discountVisible => discount != null && discount > 0;
-        public string shortDescription => description.Length > 60 ? description.Substring(0, 60) + "..." : description;
-
-        public string approxString => approxCompleteTime.ConvertDay();
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

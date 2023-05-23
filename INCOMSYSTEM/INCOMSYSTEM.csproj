@@ -78,6 +78,9 @@
     <Compile Include="Context\Employees.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\HistoryUploaded.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\INCOMSYSTEMModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +105,9 @@
     <Compile Include="Context\Orders.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\OrderStages.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\Positions.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -111,10 +117,25 @@
     <Compile Include="Context\SpecializationsEmployee.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\StagesTypes.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\Statuses.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Context\StatusesUpdate.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\sysdiagrams.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Context\Tasks.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\TaskStages.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\UpdatesHistory.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\UsersDetail.cs">
