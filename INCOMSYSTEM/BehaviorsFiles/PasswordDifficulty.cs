@@ -44,9 +44,11 @@ namespace INCOMSYSTEM.BehaviorsFiles
             {
                 if (!array.Contains(ch)) array.Add(ch);
                 else count++;
+
+                if (count > 1) return true;
             }
 
-            return count > 1;
+            return false;
         }
 
         private static bool IsEasyPassword(string password)
