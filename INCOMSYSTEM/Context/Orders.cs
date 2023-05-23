@@ -13,7 +13,7 @@ namespace INCOMSYSTEM.Context
     using System.Windows;
     using System.Collections.Generic;
     using INCOMSYSTEM.Windows;
-
+    
     public partial class Orders
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -33,17 +33,15 @@ namespace INCOMSYSTEM.Context
         public Nullable<System.DateTime> factDateStart { get; set; }
         public Nullable<System.DateTime> planDateComplete { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
-        public byte[] attachment { get; set; }
-        public string fileExtension { get; set; }
         public byte idStatus { get; set; }
         public Nullable<long> idFile { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual Customers Customers { get; set; }
         public virtual Employees Employees { get; set; }
+        public virtual HistoryUploaded HistoryUploaded { get; set; }
         public virtual Statuses Statuses { get; set; }
         public virtual Tasks Tasks { get; set; }
-        public virtual HistoryUploaded HistoryUploaded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderStages> OrderStages { get; set; }
 

@@ -28,21 +28,20 @@ namespace INCOMSYSTEM.Context
         public virtual DbSet<Chats> Chats { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
+        public virtual DbSet<HistoryUploaded> HistoryUploaded { get; set; }
         public virtual DbSet<LegalForms> LegalForms { get; set; }
         public virtual DbSet<Messages> Messages { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<OrderStages> OrderStages { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Specializations> Specializations { get; set; }
         public virtual DbSet<SpecializationsEmployee> SpecializationsEmployee { get; set; }
-        public virtual DbSet<Statuses> Statuses { get; set; }
-        public virtual DbSet<Tasks> Tasks { get; set; }
-        public virtual DbSet<UsersDetail> UsersDetail { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<HistoryUploaded> HistoryUploaded { get; set; }
-        public virtual DbSet<OrderStages> OrderStages { get; set; }
         public virtual DbSet<StagesTypes> StagesTypes { get; set; }
+        public virtual DbSet<Statuses> Statuses { get; set; }
         public virtual DbSet<StatusesUpdate> StatusesUpdate { get; set; }
+        public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStages> TaskStages { get; set; }
         public virtual DbSet<UpdatesHistory> UpdatesHistory { get; set; }
+        public virtual DbSet<UsersDetail> UsersDetail { get; set; }
     }
 }

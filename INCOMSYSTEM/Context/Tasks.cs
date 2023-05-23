@@ -9,9 +9,9 @@
 
 namespace INCOMSYSTEM.Context
 {
-    using INCOMSYSTEM.BehaviorsFiles;
     using System;
     using System.Collections.Generic;
+    using INCOMSYSTEM.BehaviorsFiles;
     
     public partial class Tasks
     {
@@ -30,14 +30,12 @@ namespace INCOMSYSTEM.Context
         public Nullable<byte> discount { get; set; }
         public int approxCompleteTime { get; set; }
         public int supportPeriod { get; set; }
-        public byte[] attachment { get; set; }
-        public string fileExtension { get; set; }
         public Nullable<long> idFile { get; set; }
     
+        public virtual HistoryUploaded HistoryUploaded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
         public virtual Specializations Specializations { get; set; }
-        public virtual HistoryUploaded HistoryUploaded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskStages> TaskStages { get; set; }
 

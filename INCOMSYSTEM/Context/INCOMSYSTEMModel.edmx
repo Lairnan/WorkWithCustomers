@@ -638,86 +638,61 @@
           <EntitySet Name="Chats" EntityType="DP_Saulin_INCOMSYSTEMModel.Chats" />
           <EntitySet Name="Customers" EntityType="DP_Saulin_INCOMSYSTEMModel.Customers" />
           <EntitySet Name="Employees" EntityType="DP_Saulin_INCOMSYSTEMModel.Employees" />
+          <EntitySet Name="HistoryUploaded" EntityType="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" />
           <EntitySet Name="LegalForms" EntityType="DP_Saulin_INCOMSYSTEMModel.LegalForms" />
           <EntitySet Name="Messages" EntityType="DP_Saulin_INCOMSYSTEMModel.Messages" />
           <EntitySet Name="Orders" EntityType="DP_Saulin_INCOMSYSTEMModel.Orders" />
+          <EntitySet Name="OrderStages" EntityType="DP_Saulin_INCOMSYSTEMModel.OrderStages" />
           <EntitySet Name="Positions" EntityType="DP_Saulin_INCOMSYSTEMModel.Positions" />
           <EntitySet Name="Specializations" EntityType="DP_Saulin_INCOMSYSTEMModel.Specializations" />
           <EntitySet Name="SpecializationsEmployee" EntityType="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" />
+          <EntitySet Name="StagesTypes" EntityType="DP_Saulin_INCOMSYSTEMModel.StagesTypes" />
           <EntitySet Name="Statuses" EntityType="DP_Saulin_INCOMSYSTEMModel.Statuses" />
+          <EntitySet Name="StatusesUpdate" EntityType="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate" />
           <EntitySet Name="Tasks" EntityType="DP_Saulin_INCOMSYSTEMModel.Tasks" />
+          <EntitySet Name="TaskStages" EntityType="DP_Saulin_INCOMSYSTEMModel.TaskStages" />
+          <EntitySet Name="UpdatesHistory" EntityType="DP_Saulin_INCOMSYSTEMModel.UpdatesHistory" />
           <EntitySet Name="UsersDetail" EntityType="DP_Saulin_INCOMSYSTEMModel.UsersDetail" />
-          <AssociationSet Name="FK__Chats__idChat__540C7B00" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__540C7B00">
+          <AssociationSet Name="FK__Chats__idChat__59FA5E80" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__59FA5E80">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Chats" EntitySet="Chats" />
           </AssociationSet>
-          <AssociationSet Name="FK__Chats__idCustome__5224328E" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5224328E">
+          <AssociationSet Name="FK__Chats__idCustome__5812160E" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5812160E">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Chats" EntitySet="Chats" />
           </AssociationSet>
-          <AssociationSet Name="FK__Chats__idManager__531856C7" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__531856C7">
+          <AssociationSet Name="FK__Chats__idManager__59063A47" Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__59063A47">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Chats" EntitySet="Chats" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__idChat__57DD0BE4" Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__57DD0BE4">
+          <AssociationSet Name="FK__Messages__idChat__5EBF139D" Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5EBF139D">
             <End Role="Chats" EntitySet="Chats" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customers__idLeg__3D2915A8" Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__3D2915A8">
+          <AssociationSet Name="FK__Customers__idLeg__36B12243" Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__36B12243">
             <End Role="LegalForms" EntitySet="LegalForms" />
             <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customers__idUse__3C34F16F" Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__3C34F16F">
+          <AssociationSet Name="FK__Customers__idUse__35BCFE0A" Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__35BCFE0A">
             <End Role="UsersDetail" EntitySet="UsersDetail" />
             <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__idCustom__4C6B5938" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4C6B5938">
+          <AssociationSet Name="FK__Orders__idCustom__4AB81AF0" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4AB81AF0">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employees__idUse__40058253" Association="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__40058253">
+          <AssociationSet Name="FK__Employees__idUse__398D8EEE" Association="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__398D8EEE">
             <End Role="UsersDetail" EntitySet="UsersDetail" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__idExecut__4D5F7D71" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4D5F7D71">
+          <AssociationSet Name="FK__Orders__idExecut__4BAC3F29" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4BAC3F29">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Specializ__idEmp__5F7E2DAC" Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__5F7E2DAC">
+          <AssociationSet Name="FK__Specializ__idEmp__3C69FB99" Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__3C69FB99">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__idUser__58D1301D" Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__58D1301D">
-            <End Role="UsersDetail" EntitySet="UsersDetail" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__idStatus__4F47C5E3" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4F47C5E3">
-            <End Role="Statuses" EntitySet="Statuses" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__idTask__4E53A1AA" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4E53A1AA">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UsersDeta__idPos__3587F3E0" Association="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__3587F3E0">
-            <End Role="Positions" EntitySet="Positions" />
-            <End Role="UsersDetail" EntitySet="UsersDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Specializ__idSpe__607251E5" Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__607251E5">
-            <End Role="Specializations" EntitySet="Specializations" />
-            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tasks__idSpecial__46B27FE2" Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__46B27FE2">
-            <End Role="Specializations" EntitySet="Specializations" />
-            <End Role="Tasks" EntitySet="Tasks" />
-          </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="DP_Saulin_INCOMSYSTEMModel.sysdiagrams" />
-          <EntitySet Name="HistoryUploaded" EntityType="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" />
-          <EntitySet Name="OrderStages" EntityType="DP_Saulin_INCOMSYSTEMModel.OrderStages" />
-          <EntitySet Name="StagesTypes" EntityType="DP_Saulin_INCOMSYSTEMModel.StagesTypes" />
-          <EntitySet Name="StatusesUpdate" EntityType="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate" />
-          <EntitySet Name="TaskStages" EntityType="DP_Saulin_INCOMSYSTEMModel.TaskStages" />
-          <EntitySet Name="UpdatesHistory" EntityType="DP_Saulin_INCOMSYSTEMModel.UpdatesHistory" />
           <AssociationSet Name="FK__HistoryUp__uploa__2F10007B" Association="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__2F10007B">
             <End Role="UsersDetail" EntitySet="UsersDetail" />
             <End Role="HistoryUploaded" EntitySet="HistoryUploaded" />
@@ -734,6 +709,18 @@
             <End Role="HistoryUploaded" EntitySet="HistoryUploaded" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
+          <AssociationSet Name="FK__Messages__idUser__5FB337D6" Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__5FB337D6">
+            <End Role="UsersDetail" EntitySet="UsersDetail" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__idStatus__4D94879B" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4D94879B">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__idTask__4CA06362" Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4CA06362">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK__OrderStag__idOrd__534D60F1" Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__534D60F1">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderStages" EntitySet="OrderStages" />
@@ -745,6 +732,18 @@
           <AssociationSet Name="FK__OrderStag__idTyp__5441852A" Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5441852A">
             <End Role="StagesTypes" EntitySet="StagesTypes" />
             <End Role="OrderStages" EntitySet="OrderStages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersDeta__idPos__2B3F6F97" Association="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2B3F6F97">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="UsersDetail" EntitySet="UsersDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Specializ__idSpe__3D5E1FD2" Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3D5E1FD2">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="SpecializationsEmployee" EntitySet="SpecializationsEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tasks__idSpecial__412EB0B6" Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__412EB0B6">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
           <AssociationSet Name="fk_StatusesUpdate_id" Association="DP_Saulin_INCOMSYSTEMModel.fk_StatusesUpdate_id">
             <End Role="StatusesUpdate" EntitySet="StatusesUpdate" />
@@ -767,10 +766,10 @@
           <Property Name="idCustomer" Type="Int64" Nullable="false" />
           <Property Name="idManager" Type="Int64" />
           <Property Name="dateCreate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__540C7B00" FromRole="Chats" ToRole="Orders" />
-          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5224328E" FromRole="Chats" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__531856C7" FromRole="Chats" ToRole="Employees" />
-          <NavigationProperty Name="Messages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__57DD0BE4" FromRole="Chats" ToRole="Messages" />
+          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__59FA5E80" FromRole="Chats" ToRole="Orders" />
+          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5812160E" FromRole="Chats" ToRole="Customers" />
+          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__59063A47" FromRole="Chats" ToRole="Employees" />
+          <NavigationProperty Name="Messages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5EBF139D" FromRole="Chats" ToRole="Messages" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -779,10 +778,10 @@
           <Property Name="idUser" Type="Int64" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="idLegalForm" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5224328E" FromRole="Customers" ToRole="Chats" />
-          <NavigationProperty Name="LegalForms" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__3D2915A8" FromRole="Customers" ToRole="LegalForms" />
-          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__3C34F16F" FromRole="Customers" ToRole="UsersDetail" />
-          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4C6B5938" FromRole="Customers" ToRole="Orders" />
+          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5812160E" FromRole="Customers" ToRole="Chats" />
+          <NavigationProperty Name="LegalForms" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__36B12243" FromRole="Customers" ToRole="LegalForms" />
+          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__35BCFE0A" FromRole="Customers" ToRole="UsersDetail" />
+          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4AB81AF0" FromRole="Customers" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -792,357 +791,10 @@
           <Property Name="surname" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
           <Property Name="patronymic" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__531856C7" FromRole="Employees" ToRole="Chats" />
-          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__40058253" FromRole="Employees" ToRole="UsersDetail" />
-          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4D5F7D71" FromRole="Employees" ToRole="Orders" />
-          <NavigationProperty Name="SpecializationsEmployee" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__5F7E2DAC" FromRole="Employees" ToRole="SpecializationsEmployee" />
-        </EntityType>
-        <EntityType Name="LegalForms">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__3D2915A8" FromRole="LegalForms" ToRole="Customers" />
-        </EntityType>
-        <EntityType Name="Messages">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idChat" Type="Int64" Nullable="false" />
-          <Property Name="idUser" Type="Int64" Nullable="false" />
-          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="dateSend" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__57DD0BE4" FromRole="Messages" ToRole="Chats" />
-          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__58D1301D" FromRole="Messages" ToRole="UsersDetail" />
-          <Property Name="idFile" Type="Int64" />
-          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idFile__5DCAEF64" FromRole="Messages" ToRole="HistoryUploaded" />
-        </EntityType>
-        <EntityType Name="Orders">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idCustomer" Type="Int64" Nullable="false" />
-          <Property Name="idExecutor" Type="Int64" />
-          <Property Name="idTask" Type="Int64" Nullable="false" />
-          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="difficulty" Type="Double" Nullable="false" />
-          <Property Name="dateOrder" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="planDateStart" Type="DateTime" Precision="3" />
-          <Property Name="factDateStart" Type="DateTime" Precision="3" />
-          <Property Name="planDateComplete" Type="DateTime" Precision="3" />
-          <Property Name="factDateComplete" Type="DateTime" Precision="3" />
-          <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="idStatus" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__540C7B00" FromRole="Orders" ToRole="Chats" />
-          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4C6B5938" FromRole="Orders" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4D5F7D71" FromRole="Orders" ToRole="Employees" />
-          <NavigationProperty Name="Statuses" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4F47C5E3" FromRole="Orders" ToRole="Statuses" />
-          <NavigationProperty Name="Tasks" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4E53A1AA" FromRole="Orders" ToRole="Tasks" />
-          <Property Name="idFile" Type="Int64" />
-          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__49C3F6B7" FromRole="Orders" ToRole="HistoryUploaded" />
-          <NavigationProperty Name="OrderStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__534D60F1" FromRole="Orders" ToRole="OrderStages" />
-        </EntityType>
-        <EntityType Name="Positions">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__3587F3E0" FromRole="Positions" ToRole="UsersDetail" />
-        </EntityType>
-        <EntityType Name="Specializations">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SpecializationsEmployee" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__607251E5" FromRole="Specializations" ToRole="SpecializationsEmployee" />
-          <NavigationProperty Name="Tasks" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__46B27FE2" FromRole="Specializations" ToRole="Tasks" />
-        </EntityType>
-        <EntityType Name="SpecializationsEmployee">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idEmployee" Type="Int64" Nullable="false" />
-          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__5F7E2DAC" FromRole="SpecializationsEmployee" ToRole="Employees" />
-          <NavigationProperty Name="Specializations" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__607251E5" FromRole="SpecializationsEmployee" ToRole="Specializations" />
-        </EntityType>
-        <EntityType Name="Statuses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4F47C5E3" FromRole="Statuses" ToRole="Orders" />
-        </EntityType>
-        <EntityType Name="Tasks">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="discount" Type="Byte" />
-          <Property Name="approxCompleteTime" Type="Int32" Nullable="false" />
-          <Property Name="supportPeriod" Type="Int32" Nullable="false" />
-          <Property Name="attachment" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="fileExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4E53A1AA" FromRole="Tasks" ToRole="Orders" />
-          <NavigationProperty Name="Specializations" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__46B27FE2" FromRole="Tasks" ToRole="Specializations" />
-          <Property Name="idFile" Type="Int64" />
-          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__403A8C7D" FromRole="Tasks" ToRole="HistoryUploaded" />
-          <NavigationProperty Name="TaskStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__TaskStage__idTas__440B1D61" FromRole="Tasks" ToRole="TaskStages" />
-        </EntityType>
-        <EntityType Name="UsersDetail">
-          <Key>
-            <PropertyRef Name="idUser" />
-          </Key>
-          <Property Name="idUser" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="login" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
-          <Property Name="phone" Type="Int64" />
-          <Property Name="idPos" Type="Byte" Nullable="false" />
-          <Property Name="passport" Type="Int64" Nullable="false" />
-          <Property Name="address" Type="String" Nullable="false" MaxLength="175" FixedLength="false" Unicode="true" />
-          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__3C34F16F" FromRole="UsersDetail" ToRole="Customers" />
-          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__40058253" FromRole="UsersDetail" ToRole="Employees" />
-          <NavigationProperty Name="Messages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__58D1301D" FromRole="UsersDetail" ToRole="Messages" />
-          <NavigationProperty Name="Positions" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__3587F3E0" FromRole="UsersDetail" ToRole="Positions" />
-          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__2F10007B" FromRole="UsersDetail" ToRole="HistoryUploaded" />
-          <NavigationProperty Name="UpdatesHistory" Relationship="DP_Saulin_INCOMSYSTEMModel.fk_UsersDetail_id" FromRole="UsersDetail" ToRole="UpdatesHistory" />
-        </EntityType>
-        <Association Name="FK__Chats__idChat__540C7B00">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Chats">
-              <PropertyRef Name="idChat" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Chats__idCustome__5224328E">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Chats">
-              <PropertyRef Name="idCustomer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Chats__idManager__531856C7">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Chats">
-              <PropertyRef Name="idManager" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Messages__idChat__57DD0BE4">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Messages" Role="Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Chats">
-              <PropertyRef Name="idChat" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="idChat" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Customers__idLeg__3D2915A8">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.LegalForms" Role="LegalForms" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LegalForms">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="idLegalForm" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Customers__idUse__3C34F16F">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsersDetail">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Customers">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__idCustom__4C6B5938">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="idCustomer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employees__idUse__40058253">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsersDetail">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__idExecut__4D5F7D71">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="idExecutor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Specializ__idEmp__5F7E2DAC">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="SpecializationsEmployee">
-              <PropertyRef Name="idEmployee" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Messages__idUser__58D1301D">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1" />
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Messages" Role="Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UsersDetail">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__idStatus__4F47C5E3">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Statuses" Role="Statuses" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Statuses">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="idStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__idTask__4E53A1AA">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Tasks" Role="Tasks" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="idTask" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UsersDeta__idPos__3587F3E0">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Positions" Role="Positions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Positions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="UsersDetail">
-              <PropertyRef Name="idPos" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Specializ__idSpe__607251E5">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Specializations" Role="Specializations" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specializations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SpecializationsEmployee">
-              <PropertyRef Name="idSpecialization" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tasks__idSpecial__46B27FE2">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Specializations" Role="Specializations" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DP_Saulin_INCOMSYSTEMModel.Tasks" Role="Tasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specializations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Tasks">
-              <PropertyRef Name="idSpecialization" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__59063A47" FromRole="Employees" ToRole="Chats" />
+          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__398D8EEE" FromRole="Employees" ToRole="UsersDetail" />
+          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4BAC3F29" FromRole="Employees" ToRole="Orders" />
+          <NavigationProperty Name="SpecializationsEmployee" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__3C69FB99" FromRole="Employees" ToRole="SpecializationsEmployee" />
         </EntityType>
         <EntityType Name="HistoryUploaded">
           <Key>
@@ -1162,6 +814,53 @@
           <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__49C3F6B7" FromRole="HistoryUploaded" ToRole="Orders" />
           <NavigationProperty Name="Tasks" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__403A8C7D" FromRole="HistoryUploaded" ToRole="Tasks" />
         </EntityType>
+        <EntityType Name="LegalForms">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__36B12243" FromRole="LegalForms" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idChat" Type="Int64" Nullable="false" />
+          <Property Name="idUser" Type="Int64" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dateSend" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idFile" Type="Int64" />
+          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5EBF139D" FromRole="Messages" ToRole="Chats" />
+          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idFile__5DCAEF64" FromRole="Messages" ToRole="HistoryUploaded" />
+          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__5FB337D6" FromRole="Messages" ToRole="UsersDetail" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCustomer" Type="Int64" Nullable="false" />
+          <Property Name="idExecutor" Type="Int64" />
+          <Property Name="idTask" Type="Int64" Nullable="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="difficulty" Type="Double" Nullable="false" />
+          <Property Name="dateOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="planDateStart" Type="DateTime" Precision="3" />
+          <Property Name="factDateStart" Type="DateTime" Precision="3" />
+          <Property Name="planDateComplete" Type="DateTime" Precision="3" />
+          <Property Name="factDateComplete" Type="DateTime" Precision="3" />
+          <Property Name="idStatus" Type="Byte" Nullable="false" />
+          <Property Name="idFile" Type="Int64" />
+          <NavigationProperty Name="Chats" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__59FA5E80" FromRole="Orders" ToRole="Chats" />
+          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4AB81AF0" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4BAC3F29" FromRole="Orders" ToRole="Employees" />
+          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__49C3F6B7" FromRole="Orders" ToRole="HistoryUploaded" />
+          <NavigationProperty Name="Statuses" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4D94879B" FromRole="Orders" ToRole="Statuses" />
+          <NavigationProperty Name="Tasks" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4CA06362" FromRole="Orders" ToRole="Tasks" />
+          <NavigationProperty Name="OrderStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__534D60F1" FromRole="Orders" ToRole="OrderStages" />
+        </EntityType>
         <EntityType Name="OrderStages">
           <Key>
             <PropertyRef Name="id" />
@@ -1177,6 +876,33 @@
           <NavigationProperty Name="TaskStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__5535A963" FromRole="OrderStages" ToRole="TaskStages" />
           <NavigationProperty Name="StagesTypes" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5441852A" FromRole="OrderStages" ToRole="StagesTypes" />
         </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2B3F6F97" FromRole="Positions" ToRole="UsersDetail" />
+        </EntityType>
+        <EntityType Name="Specializations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SpecializationsEmployee" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3D5E1FD2" FromRole="Specializations" ToRole="SpecializationsEmployee" />
+          <NavigationProperty Name="Tasks" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__412EB0B6" FromRole="Specializations" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="SpecializationsEmployee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmployee" Type="Int64" Nullable="false" />
+          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__3C69FB99" FromRole="SpecializationsEmployee" ToRole="Employees" />
+          <NavigationProperty Name="Specializations" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3D5E1FD2" FromRole="SpecializationsEmployee" ToRole="Specializations" />
+        </EntityType>
         <EntityType Name="StagesTypes">
           <Key>
             <PropertyRef Name="id" />
@@ -1185,6 +911,14 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrderStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5441852A" FromRole="StagesTypes" ToRole="OrderStages" />
         </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4D94879B" FromRole="Statuses" ToRole="Orders" />
+        </EntityType>
         <EntityType Name="StatusesUpdate">
           <Key>
             <PropertyRef Name="id" />
@@ -1192,6 +926,24 @@
           <Property Name="id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UpdatesHistory" Relationship="DP_Saulin_INCOMSYSTEMModel.fk_StatusesUpdate_id" FromRole="StatusesUpdate" ToRole="UpdatesHistory" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="idSpecialization" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="discount" Type="Byte" />
+          <Property Name="approxCompleteTime" Type="Int32" Nullable="false" />
+          <Property Name="supportPeriod" Type="Int32" Nullable="false" />
+          <Property Name="idFile" Type="Int64" />
+          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__403A8C7D" FromRole="Tasks" ToRole="HistoryUploaded" />
+          <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4CA06362" FromRole="Tasks" ToRole="Orders" />
+          <NavigationProperty Name="Specializations" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__412EB0B6" FromRole="Tasks" ToRole="Specializations" />
+          <NavigationProperty Name="TaskStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__TaskStage__idTas__440B1D61" FromRole="Tasks" ToRole="TaskStages" />
         </EntityType>
         <EntityType Name="TaskStages">
           <Key>
@@ -1220,6 +972,151 @@
           <NavigationProperty Name="StatusesUpdate" Relationship="DP_Saulin_INCOMSYSTEMModel.fk_StatusesUpdate_id" FromRole="UpdatesHistory" ToRole="StatusesUpdate" />
           <NavigationProperty Name="UsersDetail" Relationship="DP_Saulin_INCOMSYSTEMModel.fk_UsersDetail_id" FromRole="UpdatesHistory" ToRole="UsersDetail" />
         </EntityType>
+        <EntityType Name="UsersDetail">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="idPos" Type="Byte" Nullable="false" />
+          <Property Name="passport" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="175" FixedLength="false" Unicode="true" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customers" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__35BCFE0A" FromRole="UsersDetail" ToRole="Customers" />
+          <NavigationProperty Name="Employees" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__398D8EEE" FromRole="UsersDetail" ToRole="Employees" />
+          <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__2F10007B" FromRole="UsersDetail" ToRole="HistoryUploaded" />
+          <NavigationProperty Name="Messages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__5FB337D6" FromRole="UsersDetail" ToRole="Messages" />
+          <NavigationProperty Name="Positions" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2B3F6F97" FromRole="UsersDetail" ToRole="Positions" />
+          <NavigationProperty Name="UpdatesHistory" Relationship="DP_Saulin_INCOMSYSTEMModel.fk_UsersDetail_id" FromRole="UsersDetail" ToRole="UpdatesHistory" />
+        </EntityType>
+        <Association Name="FK__Chats__idChat__59FA5E80">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="idChat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chats__idCustome__5812160E">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chats__idManager__59063A47">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__idChat__5EBF139D">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Chats" Role="Chats" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chats">
+              <PropertyRef Name="idChat" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="idChat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customers__idLeg__36B12243">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.LegalForms" Role="LegalForms" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LegalForms">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="idLegalForm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customers__idUse__35BCFE0A">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__idCustom__4AB81AF0">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__idUse__398D8EEE">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__idExecut__4BAC3F29">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="idExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Specializ__idEmp__3C69FB99">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__HistoryUp__uploa__2F10007B">
           <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1" />
           <End Type="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" Role="HistoryUploaded" Multiplicity="*" />
@@ -1268,6 +1165,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Messages__idUser__5FB337D6">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersDetail">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__idStatus__4D94879B">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Statuses" Role="Statuses" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="idStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__idTask__4CA06362">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Tasks" Role="Tasks" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="idTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__OrderStag__idOrd__534D60F1">
           <End Type="DP_Saulin_INCOMSYSTEMModel.Orders" Role="Orders" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1303,6 +1236,42 @@
             </Principal>
             <Dependent Role="OrderStages">
               <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersDeta__idPos__2B3F6F97">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Positions" Role="Positions" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Role="UsersDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UsersDetail">
+              <PropertyRef Name="idPos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Specializ__idSpe__3D5E1FD2">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Specializations" Role="Specializations" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Role="SpecializationsEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SpecializationsEmployee">
+              <PropertyRef Name="idSpecialization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tasks__idSpecial__412EB0B6">
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Specializations" Role="Specializations" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specializations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="idSpecialization" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1377,6 +1346,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="HistoryUploaded">
+            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded">
+              <MappingFragment StoreEntitySet="HistoryUploaded">
+                <ScalarProperty Name="uploadedBy" ColumnName="uploadedBy" />
+                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+                <ScalarProperty Name="fileContent" ColumnName="fileContent" />
+                <ScalarProperty Name="fileSize" ColumnName="fileSize" />
+                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="tableId" ColumnName="tableId" />
+                <ScalarProperty Name="tableName" ColumnName="tableName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LegalForms">
             <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.LegalForms">
               <MappingFragment StoreEntitySet="LegalForms">
@@ -1416,6 +1400,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrderStages">
+            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.OrderStages">
+              <MappingFragment StoreEntitySet="OrderStages">
+                <ScalarProperty Name="factDateComplete" ColumnName="factDateComplete" />
+                <ScalarProperty Name="factDateStart" ColumnName="factDateStart" />
+                <ScalarProperty Name="idTaskStage" ColumnName="idTaskStage" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="idOrder" ColumnName="idOrder" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Positions">
             <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.Positions">
               <MappingFragment StoreEntitySet="Positions">
@@ -1441,9 +1438,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="StagesTypes">
+            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.StagesTypes">
+              <MappingFragment StoreEntitySet="StagesTypes">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Statuses">
             <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.Statuses">
               <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusesUpdate">
+            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate">
+              <MappingFragment StoreEntitySet="StatusesUpdate">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -1459,64 +1472,6 @@
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="idSpecialization" ColumnName="idSpecialization" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsersDetail">
-            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.UsersDetail">
-              <MappingFragment StoreEntitySet="UsersDetail">
-                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="passport" ColumnName="passport" />
-                <ScalarProperty Name="idPos" ColumnName="idPos" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HistoryUploaded">
-            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded">
-              <MappingFragment StoreEntitySet="HistoryUploaded">
-                <ScalarProperty Name="uploadedBy" ColumnName="uploadedBy" />
-                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
-                <ScalarProperty Name="fileContent" ColumnName="fileContent" />
-                <ScalarProperty Name="fileSize" ColumnName="fileSize" />
-                <ScalarProperty Name="fileExtension" ColumnName="fileExtension" />
-                <ScalarProperty Name="fileName" ColumnName="fileName" />
-                <ScalarProperty Name="tableId" ColumnName="tableId" />
-                <ScalarProperty Name="tableName" ColumnName="tableName" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderStages">
-            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.OrderStages">
-              <MappingFragment StoreEntitySet="OrderStages">
-                <ScalarProperty Name="factDateComplete" ColumnName="factDateComplete" />
-                <ScalarProperty Name="factDateStart" ColumnName="factDateStart" />
-                <ScalarProperty Name="idTaskStage" ColumnName="idTaskStage" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="idType" ColumnName="idType" />
-                <ScalarProperty Name="idOrder" ColumnName="idOrder" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StagesTypes">
-            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.StagesTypes">
-              <MappingFragment StoreEntitySet="StagesTypes">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusesUpdate">
-            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate">
-              <MappingFragment StoreEntitySet="StatusesUpdate">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -1544,6 +1499,20 @@
                 <ScalarProperty Name="idRecord" ColumnName="idRecord" />
                 <ScalarProperty Name="tableName" ColumnName="tableName" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersDetail">
+            <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.UsersDetail">
+              <MappingFragment StoreEntitySet="UsersDetail">
+                <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="idPos" ColumnName="idPos" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

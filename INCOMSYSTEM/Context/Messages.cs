@@ -18,14 +18,12 @@ namespace INCOMSYSTEM.Context
         public long idChat { get; set; }
         public long idUser { get; set; }
         public string message { get; set; }
-        public byte[] attachment { get; set; }
-        public string fileExtension { get; set; }
         public System.DateTime dateSend { get; set; }
         public Nullable<long> idFile { get; set; }
     
         public virtual Chats Chats { get; set; }
-        public virtual UsersDetail UsersDetail { get; set; }
         public virtual HistoryUploaded HistoryUploaded { get; set; }
+        public virtual UsersDetail UsersDetail { get; set; }
 
         public string shortMessage => message.Length > 125 ? message.Substring(0, 125) + "..." : message;
     }

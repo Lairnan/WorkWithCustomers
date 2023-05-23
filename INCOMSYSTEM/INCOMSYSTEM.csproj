@@ -126,9 +126,6 @@
     <Compile Include="Context\StatusesUpdate.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\sysdiagrams.cs">
-      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Context\Tasks.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
