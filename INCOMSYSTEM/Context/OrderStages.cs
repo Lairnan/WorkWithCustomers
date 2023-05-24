@@ -22,6 +22,7 @@ namespace INCOMSYSTEM.Context
         public long idFile { get; set; }
         public Nullable<System.DateTime> factDateStart { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
+        public string description { get; set; }
     
         public virtual HistoryUploaded HistoryUploaded { get; set; }
         public virtual Orders Orders { get; set; }

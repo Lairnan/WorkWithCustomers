@@ -23,9 +23,10 @@ namespace INCOMSYSTEM.Pages
             ChatMess chatMess;
             if (Chat != null)
             {
-                if (ChatPages.ContainsKey(Chat.idChat))
+                if (ChatPages.TryGetValue(Chat.idChat, out var page))
                 {
-                    MainWindow.ChatFrame.Navigate(ChatPages[Chat.idChat]);
+                    ((ChatPage)page).IsActive = true;
+                    MainWindow.ChatFrame.Navigate(page);
                 }
                 else
                 {
@@ -37,20 +38,23 @@ namespace INCOMSYSTEM.Pages
                     };
                     var chatPage = new ChatPage(chatMess);
                     ChatPages.Add(Chat.idChat, chatPage);
+                    chatPage.IsActive = true;
                     MainWindow.ChatFrame.Navigate(chatPage);
                 }
             }
             else
             {
                 chatMess = (sender as Grid).DataContext as ChatMess;
-                if (ChatPages.ContainsKey(chatMess.Id))
+                if (ChatPages.TryGetValue(chatMess.Id, out var page))
                 {
-                    MainWindow.ChatFrame.Navigate(ChatPages[chatMess.Id]);
+                    ((ChatPage)page).IsActive = true;
+                    MainWindow.ChatFrame.Navigate(page);
                 }
                 else
                 {
                     var chatPage = new ChatPage(chatMess);
                     ChatPages.Add(chatMess.Id, chatPage);
+                    chatPage.IsActive = true;
                     MainWindow.ChatFrame.Navigate(chatPage);
                 }
             }

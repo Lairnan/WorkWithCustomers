@@ -92,6 +92,7 @@
           <Property Name="idFile" Type="bigint" Nullable="false" />
           <Property Name="factDateStart" Type="datetime2" Precision="7" />
           <Property Name="factDateComplete" Type="datetime2" Precision="7" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -894,6 +895,7 @@
           <Property Name="idFile" Type="Int64" Nullable="false" />
           <Property Name="factDateStart" Type="DateTime" Precision="7" />
           <Property Name="factDateComplete" Type="DateTime" Precision="7" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HistoryUploaded" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idFil__5629CD9C" FromRole="OrderStages" ToRole="HistoryUploaded" />
           <NavigationProperty Name="Orders" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__5441852A" FromRole="OrderStages" ToRole="Orders" />
           <NavigationProperty Name="TaskStages" Relationship="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__571DF1D5" FromRole="OrderStages" ToRole="TaskStages" />
@@ -1438,6 +1440,7 @@
           <EntitySetMapping Name="OrderStages">
             <EntityTypeMapping TypeName="DP_Saulin_INCOMSYSTEMModel.OrderStages">
               <MappingFragment StoreEntitySet="OrderStages">
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="factDateComplete" ColumnName="factDateComplete" />
                 <ScalarProperty Name="factDateStart" ColumnName="factDateStart" />
                 <ScalarProperty Name="idFile" ColumnName="idFile" />

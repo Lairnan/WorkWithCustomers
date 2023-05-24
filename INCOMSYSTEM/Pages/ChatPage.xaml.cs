@@ -33,8 +33,22 @@ namespace INCOMSYSTEM.Pages
                 InputMessageBox.Text = InputMessageBox.Text.Insert(start++, "\n");
                 InputMessageBox.SelectionStart = start;
             };
-
+            
             Task.Run(RefreshMessages);
+        }
+
+        private void MarkAllMessagesAsRead()
+        {
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                foreach (var mess in MessagesCollection.Where(s => !s.IsRead && !s.ThisUser))
+                {
+                    var mes = db.Messages.First(s => s.id == mess.Id);
+                    mes.isReadded = true;
+                }
+
+                db.SaveChanges();
+            }
         }
 
         private ObservableCollection<DialogMess> MessagesCollection { get; } = new ObservableCollection<DialogMess>();
@@ -42,6 +56,7 @@ namespace INCOMSYSTEM.Pages
             
         private readonly ChatMess _chatMess;
 
+        // decompose this method
         private async void RefreshMessages()
         {
             while (!MainWindow.IsClosed)
@@ -67,6 +82,7 @@ namespace INCOMSYSTEM.Pages
                             Message = message.message,
                             File = message.HistoryUploaded,
                             SendDate = message.dateSend,
+                            IsRead = message.isReadded
                         };
 
                         if (MainWindow.AuthUser.idUser == message.idUser) dialogMess.ThisUser = true;
@@ -85,6 +101,7 @@ namespace INCOMSYSTEM.Pages
                             Application.Current.Dispatcher.Invoke(() => MessagesCollection.Add(dialogMess));
                     }
 
+                    if (IsActive) Application.Current.Dispatcher.Invoke(MarkAllMessagesAsRead);
                     await Task.Delay(2500);
                 }
             }
@@ -190,6 +207,8 @@ namespace INCOMSYSTEM.Pages
             ErrorBorder.Visibility = Visibility.Collapsed;
             ErrorBlock.Text = string.Empty;
         }
+
+        public bool IsActive { get; set; }
     }
 
     internal class DialogMess
@@ -200,5 +219,6 @@ namespace INCOMSYSTEM.Pages
         public HistoryUploaded File { get; set; }
         public DateTime SendDate { get; set; }
         public bool ThisUser { get; set; }
+        public bool IsRead { get; set; }
     }
 }

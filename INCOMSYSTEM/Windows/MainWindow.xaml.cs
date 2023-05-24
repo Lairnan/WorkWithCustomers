@@ -220,6 +220,7 @@ namespace INCOMSYSTEM.Windows
 
         private void BackChatBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (ChatFrame.Content is ChatPage chatPage) chatPage.IsActive = false;
             ChatFrame.Navigate(ChatListPage);
         }
         #endregion
