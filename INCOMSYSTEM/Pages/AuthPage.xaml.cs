@@ -27,7 +27,7 @@ namespace INCOMSYSTEM.Pages
         }
 
 
-        private void AuthBtnClick(object sender, RoutedEventArgs e)
+        private async void AuthBtnClick(object sender, RoutedEventArgs e)
         {
             if(CheckEmpty())
             {
@@ -47,6 +47,13 @@ namespace INCOMSYSTEM.Pages
                     .FirstOrDefault(s => s.login == login && s.password == password);
                 if (user != null)
                 {
+                    if (user.isOnline)
+                    {
+                        MessageBox.Show("Данный пользователь уже в сети");
+                        return;
+                    }
+                    user.isOnline = true;
+                    await db.SaveChangesAsync();
                     MainWindow.AuthUser = user;
                     var window = new MainWindow();
                     window.Show();

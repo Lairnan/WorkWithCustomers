@@ -30,6 +30,7 @@ namespace INCOMSYSTEM.Context
         public string passport { get; set; }
         public string address { get; set; }
         public System.DateTime dateStart { get; set; }
+        public bool isOnline { get; set; }
     
         public virtual Customers Customers { get; set; }
         public virtual Employees Employees { get; set; }

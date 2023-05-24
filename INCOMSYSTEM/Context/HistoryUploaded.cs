@@ -19,15 +19,14 @@ namespace INCOMSYSTEM.Context
         {
             this.Messages = new HashSet<Messages>();
             this.Orders = new HashSet<Orders>();
+            this.OrderStages = new HashSet<OrderStages>();
             this.Tasks = new HashSet<Tasks>();
         }
     
         public long id { get; set; }
-        public string tableName { get; set; }
-        public long tableId { get; set; }
         public string fileName { get; set; }
         public string fileExtension { get; set; }
-        public int fileSize { get; set; }
+        public long fileSize { get; set; }
         public byte[] fileContent { get; set; }
         public System.DateTime dateAdded { get; set; }
         public long uploadedBy { get; set; }
@@ -37,6 +36,8 @@ namespace INCOMSYSTEM.Context
         public virtual ICollection<Messages> Messages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderStages> OrderStages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
     }

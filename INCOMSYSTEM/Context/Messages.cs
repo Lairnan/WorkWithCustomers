@@ -20,6 +20,7 @@ namespace INCOMSYSTEM.Context
         public string message { get; set; }
         public System.DateTime dateSend { get; set; }
         public Nullable<long> idFile { get; set; }
+        public bool isReadded { get; set; }
     
         public virtual Chats Chats { get; set; }
         public virtual HistoryUploaded HistoryUploaded { get; set; }

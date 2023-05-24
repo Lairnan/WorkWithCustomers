@@ -9,7 +9,7 @@ namespace INCOMSYSTEM.BehaviorsFiles
             const string text = "abcdefghijklmnopqrstuvwxyz" +
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
                                "0123456789" +
-                               "!@#$%&";
+                               "!@#$%^&*()";
 
             var random = new Random();
             var newPassword = "";

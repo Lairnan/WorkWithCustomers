@@ -43,6 +43,8 @@ namespace INCOMSYSTEM.Pages.MainPages
                     .Include(s => s.Tasks)
                     .Include(s => s.Chats)
                     .Include(s => s.Chats.Employees)
+                    .Include(s => s.Tasks.HistoryUploaded)
+                    .Include(s => s.HistoryUploaded)
                     .Where(s => MainWindow.AuthUser.idPos != 2 || s.idExecutor == MainWindow.AuthUser.idUser)
                     .ToList();
             }
@@ -148,12 +150,8 @@ namespace INCOMSYSTEM.Pages.MainPages
                     doc.ReplaceWordText("{orderPrice}", (int)order.price);
                     doc.ReplaceWordText("{orderPriceInWords}", ((int)order.price).GetNumberInWords().Trim());
 
-                    doc.ReplaceWordText("{customerPhone}", order.Customers.UsersDetail.phone != null
-                        ? order.Customers.UsersDetail.phone.Value.ToString()
-                        : "Отсутствует");
-                    doc.ReplaceWordText("{executorPhone}", order.Employees.UsersDetail.phone != null
-                        ? order.Employees.UsersDetail.phone.Value.ToString()
-                        : "Отсутствует");
+                    doc.ReplaceWordText("{customerPhone}", order.Customers.UsersDetail.phone ?? "Отсутствует");
+                    doc.ReplaceWordText("{executorPhone}", order.Employees.UsersDetail.phone ?? "Отсутствует");
 
                     doc.ReplaceWordText("{customerSeriePassport}", order.Customers.UsersDetail.SeriePassport);
                     doc.ReplaceWordText("{customerNumberPassport}", order.Customers.UsersDetail.NumberPassport);

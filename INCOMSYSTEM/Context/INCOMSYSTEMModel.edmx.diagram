@@ -5,49 +5,50 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7406069acd7d4a4faacd81c648dd64fb" Name="Diagram1" ZoomLevel="100">
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Chats" Width="1.5" PointX="10.5" PointY="6.25" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Customers" Width="1.5" PointX="6" PointY="10.5" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Employees" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" Width="1.5" PointX="3.75" PointY="1.75" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.LegalForms" Width="1.5" PointX="3.75" PointY="10.875" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Messages" Width="1.5" PointX="12.75" PointY="6.125" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Orders" Width="1.5" PointX="8.25" PointY="5" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.OrderStages" Width="1.5" PointX="10.5" PointY="10.125" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Positions" Width="1.5" PointX="1.5" PointY="14.625" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Specializations" Width="1.5" PointX="0.75" PointY="6.625" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Width="1.5" PointX="3" PointY="6.5" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.StagesTypes" Width="1.5" PointX="8.25" PointY="15.875" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Statuses" Width="1.5" PointX="6" PointY="3.125" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate" Width="1.5" PointX="1.5" PointY="17.625" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Tasks" Width="1.5" PointX="6" PointY="5.75" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.TaskStages" Width="1.5" PointX="8.25" PointY="12" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UpdatesHistory" Width="1.5" PointX="3.75" PointY="13.875" />
-        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Width="1.5" PointX="1.5" PointY="9.625" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__59FA5E80" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__5812160E" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__59063A47" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__5EBF139D" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__36B12243" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__35BCFE0A" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4AB81AF0" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__398D8EEE" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4BAC3F29" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__3C69FB99" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__2F10007B" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idFile__5DCAEF64" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__49C3F6B7" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__403A8C7D" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__5FB337D6" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4D94879B" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4CA06362" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__534D60F1" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__5535A963" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5441852A" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2B3F6F97" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3D5E1FD2" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__412EB0B6" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Chats" Width="1.5" PointX="10.5" PointY="6.5" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Customers" Width="1.5" PointX="6" PointY="10.75" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Employees" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" Width="1.5" PointX="3.75" PointY="2.125" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.LegalForms" Width="1.5" PointX="3.75" PointY="11.125" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Messages" Width="1.5" PointX="12.75" PointY="6.375" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Orders" Width="1.5" PointX="8.25" PointY="5.375" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.OrderStages" Width="1.5" PointX="10.5" PointY="10.25" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Positions" Width="1.5" PointX="1.5" PointY="15" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Specializations" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.SpecializationsEmployee" Width="1.5" PointX="3" PointY="6.75" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Statuses" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.StatusesUpdate" Width="1.5" PointX="1.5" PointY="18" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.Tasks" Width="1.5" PointX="6" PointY="6" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.TaskStages" Width="1.5" PointX="8.25" PointY="12.375" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.TypesStage" Width="1.5" PointX="8.25" PointY="16.125" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UpdatesHistory" Width="1.5" PointX="3.75" PointY="14.25" />
+        <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Width="1.5" PointX="1.5" PointY="9.875" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__5BE2A6F2" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__59FA5E80" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5AEE82B9" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__60A75C0F" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__37A5467C" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__36B12243" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idCustom__4BAC3F29" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Employees__idUse__3A81B327" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idExecut__4CA06362" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idEmp__3D5E1FD2" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__300424B4" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idFile__5FB337D6" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__4AB81AF0" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idFil__5629CD9C" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__412EB0B6" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__619B8048" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4E88ABD4" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4D94879B" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__5441852A" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__571DF1D5" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5535A963" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2C3393D0" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3E52440B" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__4222D4EF" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.fk_StatusesUpdate_id" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__TaskStage__idTas__440B1D61" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__TaskStage__idTas__44FF419A" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.fk_UsersDetail_id" />
       </Diagram>
     </edmx:Diagrams>

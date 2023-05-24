@@ -26,10 +26,10 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             DescriptionTask.Text = task.description;
             PriceTask.Text = $"Цена: {task.price.ToString("#,#", CultureInfo.CurrentCulture)} руб.";
             DiscountTask.Text = $"Скидка: {task.discount}%";
-            NewPriceTask.Text = $"Новая цена: {task.newPrice:0.00}";
+            NewPriceTask.Text = $"Новая цена: {task.newPrice.ToString("#,#", CultureInfo.CurrentCulture)} руб.";
             SupportPeriodTask.Text = $"Период поддержки: {task.supportPeriod.ConvertDay()}";
-            ApproxCompleteTime.Text = $"Примерное время выполнения {task.approxCompleteTime.ConvertDay()}";
-            AttachmentBlock.Visibility = task.attachment == null ? Visibility.Collapsed : Visibility.Visible;
+            ApproxCompleteTime.Text = $"Примерное время выполнения: {task.approxCompleteTime.ConvertDay()}";
+            AttachmentBlock.Visibility = task.idFile == null ? Visibility.Collapsed : Visibility.Visible;
             _task = task;
         }
 
@@ -41,14 +41,14 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             {
                 Title = "Скачивание файла",
                 CreatePrompt = true,
-                FileName = $"{_task.name}.{_task.fileExtension}",
-                Filter = $"File | *.{_task.fileExtension}"
+                FileName = $"{_task.HistoryUploaded.fileName}.{_task.HistoryUploaded.fileExtension}",
+                Filter = $"File | *.{_task.HistoryUploaded.fileExtension}"
             };
             if (saveFileDialog.ShowDialog() != true) return;
 
             using(var file = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                file.Write(_task.attachment, 0, _task.attachment.Length);
+                file.Write(_task.HistoryUploaded.fileContent, 0, _task.HistoryUploaded.fileContent.Length);
                 file.Dispose();
             }
         }

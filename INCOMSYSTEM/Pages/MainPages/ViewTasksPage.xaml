@@ -109,7 +109,11 @@
                                        Grid.Row="0"
                                        Style="{StaticResource TextBlockStyle}"
                                        FontSize="18"
-                                       FontWeight="Bold"/>
+                                       FontWeight="Bold">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{Binding name}"/>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
                             <TextBlock Text="{Binding shortDescription}"
                                        TextWrapping="Wrap"
                                        Style="{StaticResource TextBlockStyle}"

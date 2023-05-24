@@ -19,8 +19,7 @@ namespace INCOMSYSTEM.Pages.Details
             SaveBtn.Content = "Сохранить";
             
             _task = task;
-            _fileTask = task.attachment;
-            _fileTaskExtension = task.fileExtension;
+            _file = task.HistoryUploaded;
             SetFileValues(task);
 
             _oldName = task.name;
@@ -46,17 +45,16 @@ namespace INCOMSYSTEM.Pages.Details
 
         private void SetFileValues(Tasks task)
         {
-            if (_fileTask == null)
+            if (_file == null)
             {
                 FileDownload.IsEnabled = false;
                 ReturnBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
-                FileDownload.Content = $"{task.name}.{task.fileExtension}";
+                FileDownload.Content = $"{task.name}.{_file.fileExtension}";
                 FileDownload.IsEnabled = true;
-                TempFile = _fileTask;
-                TempFileExtension = _fileTaskExtension;
+                TempFile = _file;
                 ClearBtn.IsEnabled = true;
             }
         }
@@ -93,13 +91,11 @@ namespace INCOMSYSTEM.Pages.Details
         private readonly bool _isEdit;
 
         private readonly string _oldName;
-        
-        private readonly byte[] _fileTask;
-        private readonly string _fileTaskExtension;
 
-        private byte[] TempFile { get; set; }
+        private readonly HistoryUploaded _file;
 
-        private string TempFileExtension { get; set; }
+        private HistoryUploaded TempFile { get; set; }
+
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -111,9 +107,15 @@ namespace INCOMSYSTEM.Pages.Details
             };
             if (openFile.ShowDialog() != true) return;
 
-            TempFile = File.ReadAllBytes(openFile.FileName);
-            TempFileExtension = openFile.SafeFileName.Split('.').Last();
-            FileName = openFile.SafeFileName;
+            var file = new HistoryUploaded
+            {
+                fileName = openFile.SafeFileName,
+                fileContent = File.ReadAllBytes(openFile.FileName),
+                fileExtension = openFile.SafeFileName.Split('.').Last(),
+                fileSize = new FileInfo(openFile.FileName).Length,
+            };
+            TempFile = file;
+            
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
         }
@@ -121,7 +123,6 @@ namespace INCOMSYSTEM.Pages.Details
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = null;
-            TempFileExtension = null;
             FileName = string.Empty;
             ClearBtn.IsEnabled = false;
             ReturnBtn.IsEnabled = true;
@@ -129,9 +130,8 @@ namespace INCOMSYSTEM.Pages.Details
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            TempFile = _fileTask;
-            TempFileExtension = _fileTaskExtension;
-            FileName = $"{_oldName}.{_fileTaskExtension}";
+            TempFile = _file;
+            FileName = $"{_file.fileName}.{_file.fileExtension}";
             ReturnBtn.IsEnabled = false;
             ClearBtn.IsEnabled = true;
         }
@@ -144,33 +144,41 @@ namespace INCOMSYSTEM.Pages.Details
             {
                 Title = "Скачивание файла",
                 FileName = $"{NameBox.Value}",
-                Filter = $"File | * {TempFileExtension}",
-                DefaultExt = $".{TempFileExtension}"
+                Filter = $"File | * {_file.fileExtension}",
+                DefaultExt = $".{_file.fileExtension}"
             };
             if (saveFileDialog.ShowDialog() != true) return;
 
             using (var file = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                file.Write(TempFile, 0, TempFile.Length);
+                file.Write(TempFile.fileContent, 0, TempFile.fileContent.Length);
             }
         }
 
-        private void FileDownload_OnDrop(object sender, DragEventArgs e)
+        private void FileUpload_OnDrop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-            var file = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
-            if (file == null) return;
-            var fileExtension = file.Split('.').Last();
+            var openFile = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
+            if (openFile == null) return;
+            var fileExtension = openFile.Split('.').Last();
             if (fileExtension != "docx" && fileExtension != "doc" && fileExtension != "pdf")
             {
                 AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
-            TempFile = File.ReadAllBytes(file);
-            TempFileExtension = fileExtension;
+            
+            var file = new HistoryUploaded
+            {
+                fileName = openFile.Split('\\').Last(),
+                fileContent = File.ReadAllBytes(openFile),
+                fileExtension = fileExtension,
+                fileSize = new FileInfo(openFile).Length,
+            };
+            TempFile = file;
+            
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
-            FileName = file.Split('\\').Last();
+            FileName = file.fileName;
             AdditionalWindow.HideError();
         }
 
@@ -210,8 +218,7 @@ namespace INCOMSYSTEM.Pages.Details
                 task.approxCompleteTime = _approx;
                 task.idSpecialization = _spec.id;
                 task.supportPeriod = _support;
-                task.attachment = TempFile;
-                task.fileExtension = TempFileExtension;
+                task.HistoryUploaded = TempFile;
 
                 db.SaveChanges();
             }
@@ -238,8 +245,7 @@ namespace INCOMSYSTEM.Pages.Details
                     approxCompleteTime = _approx,
                     idSpecialization = _spec.id,
                     supportPeriod = _support,
-                    attachment = TempFile,
-                    fileExtension = TempFileExtension
+                    HistoryUploaded = TempFile,
                 };
                 if (_disc > 0) task.discount = _disc;
                 else task.discount = null;
@@ -255,7 +261,7 @@ namespace INCOMSYSTEM.Pages.Details
         private Specializations _spec;
         private string _desc;
         private decimal _price;
-        public int _support;
+        private int _support;
         private byte _disc;
         private int _approx;
 
@@ -318,7 +324,10 @@ namespace INCOMSYSTEM.Pages.Details
                         && SupportPeriod.Value == _task.supportPeriod.ToString()
                         && DiscountBox.Value == _task.discount.ToString()
                         && ApproxTimeBox.Value == _task.approxCompleteTime.ToString()
-                        && (_fileTask == TempFile && _fileTaskExtension == TempFileExtension);
+                        && (_file?.fileContent == TempFile?.fileContent
+                            && _file?.fileExtension == TempFile?.fileExtension
+                            && _file?.fileName == TempFile?.fileName
+                            && _file?.fileSize == TempFile?.fileSize);
 
             return NameBox.IsWhiteSpace
                    && DescriptionBox.IsWhiteSpace

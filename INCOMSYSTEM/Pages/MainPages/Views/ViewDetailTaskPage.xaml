@@ -71,7 +71,7 @@
                         </Style>
                         <Style TargetType="TextBlock" x:Key="oldPrice" BasedOn="{StaticResource {x:Type TextBlock}}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=discountStyle, Path=IsChecked}" Value="True">
+                                <DataTrigger Binding="{Binding ElementName=discountVisible, Path=IsChecked}" Value="True">
                                     <Setter Property="Foreground" Value="#ccc"/>
                                     <Setter Property="TextDecorations" Value="Strikethrough"/>
                                 </DataTrigger>

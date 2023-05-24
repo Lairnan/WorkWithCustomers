@@ -19,11 +19,13 @@ namespace INCOMSYSTEM.Context
         public byte idType { get; set; }
         public string name { get; set; }
         public Nullable<long> idTaskStage { get; set; }
+        public long idFile { get; set; }
         public Nullable<System.DateTime> factDateStart { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
     
+        public virtual HistoryUploaded HistoryUploaded { get; set; }
         public virtual Orders Orders { get; set; }
         public virtual TaskStages TaskStages { get; set; }
-        public virtual StagesTypes StagesTypes { get; set; }
+        public virtual TypesStage TypesStage { get; set; }
     }
 }

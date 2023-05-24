@@ -59,7 +59,7 @@
             <controls:InputTextBox PlaceHolder="Скидка" x:Name="DiscountBox"/>
             <controls:InputTextBox PlaceHolder="Период поддержки" x:Name="SupportPeriod" Margin="0 10 0 0"/>
             <controls:InputTextBox PlaceHolder="Примерное время выполнения" x:Name="ApproxTimeBox" Margin="0 15 0 15"/>
-            <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True">
+            <Grid Height="100" Drop="FileUpload_OnDrop" AllowDrop="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>

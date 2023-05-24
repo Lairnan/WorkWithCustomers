@@ -43,6 +43,7 @@ namespace INCOMSYSTEM.ViewModels
 
                     var messages = db.Messages
                         .Include(s => s.UsersDetail)
+                        .Include(s => s.HistoryUploaded)
                         .ToList();
 
                     var chatColl = ChatsCollection.ToList().Where(s => !chats.Select(k => k.idChat).Contains(s.Id));

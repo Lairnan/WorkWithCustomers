@@ -147,8 +147,18 @@ namespace INCOMSYSTEM.Windows
             ReviewFrame.GoBack();
         }
 
-        private void QuitBtn_Click(object sender, RoutedEventArgs e)
+        private async void QuitBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (AuthUser != null)
+            {
+                using (var db = new INCOMSYSTEMEntities())
+                {
+                    var usr = db.UsersDetail.First(s => s.idUser == AuthUser.idUser);
+                    usr.isOnline = false;
+                    await db.SaveChangesAsync();
+                }
+            }
+
             IsClosed = true;
             new AuthWindow().Show();
             this.Close();
@@ -195,7 +205,7 @@ namespace INCOMSYSTEM.Windows
         {
             ChatBtn_Click(null, new RoutedEventArgs());
 
-            var chatPage = ChatListPage as ChatListPage;
+            if (!(ChatListPage is ChatListPage chatPage)) return;
             chatPage.Chat = chat;
             chatPage.ChatEnter_LeftBtnUp(null, null);
         }

@@ -32,7 +32,10 @@ namespace INCOMSYSTEM.Pages.MainPages
                 LeftSlider.Value = 0;
                 RightSlider.Value = (long)max;
 
-                TasksList.ItemsSource = db.Tasks.Include(s => s.Specializations).ToList();
+                TasksList.ItemsSource = db.Tasks
+                    .Include(s => s.HistoryUploaded)
+                    .Include(s => s.Specializations)
+                    .ToList();
 
                 var list = new List<Specializations> { new Specializations { name = "Очистить" } };
                 list.AddRange(db.Specializations.ToList());
@@ -82,7 +85,7 @@ namespace INCOMSYSTEM.Pages.MainPages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                IEnumerable<Tasks> list = db.Tasks.Include(s => s.Specializations);
+                IEnumerable<Tasks> list = db.Tasks.Include(s => s.Specializations).Include(s => s.HistoryUploaded);
                 
                 if(!FilterText.IsWhiteSpace) list = list.Where(s => s.name.ToLower().Trim().Contains(FilterText.Text.ToLower().Trim())).ToList();
 

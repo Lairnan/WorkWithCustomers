@@ -20,9 +20,8 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
             Title = $"Подробности заказа №{order.id}";
 
+            _file = order.HistoryUploaded;
 
-            _fileOrder = order.attachment;
-            _fileOrderExtension = order.fileExtension;
             SetInputBoxValues(order);
             SetFileValues(order);
 
@@ -96,17 +95,16 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
         private void SetFileValues(Orders order)
         {
-            if (_fileOrder == null)
+            if (_file == null)
             {
                 FileDownload.IsEnabled = false;
                 ReturnBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
-                FileDownload.Content = $"Дополнение к договору.{order.fileExtension}";
+                FileDownload.Content = $"Дополнение к договору.{order.HistoryUploaded.fileExtension}";
                 FileDownload.IsEnabled = true;
-                TempFile = _fileOrder;
-                TempFileExtension = _fileOrderExtension;
+                TempFile = _file;
                 ClearBtn.IsEnabled = true;
             }
         }
@@ -124,11 +122,9 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             }
         }
 
-        private readonly byte[] _fileOrder;
-        private readonly string _fileOrderExtension;
+        private readonly HistoryUploaded _file;
 
-        private byte[] TempFile { get; set; }
-        private string TempFileExtension { get; set; }
+        private HistoryUploaded TempFile { get; set; }
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -140,9 +136,14 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             };
             if (openFile.ShowDialog() != true) return;
 
-            TempFile = File.ReadAllBytes(openFile.FileName);
-            TempFileExtension = openFile.SafeFileName.Split('.').Last();
-            FileName = $"Дополнение к договору.{TempFileExtension}";
+            var file = new HistoryUploaded
+            {
+                fileName = $"Дополнение к договору.{openFile.SafeFileName.Split('.').Last()}",
+                fileContent = File.ReadAllBytes(openFile.FileName),
+                fileExtension = openFile.SafeFileName.Split('.').Last(),
+                fileSize = new FileInfo(openFile.FileName).Length
+            };
+            TempFile = file;
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
         }
@@ -150,7 +151,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = null;
-            TempFileExtension = null;
             FileName = string.Empty;
             ClearBtn.IsEnabled = false;
             ReturnBtn.IsEnabled = true;
@@ -158,9 +158,8 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            TempFile = _fileOrder;
-            TempFileExtension = _fileOrderExtension;
-            FileName = $"Дополнение к договору.{TempFileExtension}";
+            TempFile = _file;
+            FileName = $"Дополнение к договору.{_file.fileExtension}";
             ReturnBtn.IsEnabled = false;
             ClearBtn.IsEnabled = true;
         }
@@ -173,32 +172,38 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             {
                 Title = "Скачивание файла",
                 FileName = $"{FileName}",
-                Filter = $"File | * {TempFileExtension}",
-                DefaultExt = $".{TempFileExtension}"
+                Filter = $"File | * {TempFile.fileExtension}",
+                DefaultExt = $".{TempFile.fileExtension}"
             };
             if (saveFileDialog.ShowDialog() != true) return;
 
             using (var file = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write))
             {
-                file.Write(TempFile, 0, TempFile.Length);
+                file.Write(TempFile.fileContent, 0, TempFile.fileContent.Length);
             }
         }
-        private void FileDownload_OnDrop(object sender, DragEventArgs e)
+        private void FileUpload_OnDrop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-            var file = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
-            if (file == null) return;
-            var fileExtension = file.Split('.').Last();
+            var openFile = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
+            if (openFile == null) return;
+            var fileExtension = openFile.Split('.').Last();
             if (fileExtension != "docx" && fileExtension != "doc" && fileExtension != "pdf")
             {
                 AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
-            TempFile = File.ReadAllBytes(file);
-            TempFileExtension = fileExtension;
+            var file = new HistoryUploaded
+            {
+                fileName = $"Дополнение к договору.{fileExtension}",
+                fileContent = File.ReadAllBytes(openFile),
+                fileExtension = fileExtension,
+                fileSize = new FileInfo(openFile).Length
+            };
+            TempFile = file;
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
-            FileName = $"Дополнение к договору.{TempFileExtension}";
+            FileName = $"Дополнение к договору.{fileExtension}";
             AdditionalWindow.HideError();
         }
 
@@ -236,8 +241,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                     order.planDateStart = PlanDateStartBox.SelectedDate;
                     order.planDateComplete = PlanDateCompleteBox.SelectedDate;
                     if (status != null) order.idStatus = status.Value;
-                    order.attachment = TempFile;
-                    order.fileExtension = TempFileExtension;
+                    order.HistoryUploaded = TempFile;
                     db.SaveChanges();
                 }
             }
@@ -266,7 +270,10 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                         && DifficultyBox.Text == _order.difficulty.ToString(CultureInfo.InvariantCulture)
                         && PlanDateStartBox.SelectedDate == _order.planDateStart
                         && PlanDateCompleteBox.SelectedDate == _order.planDateComplete
-                        && (_fileOrder == TempFile && _fileOrderExtension == TempFileExtension);
+                        && (_file.fileContent == TempFile.fileContent
+                            && _file.fileExtension == TempFile.fileExtension
+                            && _file.fileName == TempFile.fileName
+                            && _file.fileSize == TempFile.fileSize);
         }
 
         private void DateBox_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

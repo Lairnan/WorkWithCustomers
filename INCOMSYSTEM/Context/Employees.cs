@@ -21,6 +21,11 @@ namespace INCOMSYSTEM.Context
             this.Orders = new HashSet<Orders>();
             this.SpecializationsEmployee = new HashSet<SpecializationsEmployee>();
         }
+
+        public override string ToString()
+        {
+            return $"{surname} {name} {patronymic}".Trim();
+        }
     
         public long idUser { get; set; }
         public string surname { get; set; }

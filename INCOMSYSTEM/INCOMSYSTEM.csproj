@@ -117,9 +117,6 @@
     <Compile Include="Context\SpecializationsEmployee.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Context\StagesTypes.cs">
-      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Context\Statuses.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
@@ -130,6 +127,9 @@
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\TaskStages.cs">
+      <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\TypesStage.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Context\UpdatesHistory.cs">

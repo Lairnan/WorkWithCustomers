@@ -26,5 +26,21 @@ namespace INCOMSYSTEM.BehaviorsFiles
             
             return str;
         }
+        
+        public static string ConvertFileSizeToString(this long fileSizeInBytes)
+        {
+            if (fileSizeInBytes < 0) return "Invalid size";
+
+            string[] sizes = { "Байт", "КБ", "МБ", "ГБ", "ТБ", "ПБ" };
+            var order = 0;
+
+            while (fileSizeInBytes >= 1024 && order < sizes.Length - 1)
+            {
+                fileSizeInBytes /= 1024;
+                order++;
+            }
+
+            return $"{(fileSizeInBytes == 0 ? "0" : fileSizeInBytes.ToString("#.#"))} {sizes[order]}";
+        }
     }
 }

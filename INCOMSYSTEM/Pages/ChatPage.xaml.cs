@@ -55,6 +55,7 @@ namespace INCOMSYSTEM.Pages
                         .Include(s => s.Chats)
                         .Include(s => s.Chats.Orders)
                         .Include(s => s.Chats.Orders.Tasks)
+                        .Include(s => s.HistoryUploaded)
                         .Where(s => s.idChat == _chatMess.Id)
                         .ToList();
 
@@ -64,10 +65,8 @@ namespace INCOMSYSTEM.Pages
                         {
                             Id = message.id,
                             Message = message.message,
-                            File = message.attachment,
-                            FileExtension = message.fileExtension,
+                            File = message.HistoryUploaded,
                             SendDate = message.dateSend,
-                            FileName = message.attachment != null ? $"{message.Chats.Orders.Tasks.name}.{message.fileExtension}" : string.Empty
                         };
 
                         if (MainWindow.AuthUser.idUser == message.idUser) dialogMess.ThisUser = true;
@@ -198,9 +197,7 @@ namespace INCOMSYSTEM.Pages
         public long Id { get; set; }
         public string Sender { get; set; }
         public string Message { get; set; }
-        public byte[] File { get; set; }
-        public string FileExtension { get; set; }
-        public string FileName { get; set; }
+        public HistoryUploaded File { get; set; }
         public DateTime SendDate { get; set; }
         public bool ThisUser { get; set; }
     }

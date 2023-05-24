@@ -95,7 +95,7 @@
                 <controls:InputTextBox x:Name="DifficultyBox" TextChanged="DifficultyBox_TextChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
-                <Grid Height="100" Drop="FileDownload_OnDrop" AllowDrop="True" x:Name="FileDownloadGrid">
+                <Grid Height="100" Drop="FileUpload_OnDrop" AllowDrop="True" x:Name="FileDownloadGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>

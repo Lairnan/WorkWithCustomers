@@ -51,22 +51,16 @@ namespace INCOMSYSTEM.Pages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                long? phone = null;
-                if (!InpPhone.IsWhiteSpace)
-                {
-                    try { phone = long.Parse(InpPhone.Value); }
-                    catch { return; }
-                }
-
-                var passportStr = InpPassportSerie.Value + InpPassportNumber.Value;
-                long.TryParse(passportStr, out var passport);
+                var phone = InpPhone.Value;
+                    
+                var passport = InpPassportSerie.Value + InpPassportNumber.Value;
                 
                 if (db.UsersDetail.FirstOrDefault(s => s.login.ToLower() == InpLogin.Value.ToLower().Trim()) != null)
                 {
                     ShowError("Такой логин уже занят");
                     return;
                 }
-                if (phone != null && db.UsersDetail.FirstOrDefault(s => s.phone == phone) != null)
+                if (db.UsersDetail.FirstOrDefault(s => s.phone == phone) != null)
                 {
                     ShowError("Номер телефона уже занят");
                     return;
@@ -85,7 +79,8 @@ namespace INCOMSYSTEM.Pages
                     idPos = 1,
                     passport = passport,
                     address = InpAddress.Value,
-                    dateStart = DateTime.Now
+                    dateStart = DateTime.Now,
+                    isOnline = true
                 };
                 db.UsersDetail.Add(userDetail);
                 var customer = new Customers
@@ -110,10 +105,15 @@ namespace INCOMSYSTEM.Pages
         private bool CheckEmpty()
         {
             if (InpName.IsWhiteSpace) return ShowError("Название/фио не может быть пустым");
-            
-            if (!InpPhone.IsWhiteSpace && long.TryParse(InpPhone.Value, out _)) return ShowError("Номер телефона не может содержать символы");
-            if (!InpPhone.IsWhiteSpace && InpPhone.Value.Length != 11) return ShowError("Номер телефона должен содержать 11 цифр");
-            
+
+            switch (InpPhone.IsWhiteSpace)
+            {
+                case false when !long.TryParse(InpPhone.Value, out _):
+                    return ShowError("Номер телефона не может содержать символы");
+                case false when InpPhone.Value.Length != 11:
+                    return ShowError("Номер телефона должен содержать 11 цифр");
+            }
+
             if (InpPassportSerie.IsWhiteSpace) return ShowError("Серия паспорта не может быть пустым");
             if (!long.TryParse(InpPassportSerie.Value, out _)) return ShowError("Серия паспорта не может содержать символы");
             if (InpPassportSerie.Value.Length != 4) return ShowError("Серия паспорта должен содержать 4 цифры");

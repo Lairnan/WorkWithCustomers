@@ -12,10 +12,10 @@ namespace INCOMSYSTEM.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class StagesTypes
+    public partial class TypesStage
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StagesTypes()
+        public TypesStage()
         {
             this.OrderStages = new HashSet<OrderStages>();
         }
