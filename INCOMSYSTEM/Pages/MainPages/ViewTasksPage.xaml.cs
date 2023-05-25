@@ -85,12 +85,12 @@ namespace INCOMSYSTEM.Pages.MainPages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                IEnumerable<Tasks> list = db.Tasks.Include(s => s.Specializations).Include(s => s.HistoryUploaded);
+                IEnumerable<Tasks> list = db.Tasks.Include(s => s.Specializations).Include(s => s.HistoryUploaded).ToList();
                 
-                if(!FilterText.IsWhiteSpace) list = list.Where(s => s.name.ToLower().Trim().Contains(FilterText.Text.ToLower().Trim())).ToList();
+                if(!FilterText.IsWhiteSpace) list = list.Where(s => s.name.ToLower().Trim().Contains(FilterText.Text.ToLower().Trim()));
 
                 if (SpecBox.SelectedIndex > 0)
-                    list = list.Where(s => s.idSpecialization == ((Specializations)SpecBox.SelectedItem).id).ToList();
+                    list = list.Where(s => s.idSpecialization == ((Specializations)SpecBox.SelectedItem).id);
                 
                 switch (PriceBox.SelectedIndex)
                 {

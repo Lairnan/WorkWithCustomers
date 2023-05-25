@@ -40,7 +40,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             var saveFileDialog = new SaveFileDialog
             {
                 Title = "Скачивание файла",
-                CreatePrompt = true,
+                OverwritePrompt = true,
                 FileName = $"{_task.HistoryUploaded.fileName}.{_task.HistoryUploaded.fileExtension}",
                 Filter = $"File | *.{_task.HistoryUploaded.fileExtension}"
             };

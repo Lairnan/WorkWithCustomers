@@ -140,7 +140,8 @@ namespace INCOMSYSTEM.Pages.Details
             var saveFileDialog = new SaveFileDialog
             {
                 Title = "Скачивание файла",
-                FileName = $"{NameBox.Value}",
+                OverwritePrompt = true,
+                FileName = $"{TempFile.fileName}.{TempFile.fileExtension}",
                 Filter = $"File | * {TempFile.fileExtension}",
                 DefaultExt = $".{TempFile.fileExtension}"
             };
@@ -163,10 +164,11 @@ namespace INCOMSYSTEM.Pages.Details
                 AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
-            
+
+            var fileName = openFile.Split('\\').Last();
             var file = new HistoryUploaded
             {
-                fileName = openFile.Split('\\').Last(),
+                fileName = fileName.Remove(fileName.IndexOf(fileExtension, StringComparison.Ordinal) - 1, fileExtension.Length + 1),
                 fileContent = File.ReadAllBytes(openFile),
                 fileExtension = fileExtension,
                 fileSize = new FileInfo(openFile).Length,

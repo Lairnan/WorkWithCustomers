@@ -110,21 +110,20 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         }
 
         private readonly Orders _order;
-        private string _fileName = "Дополнение к договору";
-        private string FileName
-        {
-            get => _fileName;
-            set
-            {
-                FileDownload.IsEnabled = !string.IsNullOrWhiteSpace(value);
-                _fileName = value;
-                FileDownload.Content = value;
-            }
-        }
 
         private readonly HistoryUploaded _file;
 
-        private HistoryUploaded TempFile { get; set; }
+        private HistoryUploaded _tempFile;
+        private HistoryUploaded TempFile
+        {
+            get => _tempFile;
+            set
+            {
+                FileDownload.IsEnabled = value != null;
+                _tempFile = value;
+                FileDownload.Content = value == null ? string.Empty : $"{value.fileName}.{value.fileExtension}";
+            }
+        }
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -138,12 +137,14 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
 
             var file = new HistoryUploaded
             {
-                fileName = $"Дополнение к договору.{openFile.SafeFileName.Split('.').Last()}",
+                fileName = openFile.SafeFileName,
                 fileContent = File.ReadAllBytes(openFile.FileName),
                 fileExtension = openFile.SafeFileName.Split('.').Last(),
-                fileSize = new FileInfo(openFile.FileName).Length
+                fileSize = new FileInfo(openFile.FileName).Length,
+                uploadedBy = MainWindow.AuthUser.idUser
             };
             TempFile = file;
+            
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
         }
@@ -151,7 +152,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = null;
-            FileName = string.Empty;
             ClearBtn.IsEnabled = false;
             ReturnBtn.IsEnabled = true;
         }
@@ -159,7 +159,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = _file;
-            FileName = $"Дополнение к договору.{_file.fileExtension}";
             ReturnBtn.IsEnabled = false;
             ClearBtn.IsEnabled = true;
         }
@@ -167,11 +166,12 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
         private void FileDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (TempFile == null) return;
-
+            
             var saveFileDialog = new SaveFileDialog
             {
                 Title = "Скачивание файла",
-                FileName = $"{FileName}",
+                OverwritePrompt = true,
+                FileName = $"{TempFile.fileName}.{TempFile.fileExtension}",
                 Filter = $"File | * {TempFile.fileExtension}",
                 DefaultExt = $".{TempFile.fileExtension}"
             };
@@ -193,17 +193,20 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 AdditionalWindow.ShowError("Не верный формат файла");
                 return;
             }
+
+            var fileName = openFile.Split('\\').Last();
             var file = new HistoryUploaded
             {
-                fileName = $"Дополнение к договору.{fileExtension}",
+                fileName = fileName.Remove(fileName.IndexOf(fileExtension, StringComparison.Ordinal) - 1, fileExtension.Length + 1),
                 fileContent = File.ReadAllBytes(openFile),
                 fileExtension = fileExtension,
-                fileSize = new FileInfo(openFile).Length
+                fileSize = new FileInfo(openFile).Length,
+                uploadedBy = MainWindow.AuthUser.idUser
             };
             TempFile = file;
+            
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
-            FileName = $"Дополнение к договору.{fileExtension}";
             AdditionalWindow.HideError();
         }
 
