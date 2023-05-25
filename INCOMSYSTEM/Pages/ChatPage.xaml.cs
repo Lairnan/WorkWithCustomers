@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.ViewModels;
 using INCOMSYSTEM.Windows;
@@ -21,7 +23,7 @@ namespace INCOMSYSTEM.Pages
             _chatMess = chatMess;
             InitializeComponent();
 
-            Title = chatMess.IsConnected ? $"Переписка с {chatMess.Recipient}" : chatMess.Recipient;
+            _tempTitle = chatMess.IsConnected ? $"Переписка с {chatMess.Recipient}" : chatMess.Recipient;
             CollectionViewMessages.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Ascending));
             MessagesList.ItemsSource = CollectionViewMessages;
 
@@ -35,6 +37,45 @@ namespace INCOMSYSTEM.Pages
             };
             
             Task.Run(RefreshMessages);
+            Task.Run(RefreshStatusUser);
+        }
+        
+        private readonly string _tempTitle;
+        private bool? _isOnline;
+
+        private async void RefreshStatusUser()
+        {
+            Application.Current.Dispatcher.Invoke(() => TitleBlock.Text = _tempTitle);
+            while (!MainWindow.IsClosed)
+            {
+                using (var db = new INCOMSYSTEMEntities())
+                {
+                    var mes = db.Messages.First(s => s.id == _chatMess.Id);
+                    var chat = db.Chats.First(s => s.idChat == mes.idChat);
+                    var id = MainWindow.AuthUser.idUser != chat.idManager ? chat.idManager : chat.idCustomer;
+                    var user = db.UsersDetail.First(s => s.idUser == id);
+                    
+                    if(_isOnline == user.isOnline)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(3));
+                        continue;
+                    }
+                    _isOnline = user.isOnline;
+                    
+                    if (user.isOnline)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => TitleEllipse.Fill = new SolidColorBrush(Colors.Green));
+                        Application.Current.Dispatcher.Invoke(() => StatusBlock.Text = "В сети");
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(() => TitleEllipse.Fill = new SolidColorBrush(Colors.Red));
+                        Application.Current.Dispatcher.Invoke(() => StatusBlock.Text = "Не сети");
+                    }
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
         }
 
         private void MarkAllMessagesAsRead()
@@ -56,7 +97,6 @@ namespace INCOMSYSTEM.Pages
             
         private readonly ChatMess _chatMess;
 
-        // decompose this method
         private async void RefreshMessages()
         {
             while (!MainWindow.IsClosed)
