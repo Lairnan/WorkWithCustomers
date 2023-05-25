@@ -14,6 +14,11 @@ namespace INCOMSYSTEM.Context
     
     public partial class UpdatesHistory
     {
+        public UpdatesHistory()
+        {
+            id = System.Guid.NewGuid();
+        }
+        
         public System.Guid id { get; set; }
         public string tableName { get; set; }
         public long idRecord { get; set; }

@@ -7,6 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Windows;
+using INCOMSYSTEM.Windows;
+
 namespace INCOMSYSTEM.Context
 {
     using System;
@@ -18,6 +23,79 @@ namespace INCOMSYSTEM.Context
         public INCOMSYSTEMEntities()
             : base("name=INCOMSYSTEMEntities")
         {
+        }
+
+        public override int SaveChanges()
+        {
+            var changes = ChangeTracker.Entries()
+                .Where(s => s.State == EntityState.Added
+                || s.State == EntityState.Modified
+                || s.State == EntityState.Deleted)
+                .ToList();
+
+            foreach (var change in changes)
+            {
+                if (change.State == EntityState.Added)
+                {
+                    var history = new UpdatesHistory();
+                    history.tableName = change.Entity.GetType().Name.Split('_')[0];
+                    if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
+                        history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
+                    else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
+                    history.field = "new";
+                    history.oldValue = "null";
+                    history.newValue = "null";
+                    history.idUser = MainWindow.AuthUser.idUser;
+                    history.dateUpdate = DateTime.Now;
+                    history.idStatus = 1;
+                    
+                    UpdatesHistory.Add(history);
+                    
+                    continue;
+                }
+
+                foreach (var propertyName in change.CurrentValues.PropertyNames)
+                {
+                    if (propertyName == "isOnline" || change.Entity.GetType() == null) return base.SaveChanges();
+                    
+                    var originalValue = change.OriginalValues[propertyName];
+                    var currentValue = change.CurrentValues[propertyName];
+
+                    if (change.State == EntityState.Added || !Equals(originalValue, currentValue))
+                    {
+                        var history = new UpdatesHistory();
+                        history.tableName = change.Entity.GetType().Name.Split('_')[0];
+                        if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
+                            history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
+                        else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
+                        history.field = propertyName;
+                        history.oldValue = originalValue == "null" ? "null" : originalValue.ToString();
+                        history.newValue = currentValue == null ? "null" : currentValue.ToString();
+                        history.idUser = MainWindow.AuthUser.idUser;
+                        history.dateUpdate = DateTime.Now;
+                        history.idStatus = (byte)(change.State == EntityState.Modified ? 2 : 3);
+                        
+                        UpdatesHistory.Add(history);
+                    }
+                }
+            }
+            
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                    .SelectMany(x => x.ValidationErrors)
+                    .Select(x => x.ErrorMessage);
+
+                var errorMessage = string.Join("\n", errorMessages);
+
+                MessageBox.Show($"Ошибка валидации:\n\n{errorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                throw;
+            }
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -6,6 +7,7 @@ using System.Windows.Controls;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
+using Break = Microsoft.Office.Interop.Word.Break;
 
 namespace INCOMSYSTEM.Pages.Details
 {
@@ -22,7 +24,6 @@ namespace INCOMSYSTEM.Pages.Details
             _file = task.HistoryUploaded;
             SetFileValues(task);
 
-            _oldName = task.name;
             SetInputBoxValues(task);
 
             using (var db = new INCOMSYSTEMEntities())
@@ -52,7 +53,7 @@ namespace INCOMSYSTEM.Pages.Details
             }
             else
             {
-                FileDownload.Content = $"{task.name}.{_file.fileExtension}";
+                FileDownload.Content = $"{_file.fileName}.{_file.fileExtension}";
                 FileDownload.IsEnabled = true;
                 TempFile = _file;
                 ClearBtn.IsEnabled = true;
@@ -76,25 +77,22 @@ namespace INCOMSYSTEM.Pages.Details
 
         private readonly Tasks _task;
 
-        private string _fileName;
-        private string FileName
-        {
-            get => _fileName;
-            set
-            {
-                FileDownload.IsEnabled = !string.IsNullOrWhiteSpace(value);
-                _fileName = value;
-                FileDownload.Content = value;
-            }
-        }
-
         private readonly bool _isEdit;
-
-        private readonly string _oldName;
 
         private readonly HistoryUploaded _file;
 
-        private HistoryUploaded TempFile { get; set; }
+
+        private HistoryUploaded _tempFile;
+        private HistoryUploaded TempFile
+        {
+            get => _tempFile;
+            set
+            {
+                FileDownload.IsEnabled = value != null;
+                _tempFile = value;
+                FileDownload.Content = value == null ? string.Empty : $"{value.fileName}.{value.fileExtension}";
+            }
+        }
 
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
@@ -113,6 +111,7 @@ namespace INCOMSYSTEM.Pages.Details
                 fileContent = File.ReadAllBytes(openFile.FileName),
                 fileExtension = openFile.SafeFileName.Split('.').Last(),
                 fileSize = new FileInfo(openFile.FileName).Length,
+                uploadedBy = MainWindow.AuthUser.idUser
             };
             TempFile = file;
             
@@ -123,15 +122,13 @@ namespace INCOMSYSTEM.Pages.Details
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = null;
-            FileName = string.Empty;
             ClearBtn.IsEnabled = false;
-            ReturnBtn.IsEnabled = true;
+            ReturnBtn.IsEnabled = _file != null;
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
             TempFile = _file;
-            FileName = $"{_file.fileName}.{_file.fileExtension}";
             ReturnBtn.IsEnabled = false;
             ClearBtn.IsEnabled = true;
         }
@@ -144,8 +141,8 @@ namespace INCOMSYSTEM.Pages.Details
             {
                 Title = "Скачивание файла",
                 FileName = $"{NameBox.Value}",
-                Filter = $"File | * {_file.fileExtension}",
-                DefaultExt = $".{_file.fileExtension}"
+                Filter = $"File | * {TempFile.fileExtension}",
+                DefaultExt = $".{TempFile.fileExtension}"
             };
             if (saveFileDialog.ShowDialog() != true) return;
 
@@ -173,12 +170,12 @@ namespace INCOMSYSTEM.Pages.Details
                 fileContent = File.ReadAllBytes(openFile),
                 fileExtension = fileExtension,
                 fileSize = new FileInfo(openFile).Length,
+                uploadedBy = MainWindow.AuthUser.idUser
             };
             TempFile = file;
             
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
-            FileName = file.fileName;
             AdditionalWindow.HideError();
         }
 
@@ -218,9 +215,27 @@ namespace INCOMSYSTEM.Pages.Details
                 task.approxCompleteTime = _approx;
                 task.idSpecialization = _spec.id;
                 task.supportPeriod = _support;
-                task.HistoryUploaded = TempFile;
+
+                if (task.HistoryUploaded == null && TempFile != null)
+                {
+                    db.HistoryUploaded.Add(TempFile);
+                    task.idFile = TempFile.id;
+                }
+                else if (TempFile != null && (_file.fileContent != TempFile.fileContent
+                                               || _file.fileExtension != TempFile.fileExtension
+                                               || _file.fileName != TempFile.fileName
+                                               || _file.fileSize != TempFile.fileSize))
+                {
+                    var file = db.HistoryUploaded.First(s => s.id == _file.id);
+                    file.fileName = TempFile.fileName;
+                    file.fileContent = TempFile.fileContent;
+                    file.fileExtension = TempFile.fileExtension;
+                    file.fileSize = TempFile.fileSize;
+                    file.uploadedBy = TempFile.uploadedBy;
+                }
 
                 db.SaveChanges();
+                MessageBox.Show("Данные успешно сохранены");
             }
 
             return true;
@@ -237,6 +252,21 @@ namespace INCOMSYSTEM.Pages.Details
 
             using (var db = new INCOMSYSTEMEntities())
             {
+                long? idFile = null;
+                if (TempFile != null)
+                {
+                    var file = new HistoryUploaded
+                    {
+                        fileName = TempFile.fileName,
+                        fileContent = TempFile.fileContent,
+                        fileExtension = TempFile.fileExtension,
+                        fileSize = TempFile.fileSize,
+                        uploadedBy = TempFile.uploadedBy
+                    };
+                    db.HistoryUploaded.Add(file);
+                    idFile = file.id;
+                }
+
                 var task = new Tasks
                 {
                     name = _name,
@@ -245,13 +275,14 @@ namespace INCOMSYSTEM.Pages.Details
                     approxCompleteTime = _approx,
                     idSpecialization = _spec.id,
                     supportPeriod = _support,
-                    HistoryUploaded = TempFile,
+                    idFile = idFile
                 };
                 if (_disc > 0) task.discount = _disc;
                 else task.discount = null;
 
                 db.Tasks.Add(task);
                 db.SaveChanges();
+                MessageBox.Show("Данные успешно добавлены");
             }
 
             return true;
@@ -287,13 +318,9 @@ namespace INCOMSYSTEM.Pages.Details
                 return false;
             }
 
-            if (!DiscountBox.IsWhiteSpace && !byte.TryParse(DiscountBox.Value, out _disc))
-            {
-                AdditionalWindow.ShowError("Не удалось преобразовать скидку в число");
-                return false;
-            }
-
-            if (int.TryParse(ApproxTimeBox.Value, out _approx)) return true;
+            if (DiscountBox.IsWhiteSpace || byte.TryParse(DiscountBox.Value, out _disc))
+                return int.TryParse(ApproxTimeBox.Value, out _approx);
+            AdditionalWindow.ShowError("Не удалось преобразовать скидку в число");
             return false;
 
         }
@@ -334,8 +361,7 @@ namespace INCOMSYSTEM.Pages.Details
                    && PriceBox.IsWhiteSpace
                    && DiscountBox.IsWhiteSpace
                    && SupportPeriod.IsWhiteSpace
-                   && ApproxTimeBox.IsWhiteSpace
-                   && string.IsNullOrWhiteSpace(FileName);
+                   && ApproxTimeBox.IsWhiteSpace;
         }
 
         private void PriceBox_OnTextChanged(object sender, TextChangedEventArgs e)

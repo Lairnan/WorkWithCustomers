@@ -50,6 +50,8 @@ namespace INCOMSYSTEM.Pages
                     if (user.isOnline)
                     {
                         MessageBox.Show("Данный пользователь уже в сети");
+                        user.isOnline = false;
+                        db.SaveChanges();
                         return;
                     }
                     user.isOnline = true;
