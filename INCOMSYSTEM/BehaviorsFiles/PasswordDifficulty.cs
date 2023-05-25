@@ -37,18 +37,21 @@ namespace INCOMSYSTEM.BehaviorsFiles
 
         private static bool IsRepeatContains(string password)
         {
-            var array = new List<char>();
+            var lastChar = '\0';
+            var combination = 0;
             var count = 0;
             
             foreach (var ch in password)
             {
-                if (!array.Contains(ch)) array.Add(ch);
-                else count++;
+                if (lastChar == ch) combination++;
+                else combination = 0;
+                
+                lastChar = ch;
 
-                if (count > 1) return true;
+                if (combination > 2) count++;
             }
 
-            return false;
+            return count > 1;
         }
 
         private static bool IsEasyPassword(string password)

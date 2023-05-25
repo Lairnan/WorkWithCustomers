@@ -69,6 +69,8 @@
     <Compile Include="BehaviorsFiles\ObservableObject.cs" />
     <Compile Include="BehaviorsFiles\PasswordDifficulty.cs" />
     <Compile Include="BehaviorsFiles\PasswordGenerator.cs" />
+    <Compile Include="BehaviorsFiles\PasswordStengthToGridLengthConverter.cs" />
+    <Compile Include="BehaviorsFiles\PasswordStrengthToBorderBrushConverter.cs" />
     <Compile Include="Context\Chats.cs">
       <DependentUpon>INCOMSYSTEMModel.tt</DependentUpon>
     </Compile>

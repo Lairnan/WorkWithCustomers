@@ -4,9 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
+      xmlns:bf="clr-namespace:INCOMSYSTEM.BehaviorsFiles"
       mc:Ignorable="d"
       Title="Регистрация">
     <Page.Resources>
+        <bf:PasswordStrengthToGridLengthConverter x:Key="PasswordStrengthToGridLengthConverter" />
+        <bf:PasswordStrengthToBorderBrushConverter x:Key="PasswordStrengthToBorderBrushConverter" />
         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
@@ -74,7 +77,25 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <controls:InputTextBox x:Name="InpPassword" IsPassword="True" MaxLength="50" Width="155" PlaceHolder="Пароль"/>
+                <Grid  Width="155">
+                    <controls:InputTextBox x:Name="InpPassword" IsPassword="True" MaxLength="50" BorderThickness="0" Width="155" PlaceHolder="Пароль">
+                        <controls:InputTextBox.Style>
+                            <Style TargetType="controls:InputTextBox" BasedOn="{StaticResource {x:Type controls:InputTextBox}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsWhiteSpace" Value="True">
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                    </Trigger>
+                                    <Trigger Property="IsWhiteSpace" Value="False">
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </controls:InputTextBox.Style>
+                    </controls:InputTextBox>
+                    <Border BorderThickness="0 0 0 1"
+                            BorderBrush="{Binding ElementName=InpPassword, Path=Value, Converter={StaticResource PasswordStrengthToBorderBrushConverter}, UpdateSourceTrigger=PropertyChanged}"
+                            Width="{Binding ElementName=InpPassword, Path=Value, Converter={StaticResource PasswordStrengthToGridLengthConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
                 <CheckBox IsChecked="{Binding ElementName=InpPassword, Path=IsShowed}"
                           Grid.Column="1">
                     <CheckBox.Style>

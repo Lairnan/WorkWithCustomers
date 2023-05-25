@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Controls;
 using INCOMSYSTEM.Windows;
 
 namespace INCOMSYSTEM.Pages
@@ -34,7 +37,8 @@ namespace INCOMSYSTEM.Pages
             InpLogin.TextChanged += (s, e) => CheckEmpty();
             InpPassword.TextChanged += (s, e) => CheckEmpty();
         }
-        
+
+
         private void RegBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CheckEmpty()) return;
