@@ -11,10 +11,10 @@ namespace INCOMSYSTEM.BehaviorsFiles
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is IEnumerable collection))
+            if (!(value is int count))
                 return Visibility.Collapsed;
 
-            return collection.OfType<object>().Any() ? Visibility.Collapsed : Visibility.Visible;
+            return count > 0 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

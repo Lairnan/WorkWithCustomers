@@ -24,6 +24,11 @@ namespace INCOMSYSTEM.Pages
             InitializeComponent();
 
             _tempTitle = chatMess.IsConnected ? $"Переписка с {chatMess.Recipient}" : chatMess.Recipient;
+            if (!chatMess.IsConnected)
+            {
+                TitleEllipse.Visibility = Visibility.Collapsed;
+                StatusBlock.Visibility = Visibility.Collapsed;
+            }
             CollectionViewMessages.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Ascending));
             MessagesList.ItemsSource = CollectionViewMessages;
 
@@ -41,7 +46,7 @@ namespace INCOMSYSTEM.Pages
         }
         
         private readonly string _tempTitle;
-        private bool? _isOnline;
+        private bool _isOnline;
 
         private async void RefreshStatusUser()
         {
@@ -54,7 +59,14 @@ namespace INCOMSYSTEM.Pages
                     var chat = db.Chats.First(s => s.idChat == mes.idChat);
                     var id = MainWindow.AuthUser.idUser != chat.idManager ? chat.idManager : chat.idCustomer;
                     var user = db.UsersDetail.First(s => s.idUser == id);
-                    
+
+                    if (_chatMess.IsConnected && TitleEllipse.Visibility == Visibility.Collapsed)
+                    {
+                         Application.Current.Dispatcher.Invoke(() => TitleBlock.Text = $"Переписка с {_chatMess.Recipient}");
+                         Application.Current.Dispatcher.Invoke(() => TitleEllipse.Visibility = Visibility.Visible);
+                         Application.Current.Dispatcher.Invoke(() => StatusBlock.Visibility = Visibility.Visible);
+                    }
+
                     if(_isOnline == user.isOnline)
                     {
                         await Task.Delay(TimeSpan.FromSeconds(3));
@@ -86,6 +98,7 @@ namespace INCOMSYSTEM.Pages
                 {
                     var mes = db.Messages.First(s => s.id == mess.Id);
                     mes.isReadded = true;
+                    mess.IsRead = true;
                 }
 
                 db.SaveChanges();

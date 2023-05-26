@@ -41,6 +41,7 @@ namespace INCOMSYSTEM.Context
                     history.tableName = change.Entity.GetType().Name.Split('_')[0];
                     if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
                         history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
+                    else if(history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
                     else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
                     history.field = "new";
                     history.oldValue = "null";
@@ -67,9 +68,10 @@ namespace INCOMSYSTEM.Context
                         history.tableName = change.Entity.GetType().Name.Split('_')[0];
                         if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
                             history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
+                        else if(history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
                         else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
                         history.field = propertyName;
-                        history.oldValue = originalValue == "null" ? "null" : originalValue.ToString();
+                        history.oldValue = originalValue == null || originalValue == "null" ? "null" : originalValue.ToString();
                         history.newValue = currentValue == null ? "null" : currentValue.ToString();
                         history.idUser = MainWindow.AuthUser.idUser;
                         history.dateUpdate = DateTime.Now;

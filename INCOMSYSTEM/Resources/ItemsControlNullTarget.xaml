@@ -15,7 +15,7 @@
                                 Text="Список пуст"
                                 VerticalAlignment="Top"
                                 Style="{StaticResource TextBlockStyle}"
-                                Visibility="{Binding Path=Items,
+                                Visibility="{Binding Path=Items.Count,
                                                      RelativeSource={RelativeSource TemplatedParent},
                                                      UpdateSourceTrigger=PropertyChanged,
                                                      Converter={StaticResource AnyItemsToVisibilityConverter}}"/>

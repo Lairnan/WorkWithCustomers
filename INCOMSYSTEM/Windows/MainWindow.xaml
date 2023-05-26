@@ -12,7 +12,6 @@
         MinHeight="600"
         Width="950"
         MinWidth="950"
-        WindowState="Maximized"
         Background="DimGray"
         BorderBrush="Black"
         BorderThickness="2">

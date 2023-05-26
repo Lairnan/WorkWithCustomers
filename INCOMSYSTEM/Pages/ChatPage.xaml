@@ -27,8 +27,10 @@
                      Width="12"
                      Height="12"
                      Margin="5 0"
+                     Fill="Red"
                      VerticalAlignment="Center"/>
             <TextBlock x:Name="StatusBlock"
+                       Text="Не в сети"
                        Style="{StaticResource TextBlockStyle}"
                        Grid.Column="2"/>
         </Grid>

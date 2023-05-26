@@ -12,7 +12,7 @@ namespace INCOMSYSTEM.BehaviorsFiles
                                 "!@#$%^&*()";
 
             var random = new Random();
-            var newPassword = "";
+            string newPassword = null;
             while (string.IsNullOrWhiteSpace(newPassword)
                    || PasswordDifficulty.CheckDifficultyPassword(newPassword) == DifficultyPassword.Easy)
             {

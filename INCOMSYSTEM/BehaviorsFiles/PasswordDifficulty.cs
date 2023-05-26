@@ -16,7 +16,7 @@ namespace INCOMSYSTEM.BehaviorsFiles
                 || password.ToLower().Trim().Contains("qwerty"))
                 return DifficultyPassword.Easy;
 
-            if (IsRepeatContains(password)) return DifficultyPassword.Easy;
+            if (IsCombinationRepeat(password) || IsRepeatContains(password)) return DifficultyPassword.Easy;
             
             var hasUpper = Regex.IsMatch(password, "[A-ZА-Я]");
             var hasLower = Regex.IsMatch(password, "[a-zа-я]");
@@ -35,13 +35,13 @@ namespace INCOMSYSTEM.BehaviorsFiles
             return DifficultyPassword.Hard;
         }
 
-        private static bool IsRepeatContains(string password)
+        private static bool IsCombinationRepeat(string password)
         {
             var lastChar = '\0';
             var combination = 0;
             var count = 0;
             
-            foreach (var ch in password)
+            foreach (var ch in password.ToLower().Trim())
             {
                 if (lastChar == ch) combination++;
                 else combination = 0;
@@ -53,6 +53,22 @@ namespace INCOMSYSTEM.BehaviorsFiles
 
             return count > 1;
         }
+        
+        private static bool IsRepeatContains(string password)
+        {
+            var array = new List<char>();
+            var count = 0;
+
+            foreach (var ch in password.ToLower().Trim())
+            {
+                if (!array.Contains(ch)) array.Add(ch);
+                else count++;
+
+                if (count > 3) return true;
+            }
+
+            return false;
+        }
 
         private static bool IsEasyPassword(string password)
         {
@@ -61,8 +77,7 @@ namespace INCOMSYSTEM.BehaviorsFiles
             var startPass = password.Substring(0, password.Length / 2);
             var endPass = password.Substring(password.Length / 2, password.Length / 2);
 
-            if (startPass.ToLower().Trim() == endPass.ToLower().Trim()) return true;
-            return false;
+            return startPass.ToLower().Trim() == endPass.ToLower().Trim();
         }
     }
     
