@@ -1,6 +1,7 @@
 ﻿using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,14 +19,14 @@ namespace INCOMSYSTEM.ViewModels
             ChatsCollection = new ObservableCollection<ChatMess>();
             CollectionViewChat = CollectionViewSource.GetDefaultView(ChatsCollection);
             CollectionViewChat.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Descending));
-            ChatsCollection.CollectionChanged += (s, e) => OnRaiseChanged();
+            ChatsCollection.CollectionChanged += (s, e) => { OnRaiseChanged(); CollectionViewChat.Refresh(); };
             RefreshCollection();
         }
 
-        public ObservableCollection<ChatMess> ChatsCollection { get; }
+        private ObservableCollection<ChatMess> ChatsCollection { get; }
         public ICollectionView CollectionViewChat { get; }
 
-        public async void RefreshCollection()
+        private async void RefreshCollection()
         {
             while (!MainWindow.IsClosed)
             {
@@ -46,64 +47,90 @@ namespace INCOMSYSTEM.ViewModels
                         .Include(s => s.HistoryUploaded)
                         .ToList();
 
-                    var chatColl = ChatsCollection.ToList().Where(s => !chats.Select(k => k.idChat).Contains(s.Id));
-
-                    if (MainWindow.AuthUser.idPos == 3 && chatColl.Any())
-                    {
-                        foreach (var c in chatColl)
-                        {
-                            ChatsCollection.Remove(c);
-                        }
-                        continue;
-                    }
+                    if (RemoveUndefinedChats(chats)) continue;
 
                     foreach (var chat in chats)
                     {
-                        var message = messages.LastOrDefault(s => s.idChat == chat.idChat) ?? new Messages
-                        {
-                            idChat = chat.idChat,
-                            dateSend = chat.dateCreate,
-                            message = $"Подробности заказа \"{chat.Orders.Tasks.name}\"",
-                            idUser = chat.idCustomer,
-                            UsersDetail = chat.Customers.UsersDetail
-                        };
-                        var chatMess = new ChatMess
-                        {
-                            Id = chat.idChat,
-                            Chat = chat,
-                            SendDate = message.dateSend,
-                            Message = message,
-                            Order = chat.Orders,
-                            IsConnected = chat.Employees != null
-                        };
+                        var chatMess = GetChatMess(messages, chat);
 
-                        if (MainWindow.AuthUser.idUser == chat.idCustomer) chatMess.Recipient = chat.Employees == null
-                                ? "Ожидание подключения менеджера"
-                                : $"{chat.Employees}";
-                        else chatMess.Recipient = chat.Customers.name;
+                        SetRecipient(chat, ref chatMess);
 
-                        var chatMessColl = ChatsCollection.FirstOrDefault(s => s.Id == chatMess.Id);
-                        if (chatMessColl == null) ChatsCollection.Add(chatMess);
-                        else
-                        {
-                            chatMessColl.IsConnected = chatMess.IsConnected;
-                            if (chatMessColl.Chat.Employees != chat.Employees)
-                            {
-                                chatMessColl.Chat.idManager = chat.idManager;
-                                chatMessColl.Chat.Employees = chat.Employees;
-                                chatMessColl.Recipient = chatMess.Recipient;
-                            }
-
-                            if (chatMessColl.Chat.Employees == null || chatMessColl.Message.id == chatMess.Id) continue;
-                            
-                            chatMessColl.SendDate = chatMess.SendDate;
-                            chatMessColl.Message = chatMess.Message;
-                        }
+                        AddOrModifiedChatsCollection(chatMess, chat);
                     }
                 }
 
                 await Task.Delay(2500);
             }
+        }
+
+        private void AddOrModifiedChatsCollection(ChatMess chatMess, Chats chat)
+        {
+            var chatMessColl = ChatsCollection.FirstOrDefault(s => s.Id == chatMess.Id);
+            if (chatMessColl == null) ChatsCollection.Add(chatMess);
+            else
+            {
+                chatMessColl.IsConnected = chatMess.IsConnected;
+                if (chatMessColl.Chat.Employees != chat.Employees)
+                {
+                    chatMessColl.Chat.idManager = chat.idManager;
+                    chatMessColl.Chat.Employees = chat.Employees;
+                    chatMessColl.Recipient = chatMess.Recipient;
+                }
+
+                if (chatMessColl.Chat.Employees == null || chatMessColl.Message.id == chatMess.Id) return;
+
+                chatMessColl.SendDate = chatMess.SendDate;
+                chatMessColl.Message = chatMess.Message;
+            }
+            
+            CollectionViewChat.Refresh();
+        }
+
+        private static void SetRecipient(Chats chat, ref ChatMess chatMess)
+        {
+            if (MainWindow.AuthUser.idUser == chat.idCustomer)
+                chatMess.Recipient = chat.Employees == null
+                    ? "Ожидание подключения менеджера"
+                    : $"{chat.Employees}";
+            else chatMess.Recipient = chat.Customers.name;
+        }
+
+        private static ChatMess GetChatMess(List<Messages> messages, Chats chat)
+        {
+            var message = messages.LastOrDefault(s => s.idChat == chat.idChat) ?? new Messages
+            {
+                idChat = chat.idChat,
+                dateSend = chat.dateCreate,
+                message = $"Подробности заказа \"{chat.Orders.Tasks.name}\"",
+                idUser = chat.idCustomer,
+                UsersDetail = chat.Customers.UsersDetail,
+                isReadded = false
+            };
+            var chatMess = new ChatMess
+            {
+                Id = chat.idChat,
+                Chat = chat,
+                SendDate = message.dateSend,
+                Message = message,
+                Order = chat.Orders,
+                IsConnected = chat.Employees != null
+            };
+            return chatMess;
+        }
+
+        private bool RemoveUndefinedChats(List<Chats> chats)
+        {
+            var chatColl = ChatsCollection.ToList().Where(s => !chats.Select(k => k.idChat).Contains(s.Id));
+
+            if (!chatColl.Any()) return false;
+            foreach (var c in chatColl)
+            {
+                ChatsCollection.Remove(c);
+            }
+            CollectionViewChat.Refresh();
+
+            return true;
+
         }
     }
 

@@ -102,6 +102,7 @@ namespace INCOMSYSTEM.Pages
                 }
 
                 db.SaveChanges();
+                CollectionViewMessages.Refresh();
             }
         }
 
@@ -150,11 +151,15 @@ namespace INCOMSYSTEM.Pages
                                 break;
                         }
 
-                        if (MessagesCollection.FirstOrDefault(s => s.Id == dialogMess.Id) == null)
+                        var mess = MessagesCollection.FirstOrDefault(s => s.Id == dialogMess.Id);
+                        if (mess == null)
                             Application.Current.Dispatcher.Invoke(() => MessagesCollection.Add(dialogMess));
+                        else if (mess.IsRead != dialogMess.IsRead)
+                            Application.Current.Dispatcher.Invoke(() => { mess.IsRead = dialogMess.IsRead; CollectionViewMessages.Refresh(); });
+
+                        if (IsActive) Application.Current.Dispatcher.Invoke(MarkAllMessagesAsRead);
                     }
 
-                    if (IsActive) Application.Current.Dispatcher.Invoke(MarkAllMessagesAsRead);
                     await Task.Delay(2500);
                 }
             }

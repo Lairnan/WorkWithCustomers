@@ -30,8 +30,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border>
-                        <Grid
-                              Margin="0 3"
+                        <Grid Margin="0 3"
                               MouseLeftButtonUp="ChatEnter_LeftBtnUp">
                             <Grid.Style>
                                 <Style TargetType="Grid">
@@ -89,8 +88,18 @@
                                        Margin="5 0"
                                        TextWrapping="Wrap"
                                        VerticalAlignment="Center"
-                                       Text="{Binding Message.shortMessage}"
-                                       Foreground="#ccc"/>
+                                       Text="{Binding Message.shortMessage}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                                        <Setter Property="Foreground" Value="#ccc"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Message.isReadded, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <Setter Property="Foreground" Value="#fff"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                             <TextBlock Grid.Column="2"
                                        Margin="5 0"
                                        VerticalAlignment="Top"

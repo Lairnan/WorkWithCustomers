@@ -293,6 +293,7 @@
     <Resource Include="Images\home.png" />
     <Resource Include="Images\chat.png" />
     <Resource Include="Images\doorKey.png" />
+    <Resource Include="Images\checkMark.png" />
     <Content Include="Images\oldlogo.png" />
   </ItemGroup>
   <ItemGroup>
