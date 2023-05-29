@@ -35,6 +35,8 @@ namespace INCOMSYSTEM.Context
 
             foreach (var change in changes)
             {
+                if(change.Entity.GetType().Name.ToLower().Trim().Contains("messages")) return base.SaveChanges();
+
                 if (change.State == EntityState.Added)
                 {
                     var history = new UpdatesHistory();
