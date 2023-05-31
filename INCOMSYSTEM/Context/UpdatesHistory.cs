@@ -27,7 +27,7 @@ namespace INCOMSYSTEM.Context
         public string newValue { get; set; }
         public System.DateTime dateUpdate { get; set; }
         public byte idStatus { get; set; }
-        public long idUser { get; set; }
+        public Nullable<long> idUser { get; set; }
     
         public virtual StatusesUpdate StatusesUpdate { get; set; }
         public virtual UsersDetail UsersDetail { get; set; }

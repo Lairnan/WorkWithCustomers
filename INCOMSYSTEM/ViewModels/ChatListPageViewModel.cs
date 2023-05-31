@@ -59,7 +59,7 @@ namespace INCOMSYSTEM.ViewModels
                     }
                 }
 
-                await Task.Delay(2500);
+                await Task.Delay(7500);
             }
         }
 

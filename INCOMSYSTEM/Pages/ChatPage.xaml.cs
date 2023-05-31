@@ -46,7 +46,7 @@ namespace INCOMSYSTEM.Pages
         }
         
         private readonly string _tempTitle;
-        private bool _isOnline;
+        private bool? _isOnline;
 
         private async void RefreshStatusUser()
         {
@@ -55,10 +55,9 @@ namespace INCOMSYSTEM.Pages
             {
                 using (var db = new INCOMSYSTEMEntities())
                 {
-                    var mes = db.Messages.First(s => s.id == _chatMess.Id);
-                    var chat = db.Chats.First(s => s.idChat == mes.idChat);
+                    var chat = db.Chats.First(s => s.idChat == _chatMess.Chat.idChat);
                     var id = MainWindow.AuthUser.idUser != chat.idManager ? chat.idManager : chat.idCustomer;
-                    var user = db.UsersDetail.First(s => s.idUser == id);
+                    var user = db.UsersDetail.FirstOrDefault(s => s.idUser == id);
 
                     if (_chatMess.IsConnected && TitleEllipse.Visibility == Visibility.Collapsed)
                     {
@@ -67,26 +66,26 @@ namespace INCOMSYSTEM.Pages
                          Application.Current.Dispatcher.Invoke(() => StatusBlock.Visibility = Visibility.Visible);
                     }
 
-                    if(_isOnline == user.isOnline)
+                    if(_isOnline == user?.isOnline)
                     {
                         await Task.Delay(TimeSpan.FromSeconds(3));
                         continue;
                     }
-                    _isOnline = user.isOnline;
+                    _isOnline = user?.isOnline;
                     
-                    if (user.isOnline)
+                    if (user != null && user.isOnline)
                     {
                         Application.Current.Dispatcher.Invoke(() => TitleEllipse.Fill = new SolidColorBrush(Colors.Green));
                         Application.Current.Dispatcher.Invoke(() => StatusBlock.Text = "В сети");
                     }
-                    else
+                    else if(user != null)
                     {
                         Application.Current.Dispatcher.Invoke(() => TitleEllipse.Fill = new SolidColorBrush(Colors.Red));
                         Application.Current.Dispatcher.Invoke(() => StatusBlock.Text = "Не сети");
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(3));
+                await Task.Delay(7500);
             }
         }
 
@@ -108,7 +107,7 @@ namespace INCOMSYSTEM.Pages
 
         private ObservableCollection<DialogMess> MessagesCollection { get; } = new ObservableCollection<DialogMess>();
         private ICollectionView CollectionViewMessages => CollectionViewSource.GetDefaultView(MessagesCollection);
-            
+        
         private readonly ChatMess _chatMess;
 
         private async void RefreshMessages()
@@ -160,7 +159,7 @@ namespace INCOMSYSTEM.Pages
                         if (IsActive) Application.Current.Dispatcher.Invoke(MarkAllMessagesAsRead);
                     }
 
-                    await Task.Delay(2500);
+                    await Task.Delay(7500);
                 }
             }
         }

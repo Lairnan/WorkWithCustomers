@@ -7,17 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Windows;
-using INCOMSYSTEM.Windows;
-
 namespace INCOMSYSTEM.Context
 {
+    using INCOMSYSTEM.Windows;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.Entity.Validation;
+    using System.Linq;
+    using System.Windows;
+
     public partial class INCOMSYSTEMEntities : DbContext
     {
         public INCOMSYSTEMEntities()
@@ -35,32 +34,34 @@ namespace INCOMSYSTEM.Context
 
             foreach (var change in changes)
             {
-                if(change.Entity.GetType().Name.ToLower().Trim().Contains("messages")) return base.SaveChanges();
+                if (change.Entity.GetType().Name.ToLower().Trim().Contains("messages")) return base.SaveChanges();
 
                 if (change.State == EntityState.Added)
                 {
                     var history = new UpdatesHistory();
                     history.tableName = change.Entity.GetType().Name.Split('_')[0];
-                    if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
+                    if (history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
                         history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
-                    else if(history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
+                    else if (history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
                     else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
                     history.field = "new";
-                    history.oldValue = "null";
-                    history.newValue = "null";
-                    history.idUser = MainWindow.AuthUser.idUser;
+                    history.oldValue = null;
+                    history.newValue = null;
+                    if (MainWindow.AuthUser == null)
+                        history.idUser = null;
+                    else history.idUser = MainWindow.AuthUser.idUser;
                     history.dateUpdate = DateTime.Now;
                     history.idStatus = 1;
-                    
+
                     UpdatesHistory.Add(history);
-                    
+
                     continue;
                 }
 
                 foreach (var propertyName in change.CurrentValues.PropertyNames)
                 {
                     if (propertyName == "isOnline" || change.Entity.GetType() == null) return base.SaveChanges();
-                    
+
                     var originalValue = change.OriginalValues[propertyName];
                     var currentValue = change.CurrentValues[propertyName];
 
@@ -68,22 +69,22 @@ namespace INCOMSYSTEM.Context
                     {
                         var history = new UpdatesHistory();
                         history.tableName = change.Entity.GetType().Name.Split('_')[0];
-                        if(history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
+                        if (history.tableName == "UsersDetail" || history.tableName == "Customers" || history.tableName == "Employees")
                             history.idRecord = (long)change.Entity.GetType().GetProperty("idUser").GetValue(change.Entity, null);
-                        else if(history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
+                        else if (history.tableName == "Chats") history.idRecord = (long)change.Entity.GetType().GetProperty("idChat").GetValue(change.Entity, null);
                         else history.idRecord = (long)change.Entity.GetType().GetProperty("id").GetValue(change.Entity, null);
                         history.field = propertyName;
-                        history.oldValue = originalValue == null || originalValue == "null" ? "null" : originalValue.ToString();
-                        history.newValue = currentValue == null ? "null" : currentValue.ToString();
+                        history.oldValue = originalValue == null ? null : originalValue.ToString();
+                        history.newValue = currentValue == null ? null : currentValue.ToString();
                         history.idUser = MainWindow.AuthUser.idUser;
                         history.dateUpdate = DateTime.Now;
                         history.idStatus = (byte)(change.State == EntityState.Modified ? 2 : 3);
-                        
+
                         UpdatesHistory.Add(history);
                     }
                 }
             }
-            
+
             try
             {
                 return base.SaveChanges();
@@ -101,7 +102,7 @@ namespace INCOMSYSTEM.Context
                 throw;
             }
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

@@ -23,9 +23,9 @@
         <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.TypesStage" Width="1.5" PointX="8.25" PointY="16.25" />
         <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UpdatesHistory" Width="1.5" PointX="3.75" PointY="14.375" />
         <EntityTypeShape EntityType="DP_Saulin_INCOMSYSTEMModel.UsersDetail" Width="1.5" PointX="1.5" PointY="10" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__5BE2A6F2" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__59FA5E80" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__5AEE82B9" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idChat__5AEE82B9" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idCustome__59063A47" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Chats__idManager__59FA5E80" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idChat__60A75C0F" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idLeg__37A5467C" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Customers__idUse__36B12243" />
@@ -36,14 +36,14 @@
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__HistoryUp__uploa__300424B4" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idFile__5FB337D6" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idFile__4AB81AF0" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idFil__5629CD9C" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idFil__5535A963" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idFile__412EB0B6" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Messages__idUser__619B8048" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idStatus__4E88ABD4" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Orders__idTask__4D94879B" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__5441852A" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__571DF1D5" />
-        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5535A963" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idOrd__534D60F1" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTas__5629CD9C" />
+        <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__OrderStag__idTyp__5441852A" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__UsersDeta__idPos__2C3393D0" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Specializ__idSpe__3E52440B" />
         <AssociationConnector Association="DP_Saulin_INCOMSYSTEMModel.FK__Tasks__idSpecial__4222D4EF" />

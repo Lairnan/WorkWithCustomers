@@ -14,7 +14,7 @@ namespace INCOMSYSTEM.Context
     
     public partial class OrderStages
     {
-        public System.Guid id { get; set; }
+        public long id { get; set; }
         public long idOrder { get; set; }
         public byte idType { get; set; }
         public string name { get; set; }

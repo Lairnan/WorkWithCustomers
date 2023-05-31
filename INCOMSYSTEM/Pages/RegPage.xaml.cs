@@ -55,7 +55,7 @@ namespace INCOMSYSTEM.Pages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                var phone = InpPhone.Value;
+                var phone = InpPhone.IsWhiteSpace ? null : InpPhone.Value;
                     
                 var passport = InpPassportSerie.Value + InpPassportNumber.Value;
                 
@@ -64,7 +64,7 @@ namespace INCOMSYSTEM.Pages
                     ShowError("Такой логин уже занят");
                     return;
                 }
-                if (db.UsersDetail.FirstOrDefault(s => s.phone == phone) != null)
+                if (phone != null && db.UsersDetail.FirstOrDefault(s => s.phone == phone) != null)
                 {
                     ShowError("Номер телефона уже занят");
                     return;
@@ -95,7 +95,11 @@ namespace INCOMSYSTEM.Pages
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 MessageBox.Show("Вы успешно зарегистрировались");
-                MainWindow.AuthUser = userDetail;
+                MainWindow.AuthUser = db.UsersDetail
+                    .Include(s => s.Customers)
+                    .Include(s => s.Customers.LegalForms)
+                    .Include(s => s.Positions)
+                    .First(s => s.idUser == userDetail.idUser);
                 new MainWindow().Show();
                 Application.Current.Windows.OfType<AuthWindow>().First().Close();
             }

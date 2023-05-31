@@ -33,8 +33,9 @@ namespace INCOMSYSTEM.Pages
                     chatMess = new ChatMess
                     {
                         Id = Chat.idChat,
-                        IsConnected = true,
-                        Recipient = Chat.Customers.name
+                        IsConnected = Chat.idManager != null,
+                        Recipient = Chat.Customers.name,
+                        Chat = Chat,
                     };
                     var chatPage = new ChatPage(chatMess);
                     ChatPages.Add(Chat.idChat, chatPage);

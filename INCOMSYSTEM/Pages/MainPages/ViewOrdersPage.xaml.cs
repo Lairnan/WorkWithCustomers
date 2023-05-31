@@ -71,7 +71,11 @@ namespace INCOMSYSTEM.Pages.MainPages
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                var chat = db.Chats.Include(s => s.Customers).First(s => s.idChat == order.id);
+                var chat = db.Chats
+                    .Include(s => s.Customers)
+                    .Include(s => s.Employees)
+                    .Include(s => s.Orders)
+                    .First(s => s.idChat == order.id);
                 var orderDb = db.Orders.First(s => s.id == order.id);
                 if(orderDb.idStatus < 2) orderDb.idStatus = 2;
                 chat.idManager = MainWindow.AuthUser.idUser;
