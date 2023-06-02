@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Controls;
 using INCOMSYSTEM.ViewModels;
 using INCOMSYSTEM.Windows;
 using Page = System.Windows.Controls.Page;
@@ -266,6 +267,21 @@ namespace INCOMSYSTEM.Pages
         }
 
         public bool IsActive { get; set; }
+
+        private void InputMessageBox_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Shift)
+            {
+                InputMessageBox.Text = InputMessageBox.Value + "\n";
+                InputMessageBox.SelectionStart = InputMessageBox.Text.Length - 1;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter && Keyboard.Modifiers != ModifierKeys.Shift)
+            {
+                SendMessageBtn_Click(sender, e);
+                e.Handled = true;
+            }
+        }
     }
 
     internal class DialogMess

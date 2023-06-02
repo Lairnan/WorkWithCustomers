@@ -165,10 +165,8 @@ namespace INCOMSYSTEM.Controls
             }
         }
 
-        private bool _isRemove = false;
-        private bool _isChanged = false;
-
-        private readonly object _lock = new object();
+        private bool _isRemove;
+        private bool _isChanged;
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {

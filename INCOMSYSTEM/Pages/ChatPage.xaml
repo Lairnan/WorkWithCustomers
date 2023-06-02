@@ -130,7 +130,8 @@
                                        BorderThickness="0"
                                        MaxLength="255"
                                        TextAlignment="Left"
-                                       TextWrapping="Wrap"/>
+                                       TextWrapping="Wrap"
+                                       KeyDown="InputMessageBox_OnKeyDown"/>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                     <Button x:Name="SendMessageBtn"
                             Content="Отправить"

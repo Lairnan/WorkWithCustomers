@@ -92,7 +92,7 @@
                             </Style>
                         </controls:InputTextBox.Style>
                     </controls:InputTextBox>
-                    <Border BorderThickness="0 0 0 1"
+                    <Border BorderThickness="0 0 0 3"
                             BorderBrush="{Binding ElementName=InpPassword, Path=Value, Converter={StaticResource PasswordStrengthToBorderBrushConverter}, UpdateSourceTrigger=PropertyChanged}"
                             Width="{Binding ElementName=InpPassword, Path=Value, Converter={StaticResource PasswordStrengthToGridLengthConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
