@@ -173,6 +173,26 @@
                                 <DataTemplate>
                                     <CheckBox x:Name="OrderGrid" Margin="0 0 0 10"
                                               Style="{StaticResource ClearCheckBoxTemplate}">
+                                        <CheckBox.ContextMenu>
+                                            <ContextMenu>
+                                                <ContextMenu.Style>
+                                                    <Style TargetType="ContextMenu" BasedOn="{StaticResource {x:Type ContextMenu}}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser},
+                                                                                                        Path=idPos}" Value="1">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContextMenu.Style>
+                                                <MenuItem Header="Просмотреть заказ"
+                                                          Click="ViewOrderMenu_Click"
+                                                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                            Path=DataContext}">
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </CheckBox.ContextMenu>
                                         <CheckBox.Content>
                                             <Grid>
                                                 <Grid.Resources>
@@ -258,7 +278,7 @@
                                                     <TextBlock Text="{Binding Statuses.name}" />
                                                 </Border>
                                                 <UniformGrid Grid.Row="1"
-                                                             Grid.ColumnSpan="9"
+                                                             Grid.ColumnSpan="8"
                                                              Grid.Column="0"
                                                              Columns="4"
                                                              Height="80">
@@ -285,8 +305,7 @@
                                                         <TextBlock Text="Фактическая дата завершения" FontWeight="Bold" />
                                                     </Border>
                                                     <Border>
-                                                        <TextBlock
-                                                            Text="{Binding planDateStart,
+                                                        <TextBlock Text="{Binding planDateStart,
                                                                                 StringFormat='{}{0:dd MMMM yyyy} г.',
                                                                                 ConverterCulture={x:Static gl:CultureInfo.CurrentCulture},
                                                                                 TargetNullValue='Отсутствует'}" />

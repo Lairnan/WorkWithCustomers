@@ -84,12 +84,12 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idOrder" Type="bigint" Nullable="false" />
           <Property Name="idType" Type="tinyint" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="idTaskStage" Type="bigint" />
-          <Property Name="idFile" Type="bigint" Nullable="false" />
+          <Property Name="idFile" Type="bigint" />
           <Property Name="factDateStart" Type="datetime2" Precision="7" />
           <Property Name="factDateComplete" Type="datetime2" Precision="7" />
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
@@ -375,7 +375,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__OrderStag__idFil__5535A963">
-          <End Role="HistoryUploaded" Type="Self.HistoryUploaded" Multiplicity="1" />
+          <End Role="HistoryUploaded" Type="Self.HistoryUploaded" Multiplicity="0..1" />
           <End Role="OrderStages" Type="Self.OrderStages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HistoryUploaded">
@@ -887,12 +887,12 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idOrder" Type="Int64" Nullable="false" />
           <Property Name="idType" Type="Byte" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="idTaskStage" Type="Int64" />
-          <Property Name="idFile" Type="Int64" Nullable="false" />
+          <Property Name="idFile" Type="Int64" />
           <Property Name="factDateStart" Type="DateTime" Precision="7" />
           <Property Name="factDateComplete" Type="DateTime" Precision="7" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1180,7 +1180,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__OrderStag__idFil__5535A963">
-          <End Type="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" Role="HistoryUploaded" Multiplicity="1" />
+          <End Type="DP_Saulin_INCOMSYSTEMModel.HistoryUploaded" Role="HistoryUploaded" Multiplicity="0..1" />
           <End Type="DP_Saulin_INCOMSYSTEMModel.OrderStages" Role="OrderStages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HistoryUploaded">

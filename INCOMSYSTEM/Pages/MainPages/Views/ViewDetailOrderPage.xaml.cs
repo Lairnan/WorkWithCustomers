@@ -55,9 +55,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             ExecutorBox.Visibility = Visibility.Collapsed;
             ExecutorBlock.Visibility = Visibility.Visible;
             DifficultyBox.IsReadOnly = true;
-            FileDownloadGrid.AllowDrop = false;
-            UploadBtn.IsEnabled = false;
-            ClearBtn.IsEnabled = false;
             SaveBtn.Visibility = Visibility.Collapsed;
             CancelBtn.Content = "Закрыть";
         }
@@ -98,14 +95,12 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             if (_file == null)
             {
                 FileDownload.IsEnabled = false;
-                ReturnBtn.Visibility = Visibility.Collapsed;
             }
             else
             {
                 FileDownload.Content = $"Дополнение к договору.{order.HistoryUploaded.fileExtension}";
                 FileDownload.IsEnabled = true;
                 TempFile = _file;
-                ClearBtn.IsEnabled = true;
             }
         }
 
@@ -125,7 +120,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             }
         }
 
-        private void UploadBtn_Click(object sender, RoutedEventArgs e)
+        /*private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
             var openFile = new OpenFileDialog
             {
@@ -161,7 +156,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             TempFile = _file;
             ReturnBtn.IsEnabled = false;
             ClearBtn.IsEnabled = true;
-        }
+        }*/
 
         private void FileDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -182,7 +177,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 file.Write(TempFile.fileContent, 0, TempFile.fileContent.Length);
             }
         }
-        private void FileUpload_OnDrop(object sender, DragEventArgs e)
+        /*private void FileUpload_OnDrop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
             var openFile = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
@@ -208,7 +203,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             ClearBtn.IsEnabled = true;
             ReturnBtn.IsEnabled = true;
             AdditionalWindow.HideError();
-        }
+        }*/
 
         private void DifficultyBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -272,11 +267,7 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             return ((SpecializationsEmployee)ExecutorBox.SelectedItem)?.idEmployee == _order.idExecutor
                         && DifficultyBox.Text == _order.difficulty.ToString(CultureInfo.InvariantCulture)
                         && PlanDateStartBox.SelectedDate == _order.planDateStart
-                        && PlanDateCompleteBox.SelectedDate == _order.planDateComplete
-                        && (_file.fileContent == TempFile.fileContent
-                            && _file.fileExtension == TempFile.fileExtension
-                            && _file.fileName == TempFile.fileName
-                            && _file.fileSize == TempFile.fileSize);
+                        && PlanDateCompleteBox.SelectedDate == _order.planDateComplete;
         }
 
         private void DateBox_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

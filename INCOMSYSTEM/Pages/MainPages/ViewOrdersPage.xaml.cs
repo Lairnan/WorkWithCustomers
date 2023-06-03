@@ -52,7 +52,9 @@ namespace INCOMSYSTEM.Pages.MainPages
 
         private void ViewOrderMenu_Click(object sender, RoutedEventArgs e)
         {
+            ApplyFilter();
             var order = ((MenuItem)sender).CommandParameter as Orders;
+            order = OrdersList.ItemsSource.Cast<Orders>().First(s => s.id == order.id);
             var addWindow = new AdditionalWindow();
 
             addWindow.MFrame.Navigate(new ViewDetailOrderPage(order));

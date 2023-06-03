@@ -19,7 +19,7 @@ namespace INCOMSYSTEM.Context
         public byte idType { get; set; }
         public string name { get; set; }
         public Nullable<long> idTaskStage { get; set; }
-        public long idFile { get; set; }
+        public Nullable<long> idFile { get; set; }
         public Nullable<System.DateTime> factDateStart { get; set; }
         public Nullable<System.DateTime> factDateComplete { get; set; }
         public string description { get; set; }

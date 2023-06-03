@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Pages.Details;
+using INCOMSYSTEM.Windows;
 
 namespace INCOMSYSTEM.Pages
 {
@@ -24,7 +26,7 @@ namespace INCOMSYSTEM.Pages
             PositionBlock.Text = $"Должность: {usersDetail.Positions.name}";
             PassportBlock.Text = $"Паспорт: {usersDetail.SeriePassport} {usersDetail.NumberPassport}";
             PhoneBlock.Text = $"Номер телефона: {usersDetail.phone}";
-            PhoneBlock.Text = "Номер телефона: " + (usersDetail.phone != null ? usersDetail.phone.ToString() : "Отсутствует");
+            PhoneBlock.Text = "Номер телефона: " + (usersDetail.phone ?? "Отсутствует");
             
             if (usersDetail.idPos == 1) CustomerLegalFormBlock.Text = $"Правовая форма: {usersDetail.Customers.LegalForms.name}";
             else CustomerLegalFormBlock.Visibility = Visibility.Collapsed;
@@ -50,6 +52,7 @@ namespace INCOMSYSTEM.Pages
                         .Include(s => s.Tasks)
                         .Include(s => s.Chats)
                         .Include(s => s.Chats.Employees)
+                        .Include(s => s.HistoryUploaded)
                         .Where(s => s.idCustomer == _usersDetail.idUser || s.idExecutor == _usersDetail.idUser || s.Chats.idManager == _usersDetail.idUser)
                         .ToList();
                 }
@@ -72,6 +75,17 @@ namespace INCOMSYSTEM.Pages
             }
             PopularOrderBlock.Text = "Популярный заказ: " + (order != null ? order.Tasks.name : "Отсутствует");
             MostExpensiveBlock.Text = "Самый дорогой заказ: " + (list.Count > 0 ? list.Max(s => s.price).ToString("#,#", CultureInfo.CurrentCulture) + " руб." : "Отсутствует");
+        }
+        
+        private void ViewOrderMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var order = ((MenuItem)sender).CommandParameter as Orders;
+            var addWindow = new AdditionalWindow();
+
+            addWindow.MFrame.Navigate(new OrderDetailPage(order));
+
+            if (addWindow.ShowDialog() != true) return;
+            RefreshOrders();
         }
         
         private void RefreshOrdersBtn_Click(object sender, RoutedEventArgs e)

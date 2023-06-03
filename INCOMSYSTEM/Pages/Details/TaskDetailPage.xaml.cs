@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
-using Break = Microsoft.Office.Interop.Word.Break;
 
 namespace INCOMSYSTEM.Pages.Details
 {
@@ -105,11 +104,15 @@ namespace INCOMSYSTEM.Pages.Details
             };
             if (openFile.ShowDialog() != true) return;
 
+            var name = openFile.SafeFileName;
+            var ext = name.Split('.').Last();
+            name = name.Remove(name.IndexOf(ext, StringComparison.Ordinal) - 1, ext.Length + 1);
+
             var file = new HistoryUploaded
             {
-                fileName = openFile.SafeFileName,
+                fileName = name,
                 fileContent = File.ReadAllBytes(openFile.FileName),
-                fileExtension = openFile.SafeFileName.Split('.').Last(),
+                fileExtension = ext,
                 fileSize = new FileInfo(openFile.FileName).Length,
                 uploadedBy = MainWindow.AuthUser.idUser
             };

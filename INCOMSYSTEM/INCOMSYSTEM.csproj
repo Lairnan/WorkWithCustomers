@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="BehaviorsFiles\ActualWidthConverter.cs" />
     <Compile Include="BehaviorsFiles\AnyItemsToVisibilityConverter.cs" />
+    <Compile Include="BehaviorsFiles\CountDateConverter.cs" />
     <Compile Include="BehaviorsFiles\Extension.cs" />
     <Compile Include="BehaviorsFiles\NumberInWords.cs" />
     <Compile Include="BehaviorsFiles\ObservableObject.cs" />
@@ -149,8 +150,14 @@
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Details\OrderDetailPage.xaml.cs">
+      <DependentUpon>OrderDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Details\TaskDetailPage.xaml.cs">
       <DependentUpon>TaskDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Details\ViewTaskStagesPage.xaml.cs">
+      <DependentUpon>ViewTaskStagesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPages\ManagerPage.xaml.cs">
       <DependentUpon>ManagerPage.xaml</DependentUpon>
@@ -196,7 +203,9 @@
     <Page Include="Pages\AuthPage.xaml" />
     <Page Include="Pages\ChatListPage.xaml" />
     <Page Include="Pages\ChatPage.xaml" />
+    <Page Include="Pages\Details\OrderDetailPage.xaml" />
     <Page Include="Pages\Details\TaskDetailPage.xaml" />
+    <Page Include="Pages\Details\ViewTaskStagesPage.xaml" />
     <Page Include="Pages\MainPages\ManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

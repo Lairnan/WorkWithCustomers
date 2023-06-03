@@ -95,23 +95,12 @@
                 <controls:InputTextBox x:Name="DifficultyBox" TextChanged="DifficultyBox_TextChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateStartBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
                 <controls:DatePickerEx x:Name="PlanDateCompleteBox" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="DateBox_SelectedDateChanged"/>
-                <Grid Height="100" Drop="FileUpload_OnDrop" AllowDrop="True" x:Name="FileDownloadGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Style="{StaticResource LabelBtn}"
-                            x:Name="FileDownload"
-                            Click="FileDownloadBtn_Click"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            IsEnabled="False"/>
-                    <StackPanel Grid.Column="1">
-                        <Button Content="Загрузить" Click="UploadBtn_Click" x:Name="UploadBtn"/>
-                        <Button Content="Очистить" IsEnabled="False" Click="ClearBtn_Click" x:Name="ClearBtn"/>
-                        <Button Content="Вернуть" IsEnabled="False" Click="ReturnBtn_Click" x:Name="ReturnBtn"/>
-                    </StackPanel>
-                </Grid>
+                <Button Style="{StaticResource LabelBtn}"
+                        x:Name="FileDownload"
+                        Click="FileDownloadBtn_Click"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        IsEnabled="False"/>
             </StackPanel>
         </Grid>
         <StackPanel Grid.Row="2"
