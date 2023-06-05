@@ -24,12 +24,15 @@ namespace INCOMSYSTEM.Pages.Details
             
             using (var db = new INCOMSYSTEMEntities())
             {
-                OrderStagesList.ItemsSource = db.OrderStages
+                var orderStages = db.OrderStages
                     .Include(s => s.TypesStage)
                     .Include(s => s.HistoryUploaded)
                     .Include(s => s.Orders)
                     .Include(s => s.TaskStages)
-                    .Where(s => s.idOrder == order.id).ToList();
+                    .Where(s => s.idOrder == order.id)
+                    .ToList();
+                OrderStagesList.ItemsSource = orderStages;
+                WarningBlock.Visibility = orderStages.Any(s => s.idType == 2) ? Visibility.Visible : Visibility.Collapsed;
             }
             
             InitTextBlock(order);
@@ -39,18 +42,49 @@ namespace INCOMSYSTEM.Pages.Details
         private void InitTextBlock(Orders order)
         {
             DateOrderBlock.Text = $"Дата заказа: {order.dateOrder:dd.MM.yyyy}";
-            ExecutorBlock.Text = "Исполнитель: " + (order.idExecutor == null ? "ожидание" : order.Employees.ToString());
-            ManagerBlock.Text = $"Менеджер: " + (order.Chats.idManager == null ? "ожидание" : order.Chats.Employees.ToString());
+            
+            SetPositionBlock(order);
+            
             NameTaskBlock.Text = order.Tasks.name;
             
-            PlanDateStartBlock.Text = $"Плановая дата начала выполнения: {order.planDateStart:dd.MM.yyyy}";
-            FactDateStartBlock.Text = $"Фактическая дата начала выполнения: {order.factDateStart:dd.MM.yyyy}";
-            PlanDateEndBlock.Text = $"Плановая дата окончания выполнения: {order.planDateComplete:dd.MM.yyyy}";
-            FactDateEndBlock.Text = $"Фактическая дата окончания выполнения: {order.factDateComplete:dd.MM.yyyy}";
+            PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (order.planDateStart == null
+                ? "ожидание"
+                : order.planDateStart.Value.ToString("dd.MM.yyyy"));
+            FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (order.factDateStart == null
+                ? "ожидание"
+                : order.factDateStart.Value.ToString("dd.MM.yyyy"));
+            PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (order.planDateComplete == null 
+                ? "ожидание"
+                : order.planDateComplete.Value.ToString("dd.MM.yyyy"));
+            FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (order.factDateComplete == null 
+                ? "ожидание" 
+                : order.factDateComplete.Value.ToString("dd.MM.yyyy"));
 
             PriceBlock.Text = $"Цена: {order.price:0} рублей";
             DifficultyBlock.Text = $"Сложность: {order.difficulty}x";
             StatusBlock.Text = $"Статус: {order.Statuses.name.ToLower()}";
+        }
+
+        private void SetPositionBlock(Orders order)
+        {
+            switch (MainWindow.AuthUser.idPos)
+            {
+                case 1:
+                    ExecutorBlock.Text = "Исполнитель: " + (order.idExecutor == null ? "ожидание" : order.Employees.ToString());
+                    ManagerBlock.Text = "Менеджер: " + (order.Chats.idManager == null ? "ожидание" : order.Chats.Employees.ToString());
+                    FileGridBlock.AllowDrop = true;
+                    FilePanel.Visibility = Visibility.Visible;
+                    SavePanel.Visibility = Visibility.Visible;
+                    break;
+                case 2:
+                    ExecutorBlock.Text = $"Заказчик: {order.Customers.name}";
+                    ManagerBlock.Text = "Менеджер: " + (order.Chats.idManager == null ? "ожидание" : order.Chats.Employees.ToString());
+                    break;
+                case 3:
+                    ExecutorBlock.Text = $"Заказчик: {order.Customers.name}";
+                    ManagerBlock.Text = "Исполнитель: " + (order.idExecutor == null ? "ожидание" : order.Employees.ToString());
+                    break;
+            }
         }
 
         private void SetFileValues()

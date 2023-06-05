@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:bf="clr-namespace:INCOMSYSTEM.BehaviorsFiles"
       mc:Ignorable="d"
+      Background="DimGray"
       Width="800"
       Height="450">
     <Grid>
@@ -81,10 +82,11 @@
                                Style="{StaticResource TextBlockStyle}"/>
                 </StackPanel>
                 
-                <Grid Width="275"
+                <Grid x:Name="FileGridBlock"
+                      Width="275"
                       HorizontalAlignment="Left"
                       Drop="FileUpload_OnDrop"
-                      AllowDrop="True">
+                      AllowDrop="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
@@ -95,7 +97,7 @@
                             VerticalAlignment="Center"
                             HorizontalContentAlignment="Center"
                             IsEnabled="False"/>
-                    <StackPanel Grid.Column="1">
+                    <StackPanel x:Name="FilePanel" Grid.Column="1" Visibility="Collapsed">
                         <Button Content="Загрузить" Click="UploadBtn_Click"/>
                         <Button Content="Очистить" IsEnabled="False" Click="ClearBtn_Click" x:Name="ClearBtn"/>
                         <Button Content="Вернуть" IsEnabled="False" Click="ReturnBtn_Click" x:Name="ReturnBtn"/>
@@ -106,32 +108,44 @@
             <Grid Grid.Row="2"
                   Grid.Column="1"
                   Margin="10 10 20 20">
-                <Grid.Resources>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource ComboBoxTextBlockStyle}">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="TextAlignment" Value="Center"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="Background" Value="DimGray"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                    </Style>
-                    <Style TargetType="Border">
-                        <Setter Property="Background" Value="DimGray"/>
-                        <Setter Property="BorderBrush" Value="Black"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                    </Style>
-                </Grid.Resources>
                 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <Grid Grid.Row="0">
+                <TextBlock x:Name="WarningBlock"
+                           Style="{StaticResource TextBlockStyle}"
+                           Text="Внеплановые этапы могут повлиять на срок выполнения работы"
+                           TextWrapping="Wrap"
+                           Margin="0 0 0 10"
+                           Foreground="Yellow"
+                           Visibility="Collapsed"
+                           Grid.Row="0"/>
+                
+                <Grid Grid.Row="1">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource ComboBoxTextBlockStyle}">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Style>
+                    </Grid.Resources>
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="175"/>
                         <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="195"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Border Grid.Column="0">
                         <TextBlock Text="Тип этапа"/>
                     </Border>
@@ -139,12 +153,12 @@
                         <TextBlock Text="Название этапа"/>
                     </Border>
                     <Border Grid.Column="2">
-                        <TextBlock Text="Описание"/>
+                        <TextBlock Text="Вложение"/>
                     </Border>
                 </Grid>
                 
                 <ItemsControl x:Name="OrderStagesList"
-                              Grid.Row="1"
+                              Grid.Row="2"
                               Style="{StaticResource ItemsVisible}"
                               BorderThickness="1"
                               BorderBrush="Black">
@@ -172,8 +186,8 @@
                                         
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="175"/>
                                             <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="195"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Grid.RowDefinitions>
@@ -199,7 +213,20 @@
                                             </TextBlock>
                                         </Border>
                                         <Border Grid.Column="2">
-                                            <TextBlock Text="{Binding description}"/>
+                                            <Button Width="100" Click="DownloadFileOrderStageBtn_Click" CommandParameter="{Binding HistoryUploaded}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                        <Setter Property="Content" Value="Скачать"/>
+                                                        <Setter Property="IsEnabled" Value="True"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding idFile}" Value="{x:Null}">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                <Setter Property="Content" Value="Отсутствует"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
                                         </Border>
 
                                         <UniformGrid Grid.Row="1"
@@ -223,7 +250,7 @@
                                                 <TextBlock Text="Дата завершения" FontWeight="Bold"/>
                                             </Border>
                                             <Border>
-                                                <TextBlock Text="Вложение" FontWeight="Bold"/>
+                                                <TextBlock Text="Результат" FontWeight="Bold"/>
                                             </Border>
                                             <Border>
                                                 <TextBlock Text="{Binding factDateStart, StringFormat='{}{0:dd.MM.yyyy}'}"/>
@@ -232,20 +259,7 @@
                                                 <TextBlock Text="{Binding factDateComplete, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                                             </Border>
                                             <Border>
-                                                <Button Width="100" Click="DownloadFileOrderStageBtn_Click" CommandParameter="{Binding HistoryUploaded}">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                            <Setter Property="Content" Value="Скачать"/>
-                                                            <Setter Property="IsEnabled" Value="True"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding idFile}" Value="{x:Null}">
-                                                                    <Setter Property="IsEnabled" Value="False"/>
-                                                                    <Setter Property="Content" Value="Отсутствует"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
-                                                </Button>
+                                                <TextBlock Text="{Binding description}"/>
                                             </Border>
                                         </UniformGrid>
                                     </Grid>
@@ -256,9 +270,11 @@
                 </ItemsControl>
             </Grid>
         </Grid>
-        <StackPanel HorizontalAlignment="Center"
+        <StackPanel x:Name="SavePanel"
+                    HorizontalAlignment="Center"
                     Margin="10"
                     Orientation="Horizontal"
+                    Visibility="Collapsed"
                     Grid.Row="1">
             <Button Content="Сохранить" Click="SaveBtn_Click"/>
             <Button Content="Отменить" Click="CancelBtn_Click"/>

@@ -175,22 +175,10 @@
                                               Style="{StaticResource ClearCheckBoxTemplate}">
                                         <CheckBox.ContextMenu>
                                             <ContextMenu>
-                                                <ContextMenu.Style>
-                                                    <Style TargetType="ContextMenu" BasedOn="{StaticResource {x:Type ContextMenu}}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser},
-                                                                                                        Path=idPos}" Value="1">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ContextMenu.Style>
                                                 <MenuItem Header="Просмотреть заказ"
                                                           Click="ViewOrderMenu_Click"
                                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                                            Path=DataContext}">
-                                                </MenuItem>
+                                                                            Path=DataContext}"/>
                                             </ContextMenu>
                                         </CheckBox.ContextMenu>
                                         <CheckBox.Content>

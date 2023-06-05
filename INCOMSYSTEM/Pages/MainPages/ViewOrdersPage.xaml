@@ -108,6 +108,11 @@
                                                   Visibility="{Binding CanViewDetail}"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                             Path=DataContext}"/>
+                                        <MenuItem Header="Редактировать заказ"
+                                                  Click="EditOrderMenu_Click"
+                                                  Visibility="{Binding CanViewDetail}"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                                            Path=DataContext}"/>
                                         <MenuItem Header="Перейти к чату"
                                                   Click="OpenChatOrderMenu_Click"
                                                   Visibility="{Binding CanJoinChat}"

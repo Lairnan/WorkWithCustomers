@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Context;
+using INCOMSYSTEM.Controls;
+using INCOMSYSTEM.Pages.Details;
 using INCOMSYSTEM.Pages.MainPages.Views;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
@@ -49,8 +51,19 @@ namespace INCOMSYSTEM.Pages.MainPages
                     .ToList();
             }
         }
-
+        
         private void ViewOrderMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var order = ((MenuItem)sender).CommandParameter as Orders;
+            var addWindow = new AdditionalWindow();
+
+            addWindow.MFrame.Navigate(new OrderDetailPage(order));
+
+            if (addWindow.ShowDialog() != true) return;
+            ApplyFilter();
+        }
+
+        private void EditOrderMenu_Click(object sender, RoutedEventArgs e)
         {
             ApplyFilter();
             var order = ((MenuItem)sender).CommandParameter as Orders;
@@ -91,16 +104,85 @@ namespace INCOMSYSTEM.Pages.MainPages
         private void FormAgreementOrderMenu_Click(object sender, RoutedEventArgs e)
         {
             var order = ((MenuItem)sender).CommandParameter as Orders;
+            
+            // Создание приложения Word
+            var wApp = new Word.Application();
+
+            // Путь к файлу
+            var pathToFile = Directory.GetCurrentDirectory() + @"\Resources\AgreementTemplate.docx";
+
+            OpenDocument(wApp, pathToFile, order);
+        }
+
+        private void OpenDocument(Word.Application wApp, string pathToFile, Orders order)
+        {
+            Word.Document doc = null;
+
+            try
+            {
+                doc = wApp.Documents.Open(pathToFile);
+
+                var boxResult = PrintSaveDialogBox.Show("Выберите действие:");
+                HandleBoxResult(boxResult, doc, wApp, order);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при работе с документом: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (doc != null)
+                {
+                    doc.Saved = true;
+                    doc.Close(SaveChanges: false);
+                }
+
+                wApp.Quit(SaveChanges: false);
+            }
+        }
+        
+        private static bool CheckPrinterExistence(Word.Application wApp)
+        {
+            if (wApp.ActivePrinter != null) return true;
+
+            MessageBox.Show("На компьютере не найдено ни одного установленного принтера.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
+
+        }
+ 
+        private void HandleBoxResult(PrintSaveDialogBoxResult boxResult, Word.Document doc, Word.Application wApp, Orders order)
+        {
+            switch (boxResult)
+            {
+                case PrintSaveDialogBoxResult.Print:
+                    if (!CheckPrinterExistence(wApp)) return;
+                    
+                    FormAgreement(ref doc, order);
+                    doc.PrintPreview();
+                    break;
+                case PrintSaveDialogBoxResult.Save:
+                    HandleSaveDialog(doc, order);
+                    break;
+                case PrintSaveDialogBoxResult.Cancel:
+                case PrintSaveDialogBoxResult.None:
+                default:
+                    return;
+            }
+        }
+
+        private static void HandleSaveDialog(Word.Document doc, Orders order)
+        {
             var saveFileDialog = new SaveFileDialog
             {
                 FileName = $"Договор №{order.id}",
-                Filter = "Documents | *.docx, *.doc",
-                DefaultExt = ".docx",
+                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc",
+                DefaultExt = "docx",
                 OverwritePrompt = true
             };
             if (saveFileDialog.ShowDialog() != true) return;
-
-            if (!FormAgreement(saveFileDialog.FileName, order)) return;
+            
+            FormAgreement(ref doc, order);
+            doc.SaveAs2(saveFileDialog.FileName);
 
             if (MessageBox.Show("Договор успешно сохранён. Открыть?", "Успешное сохранение", MessageBoxButton.YesNo,
                     MessageBoxImage.Question)
@@ -109,80 +191,61 @@ namespace INCOMSYSTEM.Pages.MainPages
             Process.Start(saveFileDialog.FileName);
         }
 
-        private static bool FormAgreement(string path, Orders order)
+        private static void FormAgreement(ref Word.Document doc, Orders order)
         {
-            var wApp = new Word.Application();
-            var doc = wApp.Documents.Open(
-                Directory.GetCurrentDirectory() + @"\Resources\AgreementTemplate.docx");
-            while (true)
+            try
             {
-                try
-                {
-                    doc.ReplaceWordText("{dayOrder}", order.dateOrder.ToString("dd"));
-                    doc.ReplaceWordText("{monthOrder}", order.dateOrder.ToString("MMMM", CultureInfo.CurrentCulture));
-                    doc.ReplaceWordText("{yearOrder}", order.dateOrder.ToString("yy"));
+                doc.ReplaceWordText("{dayOrder}", order.dateOrder.ToString("dd"));
+                doc.ReplaceWordText("{monthOrder}", order.dateOrder.ToString("MMMM", CultureInfo.CurrentCulture));
+                doc.ReplaceWordText("{yearOrder}", order.dateOrder.ToString("yy"));
 
-                    doc.ReplaceWordText("{customerName}", order.Customers.name);
-                    var employeePatronymic = order.Employees.patronymic != null
-                        ? $" {order.Employees.patronymic}"
-                        : string.Empty;
-                    doc.ReplaceWordText("{executorName}",
-                        $"{order.Employees.surname} {order.Employees.name}{employeePatronymic}");
+                doc.ReplaceWordText("{customerName}", order.Customers.name);
+                var employeePatronymic = order.Employees.patronymic != null
+                    ? $" {order.Employees.patronymic}"
+                    : string.Empty;
+                doc.ReplaceWordText("{executorName}",
+                    $"{order.Employees.surname} {order.Employees.name}{employeePatronymic}");
 
-                    doc.ReplaceWordText("{passportCustomer}", order.Customers.UsersDetail.passport);
-                    doc.ReplaceWordText("{passportExecutor}", order.Employees.UsersDetail.passport);
+                doc.ReplaceWordText("{passportCustomer}", order.Customers.UsersDetail.passport);
+                doc.ReplaceWordText("{passportExecutor}", order.Employees.UsersDetail.passport);
 
-                    doc.ReplaceWordText("{taskName}", order.Tasks.name);
+                doc.ReplaceWordText("{taskName}", order.Tasks.name);
 
-                    doc.ReplaceWordText("{planDayStart}", order.planDateStart.Value.ToString("dd"));
-                    doc.ReplaceWordText("{planMonthStart}",
-                        order.planDateStart.Value.ToString("MMMM", CultureInfo.CurrentCulture));
-                    doc.ReplaceWordText("{planYearStart}", order.planDateStart.Value.ToString("yy"));
+                doc.ReplaceWordText("{planDayStart}", order.planDateStart.Value.ToString("dd"));
+                doc.ReplaceWordText("{planMonthStart}", order.planDateStart.Value.ToString("MMMM", CultureInfo.CurrentCulture));
+                doc.ReplaceWordText("{planYearStart}", order.planDateStart.Value.ToString("yy"));
 
-                    doc.ReplaceWordText("{planDayComplete}", order.planDateComplete.Value.ToString("dd"));
-                    doc.ReplaceWordText("{planMonthComplete}",
-                        order.planDateComplete.Value.ToString("MMMM", CultureInfo.CurrentCulture));
-                    doc.ReplaceWordText("{planYearComplete}", order.planDateComplete.Value.ToString("yy"));
+                doc.ReplaceWordText("{planDayComplete}", order.planDateComplete.Value.ToString("dd"));
+                doc.ReplaceWordText("{planMonthComplete}", order.planDateComplete.Value.ToString("MMMM", CultureInfo.CurrentCulture));
+                doc.ReplaceWordText("{planYearComplete}", order.planDateComplete.Value.ToString("yy"));
 
-                    doc.ReplaceWordText("{supportPeriod}", order.Tasks.supportPeriod);
-                    doc.ReplaceWordText("{taskPrice}", (int)order.Tasks.newPrice);
-                    doc.ReplaceWordText("{taskPriceInWords}", ((int)order.Tasks.newPrice).GetNumberInWords().Trim());
+                doc.ReplaceWordText("{supportPeriod}", order.Tasks.supportPeriod);
+                doc.ReplaceWordText("{taskPrice}", (int)order.Tasks.newPrice);
+                doc.ReplaceWordText("{taskPriceInWords}", ((int)order.Tasks.newPrice).GetNumberInWords().Trim());
 
-                    var taskDifficultyPrice = order.Tasks.newPrice * (decimal)order.difficulty;
-                    doc.ReplaceWordText("{taskDifficultyPrice}", (int)taskDifficultyPrice);
-                    doc.ReplaceWordText("{taskDifficultyPriceInWords}",
-                        ((int)taskDifficultyPrice).GetNumberInWords().Trim());
+                var taskDifficultyPrice = order.Tasks.newPrice * (decimal)order.difficulty - order.Tasks.newPrice;
+                doc.ReplaceWordText("{taskDifficultyPrice}", (int)taskDifficultyPrice);
+                doc.ReplaceWordText("{taskDifficultyPriceInWords}", ((int)taskDifficultyPrice).GetNumberInWords().Trim());
 
-                    doc.ReplaceWordText("{orderPrice}", (int)order.price);
-                    doc.ReplaceWordText("{orderPriceInWords}", ((int)order.price).GetNumberInWords().Trim());
+                doc.ReplaceWordText("{orderPrice}", (int)order.price);
+                doc.ReplaceWordText("{orderPriceInWords}", ((int)order.price).GetNumberInWords().Trim());
 
-                    doc.ReplaceWordText("{customerPhone}", order.Customers.UsersDetail.phone ?? "Отсутствует");
-                    doc.ReplaceWordText("{executorPhone}", order.Employees.UsersDetail.phone ?? "Отсутствует");
+                doc.ReplaceWordText("{customerPhone}", order.Customers.UsersDetail.phone ?? "Отсутствует");
+                doc.ReplaceWordText("{executorPhone}", order.Employees.UsersDetail.phone ?? "Отсутствует");
 
-                    doc.ReplaceWordText("{customerSeriePassport}", order.Customers.UsersDetail.SeriePassport);
-                    doc.ReplaceWordText("{customerNumberPassport}", order.Customers.UsersDetail.NumberPassport);
-                    doc.ReplaceWordText("{executorSeriePassport}", order.Employees.UsersDetail.SeriePassport);
-                    doc.ReplaceWordText("{executorNumberPassport}", order.Employees.UsersDetail.NumberPassport);
+                doc.ReplaceWordText("{customerSeriePassport}", order.Customers.UsersDetail.SeriePassport);
+                doc.ReplaceWordText("{customerNumberPassport}", order.Customers.UsersDetail.NumberPassport);
+                doc.ReplaceWordText("{executorSeriePassport}", order.Employees.UsersDetail.SeriePassport);
+                doc.ReplaceWordText("{executorNumberPassport}", order.Employees.UsersDetail.NumberPassport);
 
-                    doc.ReplaceWordText("{customerAddress}", order.Customers.UsersDetail.address);
-                    doc.ReplaceWordText("{executorAddress}", order.Employees.UsersDetail.address);
-                    break;
-                }
-                catch
-                {
-                    var result = MessageBox.Show("Для сохранения записи, необходимо закрыть Word документ", "Ошибка",
-                        MessageBoxButton.YesNo, MessageBoxImage.Error);
-                    if (result != MessageBoxResult.No) continue;
-                    doc.Close();
-                    wApp.Quit();
-                    return false;
-                }
+                doc.ReplaceWordText("{customerAddress}", order.Customers.UsersDetail.address);
+                doc.ReplaceWordText("{executorAddress}", order.Employees.UsersDetail.address);
             }
-
-            doc.SaveAs(path);
-            doc.Close();
-            wApp.Quit();
-            return true;
+            catch
+            {
+                MessageBox.Show("Для сохранения записи, необходимо закрыть Word документ", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void SetFactDateStartMenu_Click(object sender, RoutedEventArgs e)
