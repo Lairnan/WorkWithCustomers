@@ -290,6 +290,7 @@
     <AdditionalFiles Include="Resources\AgreementTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <Resource Include="Images\historyOrders.png" />
     <Content Include="Resources\ReportTemplate.docx" />
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\profile.png" />

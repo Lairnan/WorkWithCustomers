@@ -8,40 +8,31 @@
       mc:Ignorable="d">
 
     <Page.Resources>
-        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}" />
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
     </Page.Resources>
 
-    <Grid HorizontalAlignment="Center"
-          VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Border BorderBrush="White"
-                BorderThickness="0 0 1 0"
-                Margin="5 0" />
-        <StackPanel Margin="10 0">
-            <Button Style="{StaticResource SideBarButton}">
+    <TabControl TabStripPlacement="Left"
+                Background="Transparent"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="30 15">
+        <TabItem Background="DimGray">
+            <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Width="32"
                            Height="32"
                            Source="../Images/profile.png" />
                     <TextBlock VerticalAlignment="Center"
                                Text="Основное"
-                               Margin="5 0 0 0" />
+                               Margin="5 0 0 0"/>
                 </StackPanel>
-            </Button>
-        </StackPanel>
-
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="200" />
-            </Grid.RowDefinitions>
-
+            </TabItem.Header>
             <Grid Margin="0 0 0 15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
@@ -52,21 +43,30 @@
                     <TextBlock x:Name="CustomerLegalFormBlock" />
                     <TextBlock x:Name="AddressBlock" />
                 </StackPanel>
-                <Border BorderBrush="White"
-                        BorderThickness="0 0 5 0" />
-                <StackPanel Grid.Column="1"
-                            Margin="5 0">
+                <Border Grid.Column="1"
+                        BorderBrush="White"
+                        BorderThickness="0 0 5 0"
+                        Margin="5 0"/>
+                <StackPanel Grid.Column="2">
                     <TextBlock x:Name="DateStart" />
-                    <TextBlock
-                        Text="{Binding ElementName=OrdersList, Path=Items.Count, StringFormat='{}Всего заказов: {0}'}" />
+                    <TextBlock Text="{Binding ElementName=OrdersList, Path=Items.Count, StringFormat='{}Всего заказов: {0}'}" />
                     <TextBlock x:Name="PopularOrderBlock" />
                     <TextBlock x:Name="MostExpensiveBlock" />
                 </StackPanel>
             </Grid>
-
-            <ScrollViewer Grid.Row="1"
-                          Grid.ColumnSpan="2"
-                          VerticalScrollBarVisibility="Disabled"
+        </TabItem>
+        <TabItem Background="DimGray">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="32"
+                           Height="32"
+                           Source="../Images/historyOrders.png" />
+                    <TextBlock VerticalAlignment="Center"
+                               Text="История"
+                               Margin="5 0 0 0"/>
+                </StackPanel>
+            </TabItem.Header>
+            <ScrollViewer VerticalScrollBarVisibility="Disabled"
                           HorizontalScrollBarVisibility="Auto">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -326,6 +326,6 @@
                     </Grid>
                 </Grid>
             </ScrollViewer>
-        </Grid>
-    </Grid>
+        </TabItem>
+    </TabControl>
 </Page>
