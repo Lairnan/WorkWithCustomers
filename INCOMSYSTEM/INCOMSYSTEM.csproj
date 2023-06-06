@@ -155,6 +155,9 @@
     <Compile Include="Pages\Details\OrderDetailPage.xaml.cs">
       <DependentUpon>OrderDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Details\OrderStagePage.xaml.cs">
+      <DependentUpon>OrderStagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Details\ResultStagePage.xaml.cs">
       <DependentUpon>ResultStagePage.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,7 @@
     <Page Include="Pages\ChatListPage.xaml" />
     <Page Include="Pages\ChatPage.xaml" />
     <Page Include="Pages\Details\OrderDetailPage.xaml" />
+    <Page Include="Pages\Details\OrderStagePage.xaml" />
     <Page Include="Pages\Details\ResultStagePage.xaml" />
     <Page Include="Pages\Details\TaskDetailPage.xaml" />
     <Page Include="Pages\Details\ViewTaskStagesPage.xaml" />

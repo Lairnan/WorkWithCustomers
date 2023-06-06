@@ -122,8 +122,9 @@ namespace INCOMSYSTEM.Pages.MainPages
             {
                 doc = wApp.Documents.Open(pathToFile);
 
-                var boxResult = PrintSaveDialogBox.Show("Выберите действие:");
-                HandleBoxResult(boxResult, doc, wApp, order);
+                HandleSaveDialog(doc, order);
+                // var boxResult = PrintSaveDialogBox.Show("Выберите действие:");
+                // HandleBoxResult(boxResult, doc, wApp, order);
             }
             catch (Exception ex)
             {
@@ -175,7 +176,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             var saveFileDialog = new SaveFileDialog
             {
                 FileName = $"Договор №{order.id}",
-                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc",
+                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc|Portable Document|*.pdf",
                 DefaultExt = "docx",
                 OverwritePrompt = true
             };
@@ -246,41 +247,6 @@ namespace INCOMSYSTEM.Pages.MainPages
                 MessageBox.Show("Для сохранения записи, необходимо закрыть Word документ", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void SetFactDateStartMenu_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Установить текущую дату начала?", "Подтверждение", MessageBoxButton.YesNo) !=
-                MessageBoxResult.Yes) return;
-
-            var order = ((MenuItem)sender).CommandParameter as Orders;
-
-            using (var db = new INCOMSYSTEMEntities())
-            {
-                var orderDb = db.Orders.First(s => s.id == order.id);
-                orderDb.factDateStart = DateTime.Now;
-                orderDb.idStatus = 3;
-                db.SaveChanges();
-            }
-
-            ApplyFilter();
-        }
-
-        private void SetFactDateCompleteMenu_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Установить текущую дату завершения?", "Подтверждение", MessageBoxButton.YesNo) !=
-                MessageBoxResult.Yes) return;
-            var order = ((MenuItem)sender).CommandParameter as Orders;
-
-            using (var db = new INCOMSYSTEMEntities())
-            {
-                var orderDb = db.Orders.First(s => s.id == order.id);
-                orderDb.factDateComplete = DateTime.Now;
-                orderDb.idStatus = 4;
-                db.SaveChanges();
-            }
-
-            ApplyFilter();
         }
     }
 }

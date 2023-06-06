@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
@@ -53,6 +54,7 @@ namespace INCOMSYSTEM.Pages.Details
             else
             {
                 FileDownload.Content = $"{_file.fileName}.{_file.fileExtension}";
+                FileSizeNameBlock.Text = _file.fileSize.ConvertFileSizeToString();
                 FileDownload.IsEnabled = true;
                 TempFile = _file;
                 ClearBtn.IsEnabled = true;
@@ -90,16 +92,16 @@ namespace INCOMSYSTEM.Pages.Details
                 FileDownload.IsEnabled = value != null;
                 _tempFile = value;
                 FileDownload.Content = value == null ? string.Empty : $"{value.fileName}.{value.fileExtension}";
+                FileSizeNameBlock.Text = value == null ? string.Empty : value.fileSize.ConvertFileSizeToString();
             }
         }
-
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
             var openFile = new OpenFileDialog
             {
                 Title = "Загрузка файла",
-                Filter = "Document | *.docx; *.doc | Portable Document | *.pdf",
+                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc|Portable Document|*.pdf",
                 DefaultExt = ".docx"
             };
             if (openFile.ShowDialog() != true) return;

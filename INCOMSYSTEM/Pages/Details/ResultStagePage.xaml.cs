@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 
@@ -14,17 +15,19 @@ namespace INCOMSYSTEM.Pages.Details
         private readonly string _resultStage;
         public string ResultStage { get; private set; }
         
-        public ResultStagePage(OrderStages orderStages)
+        public ResultStagePage()
         {
-            _resultStage = orderStages.description;
-            ResultStage = orderStages.description;
+            _resultStage = null;
+            ResultStage = null;
             InitializeComponent();
 
-            if (!string.IsNullOrEmpty(ResultStage))
-            {
-                ItemList.ItemsSource = SplitStringToObservableCollection(ResultStage);
-            }
+            ItemList.ItemsSource = new ObservableCollection<string>();
 
+            InitPanelAndEvents();
+        }
+
+        private void InitPanelAndEvents()
+        {
             if (MainWindow.AuthUser == null || MainWindow.AuthUser.idPos != 2)
             {
                 EditPanel.Visibility = Visibility.Collapsed;
@@ -32,12 +35,29 @@ namespace INCOMSYSTEM.Pages.Details
                 return;
             }
 
-            KeyDown += (s, e) => { if (e.Key == Key.Enter) AddButton_Click(s, e); };
+            KeyDown += (s, e) =>
+            {
+                if (e.Key == Key.Enter) AddButton_Click(s, e);
+            };
             this.PreviewMouseDown += (s, e) =>
             {
                 if (!NewItemTextBox.IsMouseOver)
                     NewItemTextBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
             };
+        }
+
+        public ResultStagePage(string description)
+        {
+            _resultStage = description;
+            ResultStage = description;
+            InitializeComponent();
+
+            if (!string.IsNullOrEmpty(ResultStage))
+            {
+                ItemList.ItemsSource = ResultStage.SplitStringToObservableCollection();
+            }
+
+            InitPanelAndEvents();
         }
         
         private int _selectedItemIndex = -1;
@@ -117,16 +137,6 @@ namespace INCOMSYSTEM.Pages.Details
             var wnd = Window.GetWindow(this);
             wnd.DialogResult = false;
             wnd.Close();
-        }
-        
-        private ObservableCollection<string> SplitStringToObservableCollection(string text)
-        {
-            var items = new ObservableCollection<string>();
-            if (string.IsNullOrEmpty(text)) return items;
-            var arr = text.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var item in arr) items.Add(item.Trim());
-            
-            return items;
         }
     }
 }

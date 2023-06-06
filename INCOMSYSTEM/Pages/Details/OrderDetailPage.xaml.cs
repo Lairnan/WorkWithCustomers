@@ -53,17 +53,13 @@ namespace INCOMSYSTEM.Pages.Details
             NameTaskBlock.Text = order.Tasks.name;
             
             PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (order.planDateStart == null
-                ? "ожидание"
-                : order.planDateStart.Value.ToString("dd.MM.yyyy"));
+                ? "ожидание" : order.planDateStart.Value.ToString("dd.MM.yyyy"));
             FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (order.factDateStart == null
-                ? "ожидание"
-                : order.factDateStart.Value.ToString("dd.MM.yyyy"));
+                ? "ожидание" : order.factDateStart.Value.ToString("dd.MM.yyyy"));
             PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (order.planDateComplete == null 
-                ? "ожидание"
-                : order.planDateComplete.Value.ToString("dd.MM.yyyy"));
+                ? "ожидание" : order.planDateComplete.Value.ToString("dd.MM.yyyy"));
             FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (order.factDateComplete == null 
-                ? "ожидание" 
-                : order.factDateComplete.Value.ToString("dd.MM.yyyy"));
+                ? "ожидание" : order.factDateComplete.Value.ToString("dd.MM.yyyy"));
 
             PriceBlock.Text = $"Цена: {order.price:0} рублей";
             DifficultyBlock.Text = $"Сложность: {order.difficulty}x";
@@ -133,7 +129,7 @@ namespace INCOMSYSTEM.Pages.Details
             var openFile = new OpenFileDialog
             {
                 Title = "Загрузка файла",
-                Filter = "Document | *.docx; *.doc | Portable Document | *.pdf",
+                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc|Portable Document|*.pdf",
                 DefaultExt = ".docx"
             };
             if (openFile.ShowDialog() != true) return;
@@ -306,7 +302,7 @@ namespace INCOMSYSTEM.Pages.Details
             var orderStage = (OrderStages)((MenuItem)sender).CommandParameter;
             
             var addWindow = new AdditionalWindow();
-            var resultStagePage = new ResultStagePage(orderStage);
+            var resultStagePage = new ResultStagePage(orderStage.description);
             addWindow.MFrame.Navigate(resultStagePage);
             if(addWindow.ShowDialog() != true || orderStage.description == resultStagePage.ResultStage) return;
 
@@ -316,6 +312,27 @@ namespace INCOMSYSTEM.Pages.Details
                 orderStageDb.description = resultStagePage.ResultStage;
                 db.SaveChanges();
             }
+
+            RefreshOrderStages();
+        }
+
+        private void EditOrderStageMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var orderStage = (OrderStages)((MenuItem)sender).CommandParameter;
+            var addWindow = new AdditionalWindow();
+            var orderStagePage = new OrderStagePage(orderStage);
+            addWindow.MFrame.Navigate(orderStagePage);
+            if (addWindow.ShowDialog() != true) return;
+
+            RefreshOrderStages();
+        }
+
+        private void AddOrderStageMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new AdditionalWindow();
+            var orderStagePage = new OrderStagePage(_order);
+            addWindow.MFrame.Navigate(orderStagePage);
+            if (addWindow.ShowDialog() != true) return;
 
             RefreshOrderStages();
         }

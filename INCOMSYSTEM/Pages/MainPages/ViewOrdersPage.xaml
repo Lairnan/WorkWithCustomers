@@ -123,16 +123,6 @@
                                                   Visibility="{Binding CanFormAgreement}"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
                                                                             Path=DataContext}"/>
-                                        <MenuItem Header="Установить фактическую дату начала"
-                                                  Click="SetFactDateStartMenu_Click"
-                                                  Visibility="{Binding CanSetFactStartDate}"
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                                            Path=DataContext}"/>
-                                        <MenuItem Header="Установить фактическую дату завершения"
-                                                  Click="SetFactDateCompleteMenu_Click"
-                                                  Visibility="{Binding CanSetFactCompleteDate}"
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                                            Path=DataContext}"/>
                                     </ContextMenu>
                                 </CheckBox.ContextMenu>
                                 <CheckBox.Content>

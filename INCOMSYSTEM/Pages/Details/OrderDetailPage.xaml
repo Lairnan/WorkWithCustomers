@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:bf="clr-namespace:INCOMSYSTEM.BehaviorsFiles"
+      xmlns:wnd="clr-namespace:INCOMSYSTEM.Windows"
       mc:Ignorable="d"
-      Background="DimGray"
       Width="800"
       Height="450">
     <Grid>
@@ -113,6 +113,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <TextBlock x:Name="WarningBlock"
@@ -162,6 +163,7 @@
                               Style="{StaticResource ItemsVisible}"
                               BorderThickness="1"
                               BorderBrush="Black">
+                    
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox x:Name="OrderGrid"
@@ -174,6 +176,22 @@
                                                   Click="ViewResultStageMenu_Click"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource Self},
                                                                     Path=DataContext}"/>
+                                        
+                                        <MenuItem Header="Редактировать этап"
+                                                  Click="EditOrderStageMenu_Click"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Self},
+                                                                    Path=DataContext}">
+                                            <MenuItem.Style>
+                                                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}" Value="2">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </MenuItem.Style>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </CheckBox.ContextMenu>
                                 
@@ -274,6 +292,22 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+            
+                <Button Grid.Row="3"
+                        Content="Добавить этап"
+                        HorizontalAlignment="Right"
+                        Click="AddOrderStageMenu_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}" Value="2">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
         </Grid>
         <StackPanel x:Name="SavePanel"

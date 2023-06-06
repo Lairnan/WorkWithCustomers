@@ -34,7 +34,7 @@
             <TextBlock Text="Введите скидку"/>
             <TextBlock Text="Введите преиод поддержки (дни)" Height="40"/>
             <TextBlock Text="Введите примерное время выполнения (дни)" Height="70"/>
-            <TextBlock Text="Добавьте вложение" Height="100"/>
+            <TextBlock Text="Добавьте вложение" Height="125"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="5 0">
             <StackPanel.Resources>
@@ -59,21 +59,34 @@
             <controls:InputTextBox PlaceHolder="Скидка" x:Name="DiscountBox"/>
             <controls:InputTextBox PlaceHolder="Период поддержки" x:Name="SupportPeriod" Margin="0 10 0 0"/>
             <controls:InputTextBox PlaceHolder="Примерное время выполнения" x:Name="ApproxTimeBox" Margin="0 15 0 15"/>
-            <Grid Height="100" Drop="FileUpload_OnDrop" AllowDrop="True">
+            <Grid Height="125" Drop="FileUpload_OnDrop" AllowDrop="True" VerticalAlignment="Center" Margin="0 15 0 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource LabelBtn}"
-                        x:Name="FileDownload"
-                        Click="FileDownloadBtn_Click"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        IsEnabled="False"/>
+                <StackPanel VerticalAlignment="Center"
+                            Margin="5 0">
+                    <Button Style="{StaticResource LabelBtn}"
+                            x:Name="FileDownload"
+                            Click="FileDownloadBtn_Click"
+                            HorizontalContentAlignment="Center"
+                            IsEnabled="False"/>
+                    <TextBlock x:Name="FileSizeNameBlock"
+                               HorizontalAlignment="Center"
+                               Margin="0 5"/>
+                </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <Button Content="Загрузить" Click="UploadBtn_Click"/>
-                    <Button Content="Очистить" IsEnabled="False" Click="ClearBtn_Click" x:Name="ClearBtn"/>
-                    <Button Content="Вернуть" IsEnabled="False" Click="ReturnBtn_Click" x:Name="ReturnBtn"/>
+                    <Button Content="Загрузить"
+                            Click="UploadBtn_Click"/>
+                    <Button Content="Очистить"
+                            IsEnabled="False"
+                            Click="ClearBtn_Click"
+                            x:Name="ClearBtn"
+                            Margin="3 5"/>
+                    <Button Content="Вернуть"
+                            IsEnabled="False"
+                            Click="ReturnBtn_Click"
+                            x:Name="ReturnBtn"/>
                 </StackPanel>
             </Grid>
         </StackPanel>

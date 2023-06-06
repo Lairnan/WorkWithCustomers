@@ -1,4 +1,7 @@
-﻿using Word = Microsoft.Office.Interop.Word;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace INCOMSYSTEM.BehaviorsFiles
 {
@@ -41,6 +44,16 @@ namespace INCOMSYSTEM.BehaviorsFiles
             }
 
             return $"{(fileSizeInBytes == 0 ? "0" : fileSizeInBytes.ToString("#.#"))} {sizes[order]}";
+        }
+        
+        public static IEnumerable<string> SplitStringToObservableCollection(this string text)
+        {
+            var items = new ObservableCollection<string>();
+            if (string.IsNullOrEmpty(text)) return items;
+            var arr = text.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in arr) items.Add(item.Trim());
+            
+            return items;
         }
     }
 }
