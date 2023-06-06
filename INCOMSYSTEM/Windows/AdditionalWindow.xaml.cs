@@ -22,7 +22,7 @@ namespace INCOMSYSTEM.Windows
             var page = ((Frame)sender).Content as Page;
             this.Title = page?.Title;
             this.Width = page.Width + 50d;
-            this.Height = page.Height + 50d;
+            this.Height = page.Height + 100d;
         }
 
         public static void ShowError(string error)

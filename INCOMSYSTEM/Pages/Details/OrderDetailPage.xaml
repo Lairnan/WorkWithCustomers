@@ -164,7 +164,19 @@
                               BorderBrush="Black">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="OrderGrid" Margin="0 0 0 10" Style="{StaticResource ClearCheckBoxTemplate}">
+                            <CheckBox x:Name="OrderGrid"
+                                      Margin="0 0 0 10"
+                                      Style="{StaticResource ClearCheckBoxTemplate}">
+                                
+                                <CheckBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Посмотреть результат"
+                                                  Click="ViewResultStageMenu_Click"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Self},
+                                                                    Path=DataContext}"/>
+                                    </ContextMenu>
+                                </CheckBox.ContextMenu>
+                                
                                 <CheckBox.Content>
                                     <Grid>
                                         <Grid.Resources>
@@ -232,7 +244,7 @@
                                         <UniformGrid Grid.Row="1"
                                                      Grid.ColumnSpan="3"
                                                      Grid.Column="0"
-                                                     Columns="3">
+                                                     Columns="2">
                                             <UniformGrid.Style>
                                                 <Style TargetType="UniformGrid">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -250,16 +262,10 @@
                                                 <TextBlock Text="Дата завершения" FontWeight="Bold"/>
                                             </Border>
                                             <Border>
-                                                <TextBlock Text="Результат" FontWeight="Bold"/>
-                                            </Border>
-                                            <Border>
                                                 <TextBlock Text="{Binding factDateStart, StringFormat='{}{0:dd.MM.yyyy}'}"/>
                                             </Border>
                                             <Border>
                                                 <TextBlock Text="{Binding factDateComplete, StringFormat='{}{0:dd.MM.yyyy}'}"/>
-                                            </Border>
-                                            <Border>
-                                                <TextBlock Text="{Binding description}"/>
                                             </Border>
                                         </UniformGrid>
                                     </Grid>

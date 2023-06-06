@@ -22,6 +22,14 @@ namespace INCOMSYSTEM.Pages.Details
 
             _file = order.HistoryUploaded;
             
+            RefreshOrderStages();
+            
+            InitTextBlock(order);
+            SetFileValues();
+        }
+
+        private void RefreshOrderStages()
+        {
             using (var db = new INCOMSYSTEMEntities())
             {
                 var orderStages = db.OrderStages
@@ -29,14 +37,11 @@ namespace INCOMSYSTEM.Pages.Details
                     .Include(s => s.HistoryUploaded)
                     .Include(s => s.Orders)
                     .Include(s => s.TaskStages)
-                    .Where(s => s.idOrder == order.id)
+                    .Where(s => s.idOrder == _order.id)
                     .ToList();
                 OrderStagesList.ItemsSource = orderStages;
                 WarningBlock.Visibility = orderStages.Any(s => s.idType == 2) ? Visibility.Visible : Visibility.Collapsed;
             }
-            
-            InitTextBlock(order);
-            SetFileValues();
         }
 
         private void InitTextBlock(Orders order)
@@ -294,6 +299,25 @@ namespace INCOMSYSTEM.Pages.Details
             var addWindow = new AdditionalWindow();
             addWindow.MFrame.Navigate(new ViewTaskStagesPage(_order.Tasks));
             addWindow.ShowDialog();
+        }
+
+        private void ViewResultStageMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var orderStage = (OrderStages)((MenuItem)sender).CommandParameter;
+            
+            var addWindow = new AdditionalWindow();
+            var resultStagePage = new ResultStagePage(orderStage);
+            addWindow.MFrame.Navigate(resultStagePage);
+            if(addWindow.ShowDialog() != true || orderStage.description == resultStagePage.ResultStage) return;
+
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var orderStageDb = db.OrderStages.First(s => s.id == orderStage.id);
+                orderStageDb.description = resultStagePage.ResultStage;
+                db.SaveChanges();
+            }
+
+            RefreshOrderStages();
         }
     }
 }

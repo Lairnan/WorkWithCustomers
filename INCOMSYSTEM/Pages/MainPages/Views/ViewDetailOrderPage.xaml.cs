@@ -120,44 +120,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             }
         }
 
-        /*private void UploadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var openFile = new OpenFileDialog
-            {
-                Title = "Загрузка файла",
-                Filter = "Document | *.docx; *.doc | Portable Document | *.pdf",
-                DefaultExt = ".docx"
-            };
-            if (openFile.ShowDialog() != true) return;
-
-            var file = new HistoryUploaded
-            {
-                fileName = openFile.SafeFileName,
-                fileContent = File.ReadAllBytes(openFile.FileName),
-                fileExtension = openFile.SafeFileName.Split('.').Last(),
-                fileSize = new FileInfo(openFile.FileName).Length,
-                uploadedBy = MainWindow.AuthUser.idUser
-            };
-            TempFile = file;
-            
-            ClearBtn.IsEnabled = true;
-            ReturnBtn.IsEnabled = true;
-        }
-
-        private void ClearBtn_Click(object sender, RoutedEventArgs e)
-        {
-            TempFile = null;
-            ClearBtn.IsEnabled = false;
-            ReturnBtn.IsEnabled = true;
-        }
-
-        private void ReturnBtn_Click(object sender, RoutedEventArgs e)
-        {
-            TempFile = _file;
-            ReturnBtn.IsEnabled = false;
-            ClearBtn.IsEnabled = true;
-        }*/
-
         private void FileDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             if (TempFile == null) return;
@@ -177,33 +139,6 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
                 file.Write(TempFile.fileContent, 0, TempFile.fileContent.Length);
             }
         }
-        /*private void FileUpload_OnDrop(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-            var openFile = ((string[])e.Data.GetData(DataFormats.FileDrop))?[0];
-            if (openFile == null) return;
-            var fileExtension = openFile.Split('.').Last();
-            if (fileExtension != "docx" && fileExtension != "doc" && fileExtension != "pdf")
-            {
-                AdditionalWindow.ShowError("Не верный формат файла");
-                return;
-            }
-
-            var fileName = openFile.Split('\\').Last();
-            var file = new HistoryUploaded
-            {
-                fileName = fileName.Remove(fileName.IndexOf(fileExtension, StringComparison.Ordinal) - 1, fileExtension.Length + 1),
-                fileContent = File.ReadAllBytes(openFile),
-                fileExtension = fileExtension,
-                fileSize = new FileInfo(openFile).Length,
-                uploadedBy = MainWindow.AuthUser.idUser
-            };
-            TempFile = file;
-            
-            ClearBtn.IsEnabled = true;
-            ReturnBtn.IsEnabled = true;
-            AdditionalWindow.HideError();
-        }*/
 
         private void DifficultyBox_TextChanged(object sender, TextChangedEventArgs e)
         {
