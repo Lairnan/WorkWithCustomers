@@ -185,9 +185,13 @@
                                                 <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}" Value="2">
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding Source={x:Static wnd:MainWindow.AuthUser}, Path=idPos}" Value="2"/>
+                                                                <Condition Binding="{Binding Orders.idStatus}" Value="3"/>
+                                                            </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </MenuItem.Style>

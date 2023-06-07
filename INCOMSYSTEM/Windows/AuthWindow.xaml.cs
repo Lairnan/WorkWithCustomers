@@ -5,7 +5,7 @@ using INCOMSYSTEM.Pages;
 namespace INCOMSYSTEM.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AuthWindow.xaml
     /// </summary>
     public partial class AuthWindow
     {

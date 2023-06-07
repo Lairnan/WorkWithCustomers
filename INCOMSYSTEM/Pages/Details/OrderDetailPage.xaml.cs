@@ -24,7 +24,6 @@ namespace INCOMSYSTEM.Pages.Details
             
             RefreshOrderStages();
             
-            InitTextBlock(order);
             SetFileValues();
         }
 
@@ -42,28 +41,29 @@ namespace INCOMSYSTEM.Pages.Details
                 OrderStagesList.ItemsSource = orderStages;
                 WarningBlock.Visibility = orderStages.Any(s => s.idType == 2) ? Visibility.Visible : Visibility.Collapsed;
             }
+            InitTextBlock();
         }
 
-        private void InitTextBlock(Orders order)
+        private void InitTextBlock()
         {
-            DateOrderBlock.Text = $"Дата заказа: {order.dateOrder:dd.MM.yyyy}";
+            DateOrderBlock.Text = $"Дата заказа: {_order.dateOrder:dd.MM.yyyy}";
             
-            SetPositionBlock(order);
+            SetPositionBlock(_order);
             
-            NameTaskBlock.Text = order.Tasks.name;
+            NameTaskBlock.Text = _order.Tasks.name;
             
-            PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (order.planDateStart == null
-                ? "ожидание" : order.planDateStart.Value.ToString("dd.MM.yyyy"));
-            FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (order.factDateStart == null
-                ? "ожидание" : order.factDateStart.Value.ToString("dd.MM.yyyy"));
-            PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (order.planDateComplete == null 
-                ? "ожидание" : order.planDateComplete.Value.ToString("dd.MM.yyyy"));
-            FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (order.factDateComplete == null 
-                ? "ожидание" : order.factDateComplete.Value.ToString("dd.MM.yyyy"));
+            PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (_order.planDateStart == null
+                ? "ожидание" : _order.planDateStart.Value.ToString("dd.MM.yyyy"));
+            FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (_order.factDateStart == null
+                ? "ожидание" : _order.factDateStart.Value.ToString("dd.MM.yyyy"));
+            PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (_order.planDateComplete == null 
+                ? "ожидание" : _order.planDateComplete.Value.ToString("dd.MM.yyyy"));
+            FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (_order.factDateComplete == null 
+                ? "ожидание" : _order.factDateComplete.Value.ToString("dd.MM.yyyy"));
 
-            PriceBlock.Text = $"Цена: {order.price:0} рублей";
-            DifficultyBlock.Text = $"Сложность: {order.difficulty}x";
-            StatusBlock.Text = $"Статус: {order.Statuses.name.ToLower()}";
+            PriceBlock.Text = $"Цена: {_order.price:0} рублей";
+            DifficultyBlock.Text = $"Сложность: {_order.difficulty}x";
+            StatusBlock.Text = $"Статус: {_order.Statuses.name.ToLower()}";
         }
 
         private void SetPositionBlock(Orders order)

@@ -182,6 +182,9 @@
     <Compile Include="Pages\MainPages\ViewTasksPage.xaml.cs">
       <DependentUpon>ViewTasksPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MainPages\ViewUsersPage.xaml.cs">
+      <DependentUpon>ViewUsersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -231,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPages\ViewTasksPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPages\ViewUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

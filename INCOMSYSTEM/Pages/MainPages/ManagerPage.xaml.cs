@@ -22,5 +22,10 @@ namespace INCOMSYSTEM.Pages.MainPages
         {
             MainWindow.ReviewFrame.Navigate(new ViewOrdersPage());
         }
+
+        private void ViewUsersBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ReviewFrame.Navigate(new ViewUsersPage());
+        }
     }
 }

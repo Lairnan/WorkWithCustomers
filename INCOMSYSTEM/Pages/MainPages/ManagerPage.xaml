@@ -87,7 +87,8 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Button Margin="5"
-                    Content="Пользователи"/>
+                    Content="Пользователи"
+                    Click="ViewUsersBtn_Click"/>
             <TextBlock Grid.Column="1"
                        TextWrapping="Wrap"
                        Text="Перейдя в окно с пользователями, появится список пользователей с возможность фильтрации поиска, так же можно просмотреть аккаунт пользователя и перейти к чату, если существует"/>

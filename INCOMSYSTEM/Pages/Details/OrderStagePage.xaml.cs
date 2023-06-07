@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -25,8 +26,10 @@ namespace INCOMSYSTEM.Pages.Details
             {
                 TypeStagesBox.ItemsSource = db.TypesStage.OrderBy(s => s.id).ToList();
                 var taskStages = db.TaskStages.Where(s => s.idTask == order.idTask).ToList();
-                var orderStages = db.OrderStages.Where(s => s.idOrder == order.id).ToList();
-                TaskStageBox.ItemsSource = taskStages.Where(s => !orderStages.Select(x => x.idTaskStage).Contains(s.id)).ToList();
+                var orderStages = db.OrderStages.Where(s => s.idOrder == order.id && s.idTaskStage != null)
+                    .Select(s => s.idTaskStage)
+                    .ToList();
+                TaskStageBox.ItemsSource = taskStages.Where(s => !orderStages.Contains(s.id)).ToList();
             }
             
             ReturnBtn.Visibility = Visibility.Collapsed;
@@ -203,17 +206,17 @@ namespace INCOMSYSTEM.Pages.Details
 
             using (var db = new INCOMSYSTEMEntities())
             {
-                var orderStages = db.OrderStages.First(s => s.id == _orderStage.id);
+                var orderStage = db.OrderStages.First(s => s.id == _orderStage.id);
                 if (TypeStagesBox.SelectedIndex == 0)
                 {
-                    orderStages.description = _result;
-                    orderStages.factDateComplete = DateEnd.SelectedDate;
+                    orderStage.description = _result;
+                    orderStage.factDateComplete = DateEnd.SelectedDate;
                 }
 
-                if (orderStages.HistoryUploaded == null && TempFile != null)
+                if (orderStage.HistoryUploaded == null && TempFile != null)
                 {
                     db.HistoryUploaded.Add(TempFile);
-                    orderStages.idFile = TempFile.id;
+                    orderStage.idFile = TempFile.id;
                 }
                 else if (TempFile != null && (_file.fileContent != TempFile.fileContent
                                                || _file.fileExtension != TempFile.fileExtension
@@ -228,6 +231,17 @@ namespace INCOMSYSTEM.Pages.Details
                     file.uploadedBy = TempFile.uploadedBy;
                 }
 
+                var orderStages = db.OrderStages.Where(s => s.idOrder == _orderStage.idOrder);
+                
+                if (orderStages.All(s => s.factDateComplete.HasValue)
+                    && db.TaskStages.Where(s => s.idTask == _orderStage.Orders.idTask)
+                        .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))
+                {
+                    var order = db.Orders.First(s => s.id == _orderStage.idOrder);
+                    order.idStatus = 4;
+                    order.factDateComplete = orderStage.factDateComplete;
+                }
+
                 db.SaveChanges();
                 MessageBox.Show("Данные успешно сохранены");
             }
@@ -237,7 +251,7 @@ namespace INCOMSYSTEM.Pages.Details
 
         private bool AddOrderStage()
         {
-            if (IsNullOrWhiteSpace())
+            if (IsNullOrWhiteSpace() || TypeStagesBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Поля не могут быть пустыми");
                 return false;
@@ -280,6 +294,17 @@ namespace INCOMSYSTEM.Pages.Details
                 }
 
                 db.OrderStages.Add(orderStage);
+
+                var orderStages = db.OrderStages.Where(s => s.idOrder == _order.id);
+                
+                if (orderStages.All(s => s.factDateComplete.HasValue)
+                    && db.TaskStages.Where(s => s.idTask == _order.idTask)
+                        .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))
+                {
+                    var order = db.Orders.First(s => s.id == _order.id);
+                    order.idStatus = 4;
+                    order.factDateComplete = orderStage.factDateComplete;
+                }
 
                 db.SaveChanges();
                 MessageBox.Show("Этап успешно добавлен");
