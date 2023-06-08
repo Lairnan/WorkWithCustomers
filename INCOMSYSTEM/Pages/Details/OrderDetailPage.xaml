@@ -196,6 +196,11 @@
                                                 </Style>
                                             </MenuItem.Style>
                                         </MenuItem>
+                                        
+                                        <MenuItem Header="Сохранить отчёт"
+                                                  Click="SaveReportMenu_Click"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource Self},
+                                                                    Path=DataContext}"/>
                                     </ContextMenu>
                                 </CheckBox.ContextMenu>
                                 

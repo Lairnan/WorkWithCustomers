@@ -50,11 +50,14 @@ namespace INCOMSYSTEM.Pages.Details
             
             TypeStagesBlock.Text = _orderStage.TypesStage.name;
             NameStageBox.Text = _orderStage.idType == 2 ? orderStage.name : orderStage.TaskStages.name;
+            NameStageBox.IsEnabled = _orderStage.idType == 2;
 
             DateStart.SelectedDate = orderStage.factDateStart;
             DateStart.IsEnabled = false;
             DateEnd.SelectedDate = orderStage.factDateComplete;
             DateEnd.IsEnabled = orderStage.factDateComplete == null;
+
+            _result = orderStage.description;
 
             _file = orderStage.HistoryUploaded;
             TempFile = _file;
@@ -207,41 +210,14 @@ namespace INCOMSYSTEM.Pages.Details
             using (var db = new INCOMSYSTEMEntities())
             {
                 var orderStage = db.OrderStages.First(s => s.id == _orderStage.id);
-                if (TypeStagesBox.SelectedIndex == 0)
-                {
-                    orderStage.description = _result;
-                    orderStage.factDateComplete = DateEnd.SelectedDate;
-                }
-
-                if (orderStage.HistoryUploaded == null && TempFile != null)
-                {
-                    db.HistoryUploaded.Add(TempFile);
-                    orderStage.idFile = TempFile.id;
-                }
-                else if (TempFile != null && (_file.fileContent != TempFile.fileContent
-                                               || _file.fileExtension != TempFile.fileExtension
-                                               || _file.fileName != TempFile.fileName
-                                               || _file.fileSize != TempFile.fileSize))
-                {
-                    var file = db.HistoryUploaded.First(s => s.id == _file.id);
-                    file.fileName = TempFile.fileName;
-                    file.fileContent = TempFile.fileContent;
-                    file.fileExtension = TempFile.fileExtension;
-                    file.fileSize = TempFile.fileSize;
-                    file.uploadedBy = TempFile.uploadedBy;
-                }
-
-                var orderStages = db.OrderStages.Where(s => s.idOrder == _orderStage.idOrder);
                 
-                if (orderStages.All(s => s.factDateComplete.HasValue)
-                    && db.TaskStages.Where(s => s.idTask == _orderStage.Orders.idTask)
-                        .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))
-                {
-                    var order = db.Orders.First(s => s.id == _orderStage.idOrder);
-                    order.idStatus = 4;
-                    order.factDateComplete = orderStage.factDateComplete;
-                }
+                orderStage.description = _result;
+                orderStage.factDateComplete = DateEnd.SelectedDate;
 
+                UpdateFileOrderStage(ref orderStage, db);
+                db.SaveChanges();
+                
+                SetFactDateAndCompleteOrder(db, orderStage, _orderStage.Orders);
                 db.SaveChanges();
                 MessageBox.Show("Данные успешно сохранены");
             }
@@ -249,65 +225,123 @@ namespace INCOMSYSTEM.Pages.Details
             return true;
         }
 
+        private void UpdateFileOrderStage(ref OrderStages orderStage, INCOMSYSTEMEntities db)
+        {
+            if (orderStage.HistoryUploaded == null && TempFile != null)
+            {
+                db.HistoryUploaded.Add(TempFile);
+                orderStage.idFile = TempFile.id;
+            }
+            else if (TempFile != null && (_file.fileContent != TempFile.fileContent
+                                          || _file.fileExtension != TempFile.fileExtension
+                                          || _file.fileName != TempFile.fileName
+                                          || _file.fileSize != TempFile.fileSize))
+            {
+                var file = db.HistoryUploaded.First(s => s.id == _file.id);
+                file.fileName = TempFile.fileName;
+                file.fileContent = TempFile.fileContent;
+                file.fileExtension = TempFile.fileExtension;
+                file.fileSize = TempFile.fileSize;
+                file.uploadedBy = TempFile.uploadedBy;
+            }
+        }
+
         private bool AddOrderStage()
         {
+            if (!CheckFields()) return false;
+
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var idFile = GetIdFile(db);
+
+                var orderStage = AddOrderStage(idFile, db);
+                db.SaveChanges();
+
+                SetFactDateAndCompleteOrder(db, orderStage, _order);
+                db.SaveChanges();
+                MessageBox.Show("Этап успешно добавлен");
+            }
+
+            return true;
+        }
+
+        private void SetFactDateAndCompleteOrder(INCOMSYSTEMEntities db, OrderStages orderStage, Orders order)
+        {
+            var orderStages = db.OrderStages.Where(s => s.idOrder == order.id);
+            var orderDb = db.Orders.First(s => s.id == order.id);
+
+            if (orderDb.idStatus == 4 && orderStage.idType == 2)
+            {
+                orderDb.idStatus = (byte)(orderStage.factDateComplete.HasValue ? 4 : 3);
+                orderDb.factDateComplete = orderStage.factDateComplete;
+                return;
+            }
+            
+            if (!orderDb.factDateStart.HasValue)
+                orderDb.factDateStart = orderStages.First().factDateStart;
+
+            if (!(orderStages.All(s => s.factDateComplete.HasValue)
+                  || !db.TaskStages.Where(s => s.idTask == orderDb.idTask)
+                      .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))) return;
+            
+            orderDb.idStatus = 4;
+            orderDb.factDateComplete = orderStage.factDateComplete;
+        }
+
+        private OrderStages AddOrderStage(long? idFile, INCOMSYSTEMEntities db)
+        {
+            var orderStage = new OrderStages
+            {
+                idOrder = _order.id,
+                idType = ((TypesStage)TypeStagesBox.SelectedItem).id,
+                idFile = idFile,
+                factDateStart = DateStart.SelectedDate,
+                factDateComplete = DateEnd.SelectedDate,
+                description = _result
+            };
+            switch (orderStage.idType)
+            {
+                case 1:
+                    orderStage.idTaskStage = ((TaskStages)TaskStageBox.SelectedItem).id;
+                    break;
+                case 2:
+                    orderStage.name = NameStageBox.Value;
+                    break;
+            }
+
+            db.OrderStages.Add(orderStage);
+            return orderStage;
+        }
+
+        private long? GetIdFile(INCOMSYSTEMEntities db)
+        {
+            long? idFile = null;
+            if (TempFile == null) return idFile;
+            var file = new HistoryUploaded
+            {
+                fileName = TempFile.fileName,
+                fileContent = TempFile.fileContent,
+                fileExtension = TempFile.fileExtension,
+                fileSize = TempFile.fileSize,
+                uploadedBy = TempFile.uploadedBy
+            };
+            db.HistoryUploaded.Add(file);
+            idFile = file.id;
+
+            return idFile;
+        }
+
+        private bool CheckFields()
+        {
+            if (TypeStagesBox.SelectedIndex == 0 && TaskStageBox.SelectedItem == null)
+            {
+                MessageBox.Show("Плановые этапы уже завершены", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
             if (IsNullOrWhiteSpace() || TypeStagesBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Поля не могут быть пустыми");
                 return false;
-            }
-
-            using (var db = new INCOMSYSTEMEntities())
-            {
-                long? idFile = null;
-                if (TempFile != null)
-                {
-                    var file = new HistoryUploaded
-                    {
-                        fileName = TempFile.fileName,
-                        fileContent = TempFile.fileContent,
-                        fileExtension = TempFile.fileExtension,
-                        fileSize = TempFile.fileSize,
-                        uploadedBy = TempFile.uploadedBy
-                    };
-                    db.HistoryUploaded.Add(file);
-                    idFile = file.id;
-                }
-
-                var orderStage = new OrderStages
-                {
-                    idOrder = _order.id,
-                    idType = ((TypesStage)TypeStagesBox.SelectedItem).id,
-                    idFile = idFile,
-                    factDateStart = DateStart.SelectedDate,
-                    factDateComplete = DateEnd.SelectedDate,
-                    description = _result
-                };
-                switch (orderStage.idType)
-                {
-                    case 1:
-                        orderStage.idTaskStage = ((TaskStages)TaskStageBox.SelectedItem).id;
-                        break;
-                    case 2:
-                        orderStage.name = NameStageBox.Value;
-                        break;
-                }
-
-                db.OrderStages.Add(orderStage);
-
-                var orderStages = db.OrderStages.Where(s => s.idOrder == _order.id);
-                
-                if (orderStages.All(s => s.factDateComplete.HasValue)
-                    && db.TaskStages.Where(s => s.idTask == _order.idTask)
-                        .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))
-                {
-                    var order = db.Orders.First(s => s.id == _order.id);
-                    order.idStatus = 4;
-                    order.factDateComplete = orderStage.factDateComplete;
-                }
-
-                db.SaveChanges();
-                MessageBox.Show("Этап успешно добавлен");
             }
 
             return true;

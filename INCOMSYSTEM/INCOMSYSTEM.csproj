@@ -312,7 +312,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
     <Resource Include="Images\historyOrders.png" />
-    <Content Include="Resources\ReportTemplate.docx" />
+    <AdditionalFiles Include="Resources\ReportTemplate.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\profile.png" />
     <Resource Include="Images\profileSettings.png" />

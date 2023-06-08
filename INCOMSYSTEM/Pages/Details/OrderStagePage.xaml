@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:controls="clr-namespace:INCOMSYSTEM.Controls"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       Height="250"
       Width="700">
@@ -33,16 +34,18 @@
             </Grid.ColumnDefinitions>
             
             <StackPanel>
-                <TextBlock Text="Тип этапа" Margin="0 15"/>
-                <TextBlock Text="Название этапа"/>
+                <TextBlock Text="Тип этапа" Height="35"/>
+                <TextBlock Text="Название этапа" Height="35"/>
             </StackPanel>
             
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="TypeStagesBlock"
-                           Margin="2 5"
+                           Height="35"
+                           Margin="8 0"
                            Visibility="Collapsed"/>
                 <ComboBox x:Name="TypeStagesBox"
-                          Margin="2 5"
+                          Height="35"
+                          Margin="2 0"
                           SelectedIndex="0"
                           SelectionChanged="TypeStagesBox_OnSelectionChanged">
                     <ComboBox.ItemTemplate>
@@ -54,10 +57,12 @@
                 <controls:InputTextBox x:Name="NameStageBox"
                                        PlaceHolder="Название этапа"
                                        Margin="2 0"
+                                       Height="35"
                                        Visibility="Collapsed"/>
                 <ComboBox x:Name="TaskStageBox"
                           SelectedIndex="0"
-                          Margin="2 0">
+                          Margin="2 0"
+                          Height="35">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}" Style="{StaticResource ComboBoxTextBlockStyle}"/>
@@ -81,6 +86,7 @@
 
             <StackPanel Grid.Column="1">
                 <controls:DatePickerEx x:Name="DateStart"
+                                       DisplayDateStart="{x:Static sys:DateTime.Today}"
                                        Margin="0 15"/>
                 <controls:DatePickerEx x:Name="DateEnd"
                                        DisplayDateStart="{Binding ElementName=DateStart,

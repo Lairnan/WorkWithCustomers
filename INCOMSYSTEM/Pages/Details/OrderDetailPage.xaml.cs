@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using INCOMSYSTEM.BehaviorsFiles;
 using INCOMSYSTEM.Context;
 using INCOMSYSTEM.Windows;
 using Microsoft.Win32;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace INCOMSYSTEM.Pages.Details
 {
@@ -23,7 +25,8 @@ namespace INCOMSYSTEM.Pages.Details
             _file = order.HistoryUploaded;
             
             RefreshOrderStages();
-            
+            InitTextBlock();
+
             SetFileValues();
         }
 
@@ -35,13 +38,15 @@ namespace INCOMSYSTEM.Pages.Details
                     .Include(s => s.TypesStage)
                     .Include(s => s.HistoryUploaded)
                     .Include(s => s.Orders)
+                    .Include(s => s.Orders.Employees)
+                    .Include(s => s.Orders.Customers)
+                    .Include(s => s.Orders.Tasks)
                     .Include(s => s.TaskStages)
                     .Where(s => s.idOrder == _order.id)
                     .ToList();
                 OrderStagesList.ItemsSource = orderStages;
                 WarningBlock.Visibility = orderStages.Any(s => s.idType == 2) ? Visibility.Visible : Visibility.Collapsed;
             }
-            InitTextBlock();
         }
 
         private void InitTextBlock()
@@ -51,19 +56,23 @@ namespace INCOMSYSTEM.Pages.Details
             SetPositionBlock(_order);
             
             NameTaskBlock.Text = _order.Tasks.name;
-            
-            PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (_order.planDateStart == null
-                ? "ожидание" : _order.planDateStart.Value.ToString("dd.MM.yyyy"));
-            FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (_order.factDateStart == null
-                ? "ожидание" : _order.factDateStart.Value.ToString("dd.MM.yyyy"));
-            PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (_order.planDateComplete == null 
-                ? "ожидание" : _order.planDateComplete.Value.ToString("dd.MM.yyyy"));
-            FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (_order.factDateComplete == null 
-                ? "ожидание" : _order.factDateComplete.Value.ToString("dd.MM.yyyy"));
 
-            PriceBlock.Text = $"Цена: {_order.price:0} рублей";
-            DifficultyBlock.Text = $"Сложность: {_order.difficulty}x";
-            StatusBlock.Text = $"Статус: {_order.Statuses.name.ToLower()}";
+            using (var db = new INCOMSYSTEMEntities())
+            {
+                var order = db.Orders.Include(s => s.Statuses).First(s => s.id == _order.id);
+                PlanDateStartBlock.Text = "Плановая дата начала выполнения: " + (order.planDateStart == null
+                    ? "ожидание" : order.planDateStart.Value.ToString("dd.MM.yyyy"));
+                FactDateStartBlock.Text = "Фактическая дата начала выполнения: " + (order.factDateStart == null
+                    ? "ожидание" : order.factDateStart.Value.ToString("dd.MM.yyyy"));
+                PlanDateEndBlock.Text = "Плановая дата окончания выполнения: " + (order.planDateComplete == null
+                    ? "ожидание" : order.planDateComplete.Value.ToString("dd.MM.yyyy"));
+                FactDateEndBlock.Text = "Фактическая дата окончания выполнения: " + (order.factDateComplete == null
+                    ? "ожидание" : order.factDateComplete.Value.ToString("dd.MM.yyyy"));
+
+                PriceBlock.Text = $"Цена: {order.price:0} рублей";
+                DifficultyBlock.Text = $"Сложность: {order.difficulty}x";
+                StatusBlock.Text = $"Статус: {order.Statuses.name.ToLower()}";
+            }
         }
 
         private void SetPositionBlock(Orders order)
@@ -325,6 +334,7 @@ namespace INCOMSYSTEM.Pages.Details
             if (addWindow.ShowDialog() != true) return;
 
             RefreshOrderStages();
+            InitTextBlock();
         }
 
         private void AddOrderStageMenu_Click(object sender, RoutedEventArgs e)
@@ -335,6 +345,108 @@ namespace INCOMSYSTEM.Pages.Details
             if (addWindow.ShowDialog() != true) return;
 
             RefreshOrderStages();
+            InitTextBlock();
+        }
+
+        private void SaveReportMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var orderStage = (OrderStages)((MenuItem)sender).CommandParameter;
+
+            // Создание приложения Word
+            var wApp = new Word.Application();
+
+            // Путь к файлу
+            var pathToFile = Directory.GetCurrentDirectory() + @"\Resources\ReportTemplate.docx";
+
+            OpenDocument(wApp, pathToFile, orderStage);
+        }
+
+        private void OpenDocument(Word.Application wApp, string pathToFile, OrderStages orderStage)
+        {
+            Word.Document doc = null;
+
+            try
+            {
+                doc = wApp.Documents.Open(pathToFile);
+
+                HandleSaveDialog(doc, orderStage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при работе с документом: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (doc != null)
+                {
+                    doc.Saved = true;
+                    doc.Close(SaveChanges: false);
+                }
+
+                wApp.Quit(SaveChanges: false);
+            }
+        }
+
+        private static void HandleSaveDialog(Word.Document doc, OrderStages orderStage)
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                FileName = $"Отчёт №{orderStage.id}",
+                Filter = "Word документ (*.docx)|*.docx|Word 97-2003 документ (*.doc)|*.doc|Portable Document|*.pdf",
+                DefaultExt = "docx",
+                OverwritePrompt = true
+            };
+            if (saveFileDialog.ShowDialog() != true) return;
+
+            FormAgreement(ref doc, orderStage);
+            doc.SaveAs2(saveFileDialog.FileName);
+
+            if (MessageBox.Show("Отчёт успешно сохранён. Открыть?", "Успешное сохранение", MessageBoxButton.YesNo,
+                    MessageBoxImage.Question)
+                != MessageBoxResult.Yes) return;
+
+            Process.Start(saveFileDialog.FileName);
+        }
+
+        private static void FormAgreement(ref Word.Document doc, OrderStages orderStage)
+        {
+            try
+            {
+                doc.ReplaceWordText("{idOrderStage}", orderStage.id);
+                doc.ReplaceWordText("{customer}", orderStage.Orders.Customers.name);
+                doc.ReplaceWordText("{executer}", orderStage.Orders.Employees.ToString());
+                doc.ReplaceWordText("{idOrder}", orderStage.idOrder);
+                doc.ReplaceWordText("{dateOrder}", orderStage.Orders.dateOrder.ToString("dd.MM.yyyy"));
+                doc.ReplaceWordText("{nameTask}", orderStage.Orders.Tasks.name);
+                doc.ReplaceWordText("{nameStage}", string.IsNullOrWhiteSpace(orderStage.name)
+                    ? orderStage.TaskStages.name
+                    : orderStage.name);
+                doc.ReplaceWordText("{factDateStart}", orderStage.factDateStart.HasValue
+                    ? orderStage.factDateStart.Value.ToString("dd.MM.yyyy")
+                    : "Отсутствует");
+                doc.ReplaceWordText("{factDateEnd}", orderStage.factDateComplete.HasValue
+                    ? orderStage.factDateComplete.Value.ToString("dd.MM.yyyy")
+                    : "Отсутствует");
+                var orderStages = orderStage.description.SplitStringToObservableCollection().ToList();
+                var i = 0;
+                var count = orderStages.Count;
+                if (count == 0) doc.ReplaceWordText("{comments}", "Результат отсутствует.");
+                else
+                {
+                    foreach (var result in orderStages)
+                    {
+                        var str = result;
+                        if (i++ < count - 1) str += ";\r{comments}";
+                        else str += ".";
+                        doc.ReplaceWordText("{comments}", str);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Для сохранения записи, необходимо закрыть Word документ", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

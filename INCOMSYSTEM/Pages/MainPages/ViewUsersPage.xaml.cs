@@ -25,6 +25,7 @@ namespace INCOMSYSTEM.Pages.MainPages
                 UsersList.ItemsSource = db.UsersDetail
                     .Include(s => s.Employees)
                     .Include(s => s.Customers)
+                    .Include(s => s.Positions)
                     .ToList();
 
                 var list = new List<Positions> { new Positions { name = "Очистить" } };
@@ -67,6 +68,7 @@ namespace INCOMSYSTEM.Pages.MainPages
                 IEnumerable<UsersDetail> list = db.UsersDetail
                     .Include(s => s.Employees)
                     .Include(s => s.Customers)
+                    .Include(s => s.Positions)
                     .ToList();
                 
                 if(!FilterText.IsWhiteSpace) list = list.Where(s => s.idPos == 1 ? s.Customers.name.ToLower().Trim().StartsWith(FilterText.Text.ToLower().Trim())

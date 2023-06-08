@@ -35,7 +35,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border Width="400"
-                            Height="160"
+                            Height="130"
                             BorderThickness="1"
                             BorderBrush="White"
                             CornerRadius="10"
@@ -59,15 +59,11 @@
                             <TextBlock Text="{Binding Positions.name}"
                                        TextWrapping="Wrap"
                                        Style="{StaticResource TextBlockStyle}"/>
-                            
+
                             <TextBlock Text="{Binding dateStart, StringFormat='{}Дата регистрации: {0:dd.MM.yyy}'}"
                                        TextWrapping="Wrap"
                                        Style="{StaticResource TextBlockStyle}"/>
-                            
-                            <TextBlock Text="{Binding Positions.name}"
-                                       TextWrapping="Wrap"
-                                       Style="{StaticResource TextBlockStyle}"/>
-                            
+
                             <TextBlock Text="{Binding address, StringFormat='{}Адрес: {0}'}"
                                        TextWrapping="Wrap"
                                        Style="{StaticResource TextBlockStyle}"/>
@@ -75,6 +71,41 @@
                             <TextBlock Text="{Binding phone, StringFormat='{}Номер телефона: {0}', TargetNullValue='Номер телефона: отсутствует'}"
                                        TextWrapping="Wrap"
                                        Style="{StaticResource TextBlockStyle}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Ellipse Grid.Column="0"
+                                         Width="12"
+                                         Height="12"
+                                         Margin="5 0"
+                                         VerticalAlignment="Center">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill" Value="Red"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding isOnline}" Value="True">
+                                                    <Setter Property="Fill" Value="Green"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+                                <TextBlock Grid.Column="1">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                                            <Setter Property="Text" Value="Не в сети"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding isOnline}" Value="True">
+                                                    <Setter Property="Text" Value="В сети"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

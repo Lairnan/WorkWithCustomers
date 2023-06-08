@@ -55,6 +55,8 @@ namespace INCOMSYSTEM.Pages.MainPages.Views
             ExecutorBox.Visibility = Visibility.Collapsed;
             ExecutorBlock.Visibility = Visibility.Visible;
             DifficultyBox.IsReadOnly = true;
+            PlanDateStartBox.IsEnabled = false;
+            PlanDateCompleteBox.IsEnabled = false;
             SaveBtn.Visibility = Visibility.Collapsed;
             CancelBtn.Content = "Закрыть";
         }

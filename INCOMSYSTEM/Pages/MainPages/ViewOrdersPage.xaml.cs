@@ -59,7 +59,7 @@ namespace INCOMSYSTEM.Pages.MainPages
 
             addWindow.MFrame.Navigate(new OrderDetailPage(order));
 
-            if (addWindow.ShowDialog() != true) return;
+            addWindow.ShowDialog();
             ApplyFilter();
         }
 

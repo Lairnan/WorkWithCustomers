@@ -52,10 +52,8 @@ namespace INCOMSYSTEM.Pages.Details
             ResultStage = description;
             InitializeComponent();
 
-            if (!string.IsNullOrEmpty(ResultStage))
-            {
-                ItemList.ItemsSource = ResultStage.SplitStringToObservableCollection();
-            }
+            if (!string.IsNullOrEmpty(ResultStage)) ItemList.ItemsSource = ResultStage.SplitStringToObservableCollection();
+            else ItemList.ItemsSource = new ObservableCollection<string>();
 
             InitPanelAndEvents();
         }

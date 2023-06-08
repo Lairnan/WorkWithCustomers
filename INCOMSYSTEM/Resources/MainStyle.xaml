@@ -112,8 +112,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter TargetName="PART_ContentHost" Property="Opacity" Value="0.7"/>
                         </Trigger>
                         <Trigger Property="Width" Value="Auto">
                             <Setter Property="MinWidth" Value="100"/>
