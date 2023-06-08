@@ -34,6 +34,31 @@ namespace INCOMSYSTEM.Pages.Details
             
             ReturnBtn.Visibility = Visibility.Collapsed;
         }
+
+        private DateTime? _factDateStart;
+        private DateTime? FactDateStart
+        {
+            get => _factDateStart;
+            set
+            {
+                _factDateStart = value;
+                DateStart.Text = value.HasValue ? value.Value.ToString("dd.MM.yyyy") : "Ожидание";
+                DateStartBtn.IsEnabled = !value.HasValue;
+                DateEndBtn.IsEnabled = value.HasValue;
+            }
+        }
+
+        private DateTime? _factDateEnd;
+        private DateTime? FactDateEnd
+        {
+            get => _factDateEnd;
+            set
+            {
+                _factDateEnd = value;
+                DateEnd.Text = value.HasValue ? value.Value.ToString("dd.MM.yyyy") : "Ожидание";
+                DateEndBtn.IsEnabled = !value.HasValue && FactDateStart.HasValue;
+            }
+        }
         
         public OrderStagePage(OrderStages orderStage)
         {
@@ -52,10 +77,14 @@ namespace INCOMSYSTEM.Pages.Details
             NameStageBox.Text = _orderStage.idType == 2 ? orderStage.name : orderStage.TaskStages.name;
             NameStageBox.IsEnabled = _orderStage.idType == 2;
 
-            DateStart.SelectedDate = orderStage.factDateStart;
-            DateStart.IsEnabled = false;
-            DateEnd.SelectedDate = orderStage.factDateComplete;
-            DateEnd.IsEnabled = orderStage.factDateComplete == null;
+            FactDateStart = orderStage.factDateStart;
+            DateStartBtn.IsEnabled = false;
+            FactDateEnd = orderStage.factDateComplete;
+
+            // DateStart.SelectedDate = orderStage.factDateStart;
+            // DateStart.IsEnabled = false;
+            // DateEnd.SelectedDate = orderStage.factDateComplete;
+            // DateEnd.IsEnabled = orderStage.factDateComplete == null;
 
             _result = orderStage.description;
 
@@ -212,7 +241,7 @@ namespace INCOMSYSTEM.Pages.Details
                 var orderStage = db.OrderStages.First(s => s.id == _orderStage.id);
                 
                 orderStage.description = _result;
-                orderStage.factDateComplete = DateEnd.SelectedDate;
+                orderStage.factDateComplete = FactDateEnd;
 
                 UpdateFileOrderStage(ref orderStage, db);
                 db.SaveChanges();
@@ -295,8 +324,8 @@ namespace INCOMSYSTEM.Pages.Details
                 idOrder = _order.id,
                 idType = ((TypesStage)TypeStagesBox.SelectedItem).id,
                 idFile = idFile,
-                factDateStart = DateStart.SelectedDate,
-                factDateComplete = DateEnd.SelectedDate,
+                factDateStart = FactDateStart,
+                factDateComplete = FactDateEnd,
                 description = _result
             };
             switch (orderStage.idType)
@@ -349,7 +378,7 @@ namespace INCOMSYSTEM.Pages.Details
 
         private bool IsNullOrWhiteSpace()
         {
-            if(_order != null) return (TypeStagesBox.Visibility == Visibility.Collapsed && NameStageBox.IsWhiteSpace) || DateStart.SelectedDate == null;
+            if(_order != null) return (TypeStagesBox.Visibility == Visibility.Collapsed && NameStageBox.IsWhiteSpace) || FactDateStart == null;
             return false;
         }
 
@@ -383,6 +412,30 @@ namespace INCOMSYSTEM.Pages.Details
                     NameStageBox.Visibility = Visibility.Visible;
                     TaskStageBox.Visibility = Visibility.Collapsed;
                     WarningBlock.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        private void SetFactDateStartButton_Click(object sender, RoutedEventArgs e)
+        {
+            FactDateStart = DateTime.Now;
+        }
+
+        private void SetFactDateEndButton_Click(object sender, RoutedEventArgs e)
+        {
+            FactDateEnd = DateTime.Now;
+        }
+
+        private void ClearDateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var param = int.Parse((string)((Button)sender).CommandParameter);
+            switch (param)
+            {
+                case 1:
+                    FactDateStart = null;
+                    break;
+                case 2:
+                    FactDateEnd = null;
                     break;
             }
         }
