@@ -14,8 +14,9 @@ namespace INCOMSYSTEM.ViewModels
 {
     public class ChatListPageViewModel : ObservableObject
     {
-        public ChatListPageViewModel()
+        public ChatListPageViewModel(MainWindow currentWindow)
         {
+            _currentWindow = currentWindow;
             ChatsCollection = new ObservableCollection<ChatMess>();
             CollectionViewChat = CollectionViewSource.GetDefaultView(ChatsCollection);
             CollectionViewChat.SortDescriptions.Insert(0, new SortDescription("SendDate", ListSortDirection.Descending));
@@ -23,12 +24,14 @@ namespace INCOMSYSTEM.ViewModels
             RefreshCollection();
         }
 
+        private readonly MainWindow _currentWindow;
+
         private ObservableCollection<ChatMess> ChatsCollection { get; }
         public ICollectionView CollectionViewChat { get; }
 
         private async void RefreshCollection()
         {
-            while (!MainWindow.IsClosed)
+            while (!_currentWindow.IsClosed)
             {
                 using (var db = await Task.Run(() => new INCOMSYSTEMEntities()))
                 {

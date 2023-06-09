@@ -165,7 +165,7 @@ namespace INCOMSYSTEM.Windows
         }
 
         private readonly Dictionary<MenuItems, Page> _sideBarMenu = new Dictionary<MenuItems, Page>();
-        public static bool IsClosed { get; private set; }
+        public bool IsClosed { get; private set; }
         private Page ChatListPage { get; set; }
 
         #region Buttons

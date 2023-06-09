@@ -41,10 +41,16 @@ namespace INCOMSYSTEM.Pages
                 InputMessageBox.Text = InputMessageBox.Text.Insert(start++, "\n");
                 InputMessageBox.SelectionStart = start;
             };
-            
-            Task.Run(RefreshMessages);
-            Task.Run(RefreshStatusUser);
+
+            Loaded += (s, e) =>
+            {
+                _currentWindow = Window.GetWindow(this) as MainWindow;
+                Task.Run(RefreshMessages);
+                Task.Run(RefreshStatusUser);
+            };
         }
+
+        private MainWindow _currentWindow;
         
         private readonly string _tempTitle;
         private bool? _isOnline;
@@ -52,7 +58,7 @@ namespace INCOMSYSTEM.Pages
         private async void RefreshStatusUser()
         {
             Application.Current.Dispatcher.Invoke(() => TitleBlock.Text = _tempTitle);
-            while (!MainWindow.IsClosed)
+            while (!_currentWindow.IsClosed)
             {
                 using (var db = new INCOMSYSTEMEntities())
                 {
@@ -113,7 +119,7 @@ namespace INCOMSYSTEM.Pages
 
         private async void RefreshMessages()
         {
-            while (!MainWindow.IsClosed)
+            while (!_currentWindow.IsClosed)
             {
                 using (var db = await Task.Run(() => new INCOMSYSTEMEntities()))
                 {

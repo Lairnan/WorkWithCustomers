@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using INCOMSYSTEM.Context;
@@ -13,6 +14,7 @@ namespace INCOMSYSTEM.Pages
         public ChatListPage()
         {
             InitializeComponent();
+            Loaded += (s, e) => { DataContext = new ChatListPageViewModel(Window.GetWindow(this) as MainWindow); };
         }
 
         private Dictionary<long, Page> ChatPages { get; } = new Dictionary<long, Page>();
