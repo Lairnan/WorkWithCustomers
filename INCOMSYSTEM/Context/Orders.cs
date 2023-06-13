@@ -71,9 +71,9 @@ namespace INCOMSYSTEM.Context
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-        public bool IsStartLateYellow => factDateStart > planDateStart?.AddDays(2);
         public bool IsStartLateRed => factDateStart > planDateComplete?.AddDays(5);
-        public bool IsCompleteLateYellow => factDateComplete > planDateComplete;
+        public bool IsStartLateYellow => factDateStart > planDateStart?.AddDays(2) && !IsStartLateRed;
         public bool IsCompleteLateRed => factDateComplete > planDateComplete?.AddDays(5);
+        public bool IsCompleteLateYellow => factDateComplete > planDateComplete && !IsStartLateRed;
     }
 }
