@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using INCOMSYSTEM.BehaviorsFiles;
@@ -101,7 +102,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             ApplyFilter();
         }
 
-        private void FormAgreementOrderMenu_Click(object sender, RoutedEventArgs e)
+        private async void FormAgreementOrderMenu_Click(object sender, RoutedEventArgs e)
         {
             var order = ((MenuItem)sender).CommandParameter as Orders;
             
@@ -111,18 +112,18 @@ namespace INCOMSYSTEM.Pages.MainPages
             // Путь к файлу
             var pathToFile = Directory.GetCurrentDirectory() + @"\Resources\AgreementTemplate.docx";
 
-            OpenDocument(wApp, pathToFile, order);
+            await OpenDocument(wApp, pathToFile, order);
         }
 
-        private void OpenDocument(Word.Application wApp, string pathToFile, Orders order)
+        private async Task OpenDocument(Word.Application wApp, string pathToFile, Orders order)
         {
             Word.Document doc = null;
 
             try
             {
-                doc = wApp.Documents.Open(pathToFile);
+                doc = await Task.Run(() => wApp.Documents.Open(pathToFile));
 
-                HandleSaveDialog(doc, order);
+                await HandleSaveDialog(doc, order);
                 // var boxResult = PrintSaveDialogBox.Show("Выберите действие:");
                 // HandleBoxResult(boxResult, doc, wApp, order);
             }
@@ -171,7 +172,7 @@ namespace INCOMSYSTEM.Pages.MainPages
             }
         }
 
-        private static void HandleSaveDialog(Word.Document doc, Orders order)
+        private async Task HandleSaveDialog(Word.Document doc, Orders order)
         {
             var saveFileDialog = new SaveFileDialog
             {
@@ -183,13 +184,13 @@ namespace INCOMSYSTEM.Pages.MainPages
             if (saveFileDialog.ShowDialog() != true) return;
             
             FormAgreement(ref doc, order);
-            doc.SaveAs2(saveFileDialog.FileName);
+            await Task.Run(() => doc.SaveAs2(saveFileDialog.FileName));
 
             if (MessageBox.Show("Договор успешно сохранён. Открыть?", "Успешное сохранение", MessageBoxButton.YesNo,
                     MessageBoxImage.Question)
                 != MessageBoxResult.Yes) return;
 
-            Process.Start(saveFileDialog.FileName);
+            await Task.Run(() => Process.Start(saveFileDialog.FileName));
         }
 
         private static void FormAgreement(ref Word.Document doc, Orders order)

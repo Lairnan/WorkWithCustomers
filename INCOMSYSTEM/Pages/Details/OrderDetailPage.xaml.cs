@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using INCOMSYSTEM.BehaviorsFiles;
@@ -348,7 +349,7 @@ namespace INCOMSYSTEM.Pages.Details
             InitTextBlock();
         }
 
-        private void SaveReportMenu_Click(object sender, RoutedEventArgs e)
+        private async void SaveReportMenu_Click(object sender, RoutedEventArgs e)
         {
             var orderStage = (OrderStages)((MenuItem)sender).CommandParameter;
 
@@ -358,18 +359,18 @@ namespace INCOMSYSTEM.Pages.Details
             // Путь к файлу
             var pathToFile = Directory.GetCurrentDirectory() + @"\Resources\ReportTemplate.docx";
 
-            OpenDocument(wApp, pathToFile, orderStage);
+            await OpenDocument(wApp, pathToFile, orderStage);
         }
 
-        private void OpenDocument(Word.Application wApp, string pathToFile, OrderStages orderStage)
+        private async Task OpenDocument(Word.Application wApp, string pathToFile, OrderStages orderStage)
         {
             Word.Document doc = null;
 
             try
             {
-                doc = wApp.Documents.Open(pathToFile);
+                doc = await Task.Run(() => wApp.Documents.Open(pathToFile));
 
-                HandleSaveDialog(doc, orderStage);
+                await HandleSaveDialog(doc, orderStage);
             }
             catch (Exception ex)
             {
@@ -387,7 +388,7 @@ namespace INCOMSYSTEM.Pages.Details
             }
         }
 
-        private static void HandleSaveDialog(Word.Document doc, OrderStages orderStage)
+        private async Task HandleSaveDialog(Word.Document doc, OrderStages orderStage)
         {
             var saveFileDialog = new SaveFileDialog
             {
@@ -399,13 +400,13 @@ namespace INCOMSYSTEM.Pages.Details
             if (saveFileDialog.ShowDialog() != true) return;
 
             FormAgreement(ref doc, orderStage);
-            doc.SaveAs2(saveFileDialog.FileName);
+            await Task.Run(() => doc.SaveAs2(saveFileDialog.FileName));
 
             if (MessageBox.Show("Отчёт успешно сохранён. Открыть?", "Успешное сохранение", MessageBoxButton.YesNo,
                     MessageBoxImage.Question)
                 != MessageBoxResult.Yes) return;
 
-            Process.Start(saveFileDialog.FileName);
+            await Task.Run(() => Process.Start(saveFileDialog.FileName));
         }
 
         private static void FormAgreement(ref Word.Document doc, OrderStages orderStage)
