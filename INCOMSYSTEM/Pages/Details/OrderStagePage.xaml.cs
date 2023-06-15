@@ -309,9 +309,9 @@ namespace INCOMSYSTEM.Pages.Details
             if (!orderDb.factDateStart.HasValue)
                 orderDb.factDateStart = orderStages.First().factDateStart;
 
-            if (!(orderStages.All(s => s.factDateComplete.HasValue)
-                  || !db.TaskStages.Where(s => s.idTask == orderDb.idTask)
-                      .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id)))) return;
+            if (!orderStages.All(s => s.factDateComplete.HasValue)
+                || !db.TaskStages.Where(s => s.idTask == orderDb.idTask)
+                    .All(s => orderStages.Select(x => x.idTaskStage).Contains(s.id))) return;
             
             orderDb.idStatus = 4;
             orderDb.factDateComplete = orderStage.factDateComplete;
